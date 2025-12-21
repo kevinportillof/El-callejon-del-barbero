@@ -49,13 +49,16 @@
         }
 
         .overlay {
-            background: rgba(0, 0, 0, 0.55);
-            width: 100%;
-            height: 100%;
-            position: fixed;
-            top: 0;
-            left: 0;
-        }
+    background: rgba(0, 0, 0, 0.55);
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    pointer-events: none;
+}
+
 
         .contenido {
             position: relative;
@@ -222,9 +225,150 @@
             margin-bottom: 25px;
             text-shadow: 0 0 14px black;
         }
+
+        /* ===== MODAL AVISO AL ENTRAR ===== */
+.modal-aviso {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+}
+
+.modal-contenido {
+    background: linear-gradient(135deg, #111, #1e1e1e);
+    padding: 30px 22px;
+    border-radius: 24px;
+    max-width: 340px;
+    width: 85%;
+    box-shadow: 0 0 30px rgba(255,255,255,0.25);
+    animation: popIn 0.4s ease;
+}
+
+@keyframes popIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to   { transform: scale(1); opacity: 1; }
+}
+
+.modal-contenido h3 {
+    font-size: 28px;
+    margin-bottom: 12px;
+    color: #ffdf70;
+}
+
+.modal-contenido p {
+    font-size: 18px;
+    margin-bottom: 22px;
+}
+
+.modal-contenido button {
+    background: linear-gradient(135deg, #524b4b, #a1a0e7, #61a0ce);
+    border: none;
+    padding: 12px 26px;
+    border-radius: 40px;
+    color: white;
+    font-size: 16px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+/* ===== BARBEROS ===== */
+.contenedor-barberos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 22px;
+}
+
+.barbero-card {
+    width: 260px;
+    background: rgba(0,0,0,0.65);
+    border-radius: 20px;
+    padding: 16px;
+    box-shadow: 0 0 18px rgba(0,0,0,0.6);
+}
+
+.barbero-card img {
+    width: 100%;
+    border-radius: 16px;
+    margin-bottom: 10px;
+}
+
+.barbero-card h3 {
+    font-size: 22px;
+    margin: 8px 0;
+}
+
+.barbero-card p {
+    font-size: 15px;
+}
+
+.barbero-card button,
+.btn-barbero {
+    margin-top: 10px;
+    padding: 10px 16px;
+    border-radius: 30px;
+    border: none;
+    background: #ffdf70;
+    color: #000;
+    font-weight: 800;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.barbero-card.vacante {
+    border: 2px dashed #ffdf70;
+}
+
     </style>
 </head>
 <body>
+
+    <!-- ===== MODAL AVISO ===== -->
+<div class="modal-aviso" id="modalAviso">
+    <div class="modal-contenido">
+        <h3>⚠️ Aviso importante</h3>
+        <p>
+            El <strong>24 y 25 de diciembre</strong><br>
+            permaneceremos <strong>cerrados</strong>.<br><br>
+            Agenda con anticipación para asegurar tu lugar.
+        </p>
+        <button onclick="cerrarAviso()">Entendido</button>
+    </div>
+</div>
+
+<!-- ===== MODAL SE BUSCA BARBERO ===== -->
+<div class="modal-aviso" id="modalBarbero" style="display:none;">
+    <div class="modal-contenido">
+        <h3>✂️ Se busca barbero</h3>
+        <p>
+            ¿Eres barbero y te gustaría<br>
+            formar parte de <strong>El Callejón del Barbero</strong>?<br><br>
+            <strong>Mándanos tus trabajos</strong><br>
+            y conoce más información.
+        </p>
+
+        <a href="https://wa.me/5213114345505"
+           style="
+                display:block;
+                margin-bottom:14px;
+                padding:12px;
+                border-radius:40px;
+                background:#ffdf70;
+                color:#000;
+                font-weight:800;
+                text-decoration:none;
+           ">
+            Pedir información
+        </a>
+
+        <button onclick="cerrarBarbero()">Entendido</button>
+    </div>
+</div>
+
 
 <div class="overlay"></div>
 
@@ -243,16 +387,16 @@
         <i class="fa-solid fa-pump-soap icono-barberia"></i> Productos
     </a>
 
-    <a class="btn" onclick="mostrar('barberos')">
-        <i class="fa-solid fa-user-ninja icono-barberia"></i> Barberos
-    </a>
+    <a class="btn" onclick="mostrar('trabajos')">
+    <i class="fa-solid fa-briefcase icono-barberia"></i> Trabajos 
+</a>
 
-    <a class="btn" href="https://wa.me/3314345505" target="_blank">
+    <a class="btn" href="https://wa.me/+523314345505" target="_blank">
         <i class="fa-brands fa-whatsapp icono-barberia"></i> Agendar Cita
     </a>
 
     <div class="social-container">
-        <a class="social-circle tikTok" href="https://www.tiktok.com" target="_blank">
+        <a class="social-circle tikTok" href="https://vm.tiktok.com/ZSHKNBNFWNjTw-59O2k/" target="_blank">
             <i class="fa-brands fa-tiktok"></i>
         </a>
 
@@ -260,7 +404,7 @@
             <i class="fa-brands fa-facebook-f"></i>
         </a>
 
-        <a class="social-circle instagram" href="https://www.instagram.com" target="_blank">
+        <a class="social-circle instagram" href="https://www.instagram.com/el_callejon_del_barbaro?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">
             <i class="fa-brands fa-instagram"></i>
         </a>
     </div>
@@ -306,43 +450,74 @@
     <div style="display:flex; flex-direction:column; gap:30px; align-items:center;">
 
         <div style="width:90%; max-width:420px; background:rgba(0,0,0,0.6); padding:20px; border-radius:22px;">
-            <img src="GIF_PRODUCTO_1.gif" style="width:100%; border-radius:18px;">
-            <div style="font-size:28px; font-weight:900;">Pomada Premium</div>
-            <div style="font-size:24px; font-weight:800; color:#ffdf70;">$180 MXN</div>
-            <p>Fijación fuerte con acabado natural.</p>
+            <img src="https://i.ibb.co/cSd75Cc8/Whats-App-Image-2025-12-20-at-8-30-38-PM.jpg" style="width:100%; border-radius:18px;">
+            <div style="font-size:28px; font-weight:900;">Minoxidil</div>
+            <div style="font-size:24px; font-weight:800; color:#ffdf70;">$200 MXN</div>
+            <p>En El Callejón del Barbero tenemos Minoxidil para barba y cabello.
+Más densidad, mejor forma y resultados con constancia.
+Pregunta por él en tu cita.</p>
+        </div>
+
+         <div style="width:90%; max-width:420px; background:rgba(0,0,0,0.6); padding:20px; border-radius:22px;">
+            <img src="https://i.ibb.co/4nVFzp4w/Post-de-Instagram-Black-Friday-Moderno-Negro.png" style="width:100%; border-radius:18px;">
+            <div style="font-size:28px; font-weight:900;">Cera Matte</div>
+            <div style="font-size:24px; font-weight:800; color:#ffdf70;">$190 MXN</div>
+            <p>En El Callejón del Barbero usamos Cera Matte de nivel profesional.
+Control preciso, fijación firme y acabado totalmente mate para un look definido y elegante.
+Pregunta por ella en barbería.</p>
         </div>
 
         <div style="width:90%; max-width:420px; background:rgba(0,0,0,0.6); padding:20px; border-radius:22px;">
-            <img src="GIF_PRODUCTO_2.gif" style="width:100%; border-radius:18px;">
-            <div style="font-size:28px; font-weight:900;">Cera Mate</div>
+            <img src="https://i.ibb.co/Q3j58dwG/Whats-App-Image-2025-12-19-at-11-37-49-AM-1.jpg" style="width:100%; border-radius:18px;">
+            <div style="font-size:28px; font-weight:900;">Cera Spider</div>
+            <div style="font-size:24px; font-weight:800; color:#ffdf70;">$190 MXN</div>
+            <p>En El Callejón del Barbero la usamos y también la vendemos.
+Cera Spider con fijación flexible y estilo limpio sin dejar duro el cabello.
+Llévatela el día de tu corte.</p>
+        </div>
+
+        <div style="width:90%; max-width:420px; background:rgba(0,0,0,0.6); padding:20px; border-radius:22px;">
+            <img src="https://i.ibb.co/mV6bk13M/Whats-App-Image-2025-12-19-at-11-37-48-AM.jpg" style="width:100%; border-radius:18px;">
+            <div style="font-size:28px; font-weight:900;">Gel Fijador de Linaza</div>
             <div style="font-size:24px; font-weight:800; color:#ffdf70;">$160 MXN</div>
-            <p>Control sin brillo y textura natural.</p>
+            <p>En El Callejón del Barbero utilizamos Gel Fijador de Linaza de calidad profesional.
+Ofrece fijación natural, control uniforme y un acabado limpio, sin rigidez ni residuos.
+
+Pregunta por ella.</p>
         </div>
 
         <div style="width:90%; max-width:420px; background:rgba(0,0,0,0.6); padding:20px; border-radius:22px;">
-            <img src="GIF_PRODUCTO_3.gif" style="width:100%; border-radius:18px;">
-            <div style="font-size:28px; font-weight:900;">Shampoo Profesional</div>
-            <div style="font-size:24px; font-weight:800; color:#ffdf70;">$220 MXN</div>
-            <p>Limpieza profunda y fortalecimiento.</p>
-        </div>
-
-        <div style="width:90%; max-width:420px; background:rgba(0,0,0,0.6); padding:20px; border-radius:22px;">
-            <img src="GIF_PRODUCTO_4.gif" style="width:100%; border-radius:18px;">
-            <div style="font-size:28px; font-weight:900;">Aceite para Barba</div>
-            <div style="font-size:24px; font-weight:800; color:#ffdf70;">$150 MXN</div>
-            <p>Hidratación, suavidad y brillo natural.</p>
-        </div>
-
-        <div style="width:90%; max-width:420px; background:rgba(0,0,0,0.6); padding:20px; border-radius:22px;">
-            <img src="https://i.ibb.co/p606twcT/gel-normal.gif" alt="gel normal" style="width:100%; border-radius:18px;">
-            <div style="font-size:28px; font-weight:900;">Gel Fijador</div>
+            <img src="https://i.ibb.co/VcjNxJW6/Whats-App-Image-2025-12-20-at-8-30-35-PM.jpg" style="width:100%; border-radius:18px;">
+            <div style="font-size:28px; font-weight:900;">Gel Fijador Extra Firme</div>
             <div style="font-size:24px; font-weight:800; color:#ffdf70;">$120 MXN</div>
-            <p>Fijación extra firme y duradera sin residuos.</p>
+            <p>En El Callejón del Barbero trabajamos con Gel Fijador Extra Firme de calidad profesional.
+Máxima fijación, control duradero y acabado limpio para estilos que no se mueven.
+Disponible en barbería.</p>
         </div>
 
     </div>
 
-    <button class="btn-regresar" onclick="regresar()">Regresar</button>
+    <a class="btn-regresar" onclick="regresar()">
+        <i class="fa-solid fa-razor"></i> Regresar
+    </a>
+</div>
+
+
+<!-- Trabajos -->
+<div class="seccion" id="trabajos">
+    <h2 class="titulo">Trabajos</h2>
+
+    <div style="display:flex; flex-direction:column; gap:20px; align-items:center;">
+        <img src="https://i.ibb.co/qyW8F6G/estilista1.jpg"
+             style="width:85%; max-width:420px; border-radius:20px;">
+
+        <img src="https://i.ibb.co/jkyT0Qx/estilista2.jpg"
+             style="width:85%; max-width:420px; border-radius:20px;">
+    </div>
+
+    <a class="btn-regresar" onclick="regresar()">
+        <i class="fa-solid fa-arrow-left"></i> Regresar
+    </a>
 </div>
 
 
@@ -351,7 +526,20 @@
         document.getElementById("inicio").style.display = "none";
         document.querySelectorAll(".seccion").forEach(sec => sec.style.display = "none");
         document.getElementById(id).style.display = "block";
+
+       // MOSTRAR MODAL SOLO UNA VEZ AL ENTRAR A TRABAJOS
+if (id === "trabajos" && !sessionStorage.getItem("trabajoVisto")) {
+    document.getElementById("modalBarbero").style.display = "flex";
+    sessionStorage.setItem("trabajoVisto", "true");
+}
+        }
+    
+
+    function regresar() {
+        document.querySelectorAll(".seccion").forEach(sec => sec.style.display = "none");
+        document.getElementById("inicio").style.display = "block";
     }
+    
     function regresar() {
         document.querySelectorAll(".seccion").forEach(sec => sec.style.display = "none");
         document.getElementById("inicio").style.display = "block";
@@ -371,6 +559,15 @@
         }
     }
     crearNieve();
+
+    function cerrarAviso() {
+    document.getElementById("modalAviso").style.display = "none";
+}
+
+function cerrarBarbero() {
+    document.getElementById("modalBarbero").style.display = "none";
+}
+
 </script>
 
 </body>
