@@ -314,7 +314,7 @@
     padding: 10px 16px;
     border-radius: 30px;
     border: none;
-    background: #ffdf70;
+    background:#ffdf70;
     color: #000;
     font-weight: 800;
     cursor: pointer;
@@ -326,27 +326,87 @@
     border: 2px dashed #ffdf70;
 }
 
+/* BOTÓN ENTENDIDO ESTILO "SE BUSCA BARBERO" */
+.btn-entendido {
+    padding: 12px 26px;
+    border-radius: 40px;
+    border: none;
+    font-size: 16px;
+    font-weight: 800;
+    cursor: pointer;
+    color: white;
+    background: linear-gradient(135deg, #524b4b, #a1a0e7, #61a0ce);
+    transition: all 0.25s ease;
+}
+
+.btn-entendido:hover {
+    transform: scale(1.08);
+    filter: brightness(1.15);
+}
+
     </style>
 </head>
 <body>
 
-  <!-- ===== MODAL ANUNCIO NAVIDAD ===== -->
-<div class="modal-aviso" id="modalAviso">
+<!-- ===== MODAL AGENDAR CITA ===== -->
+<div class="modal-aviso" id="modalCita" style="display:none;">
     <div class="modal-contenido">
-
-        <h3 style="font-size:22px; margin-bottom:10px;">🎄 Feliz Navidad</h3>
-
-        <p style="line-height:1.6;">
-            En <strong>El Callejón del Barbero</strong> agradecemos tu preferencia
-            y la confianza que nos brindas.<br><br>
-            Seguimos comprometidos con ofrecerte un servicio profesional,
-            atención personalizada y el estilo que te define.
+        <h3>📅 Agenda tu Cita</h3>
+        <p>
+            Gracias por elegir <strong>El Callejón del Barbero</strong>.<br>
+            Nuestro equipo está listo para ofrecerte un servicio profesional y personalizado.<br><br>
+            Haz clic en continuar para enviarnos un mensaje por WhatsApp y reservar tu cita.
         </p>
 
-        <a href="https://wa.me/+523314345505"
+        <a id="btnContinuarCita" 
+           href="https://wa.me/+523314345505" 
+           target="_blank"
            style="
                 display:block;
                 margin:16px 0;
+                padding:12px;
+                border-radius:40px;
+                 background: linear-gradient(135deg, #524b4b, #a1a0e7, #61a0ce);
+                color:#000;
+                font-weight:800;
+                text-decoration:none;
+                text-align:center;
+           ">
+            Continuar
+        </a>
+
+        <button onclick="cerrarCita()"
+                style="
+                    padding:10px 18px;
+                    border:none;
+                    border-radius:8px;
+                    background: #f63c09;
+                    color:#fff;
+                    cursor:pointer;
+                ">
+            Cancelar
+        </button>
+    </div>
+</div>
+
+<!-- ===== MODAL AVISO FIN DE AÑO ===== -->
+<div class="modal-aviso" id="modalAviso">
+    <div class="modal-contenido">
+
+        <h3 style="font-size:22px; margin-bottom:10px;">📢 Aviso Importante</h3>
+
+        <p style="line-height:1.6;">
+            En <strong>El Callejón del Barbero</strong> queremos informarte que <br>
+            estaremos <strong>cerrados el 31 de diciembre de 2025</strong> y <strong>el 1 y 2 de enero de 2026</strong>.<br><br>
+            Te invitamos a agendar tu cita con anticipación para asegurar tu espacio<br>
+            y comenzar el año con un estilo impecable.
+        </p>
+
+        <!-- BOTÓN ESTILO "SE BUSCA BARBERO" -->
+        <a href="https://wa.me/+523314345505"
+           style="
+                display:block;
+                margin-bottom:14px;
                 padding:12px;
                 border-radius:40px;
                 background:#ffdf70;
@@ -358,18 +418,7 @@
             Agendar Cita
         </a>
 
-        <button 
-            onclick="cerrarAviso()"
-            style="
-                padding:10px 18px;
-                border:none;
-                border-radius:8px;
-                background:#62c9ee;
-                color:#fff;
-                cursor:pointer;
-            ">
-            Entendido
-        </button>
+        <button class="btn-entendido" onclick="cerrarAviso()">Entendido</button>
 
     </div>
 </div>
@@ -399,7 +448,7 @@
             Pedir información
         </a>
 
-        <button onclick="cerrarBarbero()">Entendido</button>
+       <button class="btn-entendido" onclick="cerrarBarbero()">Entendido</button>
     </div>
 </div>
 
@@ -425,9 +474,10 @@
     <i class="fa-solid fa-briefcase icono-barberia"></i> Trabajos 
 </a>
 
-    <a class="btn" href="https://wa.me/+523314345505" target="_blank">
-        <i class="fa-brands fa-whatsapp icono-barberia"></i> Agendar Cita
-    </a>
+    <a class="btn" onclick="mostrarCita()">
+    <i class="fa-brands fa-whatsapp icono-barberia"></i> Agendar Cita
+</a>
+
 
     <div class="social-container">
         <a class="social-circle tikTok" href="https://vm.tiktok.com/ZSHKNBNFWNjTw-59O2k/" target="_blank">
@@ -559,26 +609,19 @@ Disponible en barbería.</p>
     </a>
 </div>
 
-
 <script>
     function mostrar(id) {
         document.getElementById("inicio").style.display = "none";
         document.querySelectorAll(".seccion").forEach(sec => sec.style.display = "none");
         document.getElementById(id).style.display = "block";
 
-       // MOSTRAR MODAL SOLO UNA VEZ AL ENTRAR A TRABAJOS
-if (id === "trabajos" && !sessionStorage.getItem("trabajoVisto")) {
+    if (id === "trabajos") {
     document.getElementById("modalBarbero").style.display = "flex";
-    sessionStorage.setItem("trabajoVisto", "true");
 }
+
         }
     
 
-    function regresar() {
-        document.querySelectorAll(".seccion").forEach(sec => sec.style.display = "none");
-        document.getElementById("inicio").style.display = "block";
-    }
-    
     function regresar() {
         document.querySelectorAll(".seccion").forEach(sec => sec.style.display = "none");
         document.getElementById("inicio").style.display = "block";
@@ -607,8 +650,16 @@ function cerrarBarbero() {
     document.getElementById("modalBarbero").style.display = "none";
 }
 
+function mostrarCita() {
+    document.getElementById("modalCita").style.display = "flex";
+}
+
+function cerrarCita() {
+    document.getElementById("modalCita").style.display = "none";
+}
+
+
 </script>
 
 </body>
 </html>
-
