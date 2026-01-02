@@ -351,81 +351,6 @@
 </head>
 <body>
 
-<!-- ===== MODAL AGENDAR CITA ===== -->
-<div class="modal-aviso" id="modalCita" style="display:none;">
-    <div class="modal-contenido">
-        <h3>📅 Agenda tu Cita</h3>
-        <p>
-            Gracias por elegir <strong>El Callejón del Barbero</strong>.<br>
-            Nuestro equipo está listo para ofrecerte un servicio profesional y personalizado.<br><br>
-            Haz clic en continuar para enviarnos un mensaje por WhatsApp y reservar tu cita.
-        </p>
-
-        <a id="btnContinuarCita" 
-           href="https://wa.me/+523314345505" 
-           target="_blank"
-           style="
-                display:block;
-                margin:16px 0;
-                padding:12px;
-                border-radius:40px;
-                 background: linear-gradient(135deg, #524b4b, #a1a0e7, #61a0ce);
-                color:#000;
-                font-weight:800;
-                text-decoration:none;
-                text-align:center;
-           ">
-            Continuar
-        </a>
-
-        <button onclick="cerrarCita()"
-                style="
-                    padding:10px 18px;
-                    border:none;
-                    border-radius:8px;
-                    background: #f63c09;
-                    color:#fff;
-                    cursor:pointer;
-                ">
-            Cancelar
-        </button>
-    </div>
-</div>
-
-<!-- ===== MODAL AVISO FIN DE AÑO ===== -->
-<div class="modal-aviso" id="modalAviso">
-    <div class="modal-contenido">
-
-        <h3 style="font-size:22px; margin-bottom:10px;">📢 Aviso Importante</h3>
-
-        <p style="line-height:1.6;">
-            En <strong>El Callejón del Barbero</strong> queremos informarte que <br>
-            estaremos <strong>cerrados el 31 de diciembre de 2025</strong> y <strong>el 1 y 2 de enero de 2026</strong>.<br><br>
-            Te invitamos a agendar tu cita con anticipación para asegurar tu espacio<br>
-            y comenzar el año con un estilo impecable.
-        </p>
-
-        <!-- BOTÓN ESTILO "SE BUSCA BARBERO" -->
-        <a href="https://wa.me/+523314345505"
-           style="
-                display:block;
-                margin-bottom:14px;
-                padding:12px;
-                border-radius:40px;
-                background:#ffdf70;
-                color:#000;
-                font-weight:800;
-                text-decoration:none;
-                text-align:center;
-           ">
-            Agendar Cita
-        </a>
-
-        <button class="btn-entendido" onclick="cerrarAviso()">Entendido</button>
-
-    </div>
-</div>
-
 <!-- ===== MODAL SE BUSCA BARBERO ===== -->
 <div class="modal-aviso" id="modalBarbero" style="display:none;">
     <div class="modal-contenido">
@@ -437,19 +362,22 @@
             y conoce más información.
         </p>
 
-        <a href="https://wa.me/+523314345505"
-           style="
-                display:block;
-                margin-bottom:14px;
-                padding:12px;
-                border-radius:40px;
-                background:#ffdf70;
-                color:#000;
-                font-weight:800;
-                text-decoration:none;
-           ">
-            Pedir información
-        </a>
+        <a href="https://wa.me/523314345505?text=Hola,%20vi%20el%20anuncio%20de%20*Se%20busca%20barbero*%20en%20El%20Callej%C3%B3n%20del%20Barbero%20y%20me%20gustar%C3%ADa%20recibir%20m%C3%A1s%20informaci%C3%B3n.%20Gracias."
+   target="_blank"
+   style="
+        display:block;
+        margin-bottom:14px;
+        padding:12px;
+        border-radius:40px;
+        background:#ffdf70;
+        color:#000;
+        font-weight:800;
+        text-decoration:none;
+        text-align:center;
+   ">
+    Pedir información
+</a>
+
 
        <button class="btn-entendido" onclick="cerrarBarbero()">Entendido</button>
     </div>
@@ -461,7 +389,7 @@
 <!-- INICIO -->
 <div class="contenido" id="inicio">
 
-    <img src="https://i.ibb.co/DggtYRw7/francisco-8.png" class="logo" alt="Logo">
+    <img src="https://i.ibb.co/BXWTNnd/logoya.png" class="logo" alt="Logo">
 
     <h1>Dedicados al cuidado personal masculino</h1>
 
@@ -477,9 +405,10 @@
     <i class="fa-solid fa-briefcase icono-barberia"></i> Trabajos 
 </a>
 
-    <a class="btn" onclick="mostrarCita()">
-    <i class="fa-brands fa-whatsapp icono-barberia"></i> Agendar Cita
+<a class="btn" href="https://wa.me/523314345505" target="_blank">
+    <i class="fa-brands fa-whatsapp icono-barberia"></i> Agendar cita
 </a>
+
 
 
     <div class="social-container">
@@ -494,14 +423,13 @@
         <a class="social-circle instagram" href="https://www.instagram.com/el_callejon_del_barbaro?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">
             <i class="fa-brands fa-instagram"></i>
         </a>
-         <a class="social-circle maps" 
-       href="https://maps.app.goo.gl/orRLdvvuPvpcM7wD8?g_st=aw" 
-       target="_blank">
-        <i class="fa-solid fa-location-dot"></i>
-    </a>
+
+        <a class="social-circle maps" id="btnMapa">
+    <i class="fa-solid fa-location-dot"></i>
+</a>
     </div>
 
-    <div class="direccion">
+    <div class="direccion" onclick="document.getElementById('btnMapa').click()" style="cursor:pointer;">
         <i class="fa-solid fa-location-dot"></i>
         Calzada del Panteón #54, Andador 3, entre Nueva Galicia y 12 de Octubre.<br> Tepic, Nayarit Mexico 
     </div>
@@ -670,37 +598,30 @@ function mostrar(id) {
         document.getElementById("inicio").style.display = "block";
     }
 
-    // Nieve
-    function crearNieve() {
-        const snowCount = 50;
-        for (let i = 0; i < snowCount; i++) {
-            let snow = document.createElement('div');
-            snow.className = 'snowflake';
-            snow.style.left = Math.random() * window.innerWidth + 'px';
-            snow.style.fontSize = (Math.random() * 10 + 10) + 'px';
-            snow.style.animationDuration = (Math.random() * 5 + 5) + 's';
-            snow.innerText = '❄';
-            document.body.appendChild(snow);
-        }
-    }
-    crearNieve();
+    
 
-    function cerrarAviso() {
-    document.getElementById("modalAviso").style.display = "none";
-}
+// ===== MAPA ÚNICO (APPLE / GOOGLE) =====
+document.getElementById("btnMapa").addEventListener("click", function () {
+
+    const linkAppleMaps = "https://maps.apple.com/?address=Andador%206%2051,%20Esteban%20Baca%20Calderon,%2063000%20Tepic,%20Nay.,%20M%C3%A9xico&auid=12437454849627990863&ll=21.501987,-104.886234&lsp=9902&q=El%20Callej%C3%B3n%20Del%20Barbero&_ext=CjkKBQgEEKUBCgQIBRADCgQIBhBnCgQIChAACgQIUhABCgQIVRAPCgQIWRACCgUIpAEQAQoFCMEBEAISJimWD5yOW381QDHf4uE9BzlawDmqcSXxqIE1QEEkyijgaDhawFAE";
+    const linkGoogleMaps = "https://maps.app.goo.gl/fC9s49aJyvPhe1B89?g_st=aw";
+
+    const esIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+    window.open(esIOS ? linkAppleMaps : linkGoogleMaps, "_blank");
+
+});
 
 function cerrarBarbero() {
     document.getElementById("modalBarbero").style.display = "none";
 }
 
-function mostrarCita() {
-    document.getElementById("modalCita").style.display = "flex";
-}
-
-function cerrarCita() {
-    document.getElementById("modalCita").style.display = "none";
-}
-
+// ===== MOSTRAR MODAL "SE BUSCA BARBERO" AL INICIO =====
+window.addEventListener("load", function () {
+    setTimeout(function () {
+        document.getElementById("modalBarbero").style.display = "flex";
+    }, 1200); // 1.2 segundos después de entrar
+});
 
 </script>
 
