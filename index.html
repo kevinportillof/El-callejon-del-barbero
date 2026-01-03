@@ -12,7 +12,7 @@
     <!-- TIPOGRAFÍA PREMIUM -->
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
 
-    <script async src="https://www.instagram.com/embed.js"></script>
+   <script async src="https://www.tiktok.com/embed.js"></script>
 
     <style>
       
@@ -546,26 +546,47 @@ Disponible en barbería.</p>
         margin:0 auto;
     ">
 
-        <!-- REEL 1 -->
-        <blockquote class="instagram-media"
-            data-instgrm-permalink="https://www.instagram.com/reel/DQsNsU2gOvI/"
-            data-instgrm-version="14"
-            style="background:#000; border-radius:20px;">
-        </blockquote>
+      <blockquote class="tiktok-embed"
+    cite="https://www.tiktok.com/@elcallejondelbarbero/video/7589350372553018632"
+    data-video-id="7589350372553018632"
+    style="max-width:100%; border-radius:20px;">
+    <section></section>
+</blockquote>
 
-        <!-- REEL 2 -->
-        <blockquote class="instagram-media"
-            data-instgrm-permalink="https://www.instagram.com/reel/DPSlmQsAP2_/"
-            data-instgrm-version="14"
-            style="background:#000; border-radius:20px;">
-        </blockquote>
+<blockquote class="tiktok-embed"
+    cite="https://www.tiktok.com/@elcallejondelbarbero/video/7558199823531265297"
+    data-video-id="7558199823531265297"
+    style="max-width:100%; border-radius:20px;">
+    <section></section>
+</blockquote>
 
-        <!-- REEL 3 (opcional) -->
-        <blockquote class="instagram-media"
-            data-instgrm-permalink="https://www.instagram.com/reel/DQqrYTIgI9z/"
-            data-instgrm-version="14"
-            style="background:#000; border-radius:20px;">
-        </blockquote>
+<blockquote class="tiktok-embed"
+    cite="https://www.tiktok.com/@elcallejondelbarbero/video/7535668373141736721"
+    data-video-id="7535668373141736721"
+    style="max-width:100%; border-radius:20px;">
+    <section></section>
+</blockquote>
+
+     <blockquote class="tiktok-embed"
+    cite="https://www.tiktok.com/@elcallejondelbarbero/video/7556447731129109777"
+    data-video-id="7556447731129109777"
+    style="max-width:100%; border-radius:20px;">
+    <section></section>
+</blockquote>
+
+   <blockquote class="tiktok-embed"
+    cite="https://www.tiktok.com/@elcallejondelbarbero/video/7586819573010287879"
+    data-video-id="7586819573010287879"
+    style="max-width:100%; border-radius:20px;">
+    <section></section>
+</blockquote>
+
+    <blockquote class="tiktok-embed"
+    cite="https://www.tiktok.com/@elcallejondelbarbero/video/7555301939550964993"
+    data-video-id="7555301939550964993"
+    style="max-width:100%; border-radius:20px;">
+    <section></section>
+</blockquote>
 
     </div>
 
@@ -574,32 +595,50 @@ Disponible en barbería.</p>
     </a>
 </div>
 
-
 <script>
 
+function regresar() {
+    // Oculta todas las secciones
+    document.querySelectorAll(".seccion").forEach(sec => {
+        sec.style.display = "none";
+    });
+
+    // Muestra el inicio
+    document.getElementById("inicio").style.display = "block";
+
+    // Regresa el scroll arriba (opcional pero recomendado)
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
 function mostrar(id) {
+    // Oculta inicio
     document.getElementById("inicio").style.display = "none";
-    document.querySelectorAll(".seccion").forEach(sec => sec.style.display = "none");
+
+    // Oculta todas las secciones
+    document.querySelectorAll(".seccion").forEach(sec => {
+        sec.style.display = "none";
+    });
+
+    // Muestra la sección solicitada
     document.getElementById(id).style.display = "block";
 
+    // Forzar render de TikTok al entrar a "Trabajos"
     if (id === "trabajos") {
-
-        // Espera real + recarga Instagram
         setTimeout(() => {
-            if (window.instgrm && instgrm.Embeds) {
-                instgrm.Embeds.process();
+            if (window.tiktokEmbed && window.tiktokEmbed.reload) {
+                window.tiktokEmbed.reload();
             }
-        }, 600);
+        }, 500);
+    }
 
-        // ❌ NO ABRIR MODAL AQUÍ
+    // Instagram (por si lo usas después)
+    if (window.instgrm && instgrm.Embeds) {
+        instgrm.Embeds.process();
     }
 }
-    function regresar() {
-        document.querySelectorAll(".seccion").forEach(sec => sec.style.display = "none");
-        document.getElementById("inicio").style.display = "block";
-    }
-
-    
 
 // ===== MAPA ÚNICO (APPLE / GOOGLE) =====
 document.getElementById("btnMapa").addEventListener("click", function () {
