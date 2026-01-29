@@ -1,675 +1,1279 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Liliana Montano Pretty Woman</title>
 
-    <title>El Callejón Del Barbero</title>
+<!-- ICONOS -->
+ <link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+referrerpolicy="no-referrer">
 
-    <!-- Iconos -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<!-- TIPOGRAFÍAS -->
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Raleway:wght@400;600;700&display=swap" rel="stylesheet">
 
-    <!-- TIPOGRAFÍA PREMIUM -->
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
 
-   <script async src="https://www.tiktok.com/embed.js"></script>
+<style>
+    
+/* RESET BÁSICO */
+*{
+    box-sizing: border-box;
+}
 
-    <style>
-      
-        body {
-            margin: 0;
-            font-family: 'Playfair Display', serif;
+img{
+    max-width:100%;
+    height:auto;
+    display:block;
+}
 
-            /* FONDO AJUSTADO */
-            background-image: url('https://i.ibb.co/cKjcgGnL/Whats-App-Image-2025-12-05-at-12-53-23-AM.jpg');
-            background-size: cover;
-            background-position: center top;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
+/* BODY BASE */
+body{
+    margin: 0;
+    font-family: 'Raleway', sans-serif;
+    background-image: url('https://i.ibb.co/DD3Yfryy/fondolili.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    text-align: center;
+    color: white;
+    overflow-x: hidden;
+}
 
-            text-align: center;
-            color: white;
-            overflow-x: hidden;
-        }
+ /* BRILLOS DORADOS SOBRE TODO EL SITIO */
+.spark {
+    position: fixed; /* fijo sobre todo el body */
+    width: 6px;
+    height: 6px;
+    background: gold;
+    border-radius: 50%;
+    opacity: 0.8;
+    pointer-events: none;
+    z-index: 9999; /* siempre encima */
+    animation-name: shineFall;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
 
-        /* Nieve */
-        .snowflake {
-            position: fixed;
-            top: -10px;
-            z-index: 9999;
-            user-select: none;
-            pointer-events: none;
-            color: white;
-            font-size: 1em;
-            opacity: 0.8;
-            animation-name: fall;
-            animation-timing-function: linear;
-            animation-iteration-count: infinite;
-        }
-        @keyframes fall {
-            0% { transform: translateY(0) rotate(0deg); }
-            100% { transform: translateY(100vh) rotate(360deg); }
-        }
+@keyframes shineFall {
+    0% { transform: translateY(-10px) scale(0.5); opacity: 0.8; }
+    50% { opacity: 1; }
+    100% { transform: translateY(100vh) scale(1); opacity: 0; }
+}
 
-        .overlay {
-    background: rgba(0, 0, 0, 0.55);
+   .overlay {
+    background: radial-gradient(circle at top, rgba(0,0,0,0.45), rgba(0,0,0,0.7));
     width: 100%;
     height: 100%;
     position: fixed;
-    top: 0;
-    left: 0;
+    inset: 0;
     z-index: 1;
     pointer-events: none;
 }
 
+    .contenido {
+        position: relative;
+        z-index: 2;
+        padding-top: 50px;
+        animation: fadeIn 0.8s ease;
+    }
 
-        .contenido {
-            position: relative;
-            z-index: 2;
-            padding-top: 40px;
-            animation: fadeIn 0.8s ease;
-        }
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
+    img.logo {
+        width: 80%;
+        max-width: 350px;
+        border-radius: 20px;
+        transition: transform 0.4s ease, box-shadow 0.4s ease;
+        cursor: pointer;
+    }
 
-        /* LOGO INTERACTIVO */
-        img.logo {
-            width: 72%;
-            max-width: 350px;
-            margin-top: 5px;
-            border-radius: 20px;
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
-        }
-        img.logo:hover {
-            transform: rotate(-5deg) scale(1.08);
-            box-shadow: 0 0 25px rgba(255,255,255,0.9);
-            cursor: pointer;
-        }
+    img.logo:hover {
+        transform: rotate(-3deg) scale(1.05);
+        box-shadow: 0 0 20px gold;
+        cursor: pointer;
+    }
+    .logo {
+    margin: 0 auto;
+    }
 
-        h1 {
-            font-family: 'Great Vibes', cursive;
-            font-size: 52px;
-            margin-top: 10px;
-            color: #ffffff;
-            text-shadow: 0 0 18px black;
-        }
+    h1 {
+        font-family: 'Great Vibes', cursive;
+        font-size: 50px;
+        margin-top: 15px;
+        color: gold;
+        text-shadow: 0 0 12px #ffd700;
+    }
 
-        /* BOTONES PROFESIONALES */
-        .btn {
-            display: block;
-            width: 80%;
-            max-width: 300px;
-            margin: 14px auto;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            color: white;
-            font-size: 19px;
-            font-weight: 700;
-            border-radius: 16px;
-            text-decoration: none;
-            transition: 0.25s;
-            box-shadow: 0 5px 18px rgba(0,0,0,0.4);
-        }
+    /* BOTONES */
+    .btn {
+        display: block;
+        width: 80%;
+        max-width: 300px;
+        margin: 14px auto;
+        padding: 15px;
+        background: rgba(255, 215, 0, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 215, 0, 0.4);
+        color: white;
+        font-size: 18px;
+        font-weight: 700;
+        border-radius: 16px;
+        text-decoration: none;
+        transition: 0.25s;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
 
-        .btn:hover {
-            background: rgba(255, 255, 255, 0.28);
-            transform: scale(1.04);
-        }
+    .btn:hover {
+        background: rgba(255, 215, 0, 0.3);
+        transform: scale(1.05);
+    }
 
-        /* BOTÓN REGRESAR PROFESIONAL */
-        .btn-regresar {
-            width: 60%;
-            max-width: 185px;
-            margin: 25px auto;
-            padding: 11px 14px;
+    .btn-regresar {
+        width: 60%;
+        max-width: 180px;
+        margin: 25px auto;
+        padding: 12px 14px;
+        background: linear-gradient(135deg, #d4af37, #ffd700, #f5c400);
+        background-size: 300% 300%;
+        color: white;
+        font-size: 16px;
+        font-weight: 800;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        border-radius: 50px;
+        border: none;
+        animation: glow 4s ease infinite;
+        box-shadow: 0 0 15px rgba(255,215,0,0.6);
+        transition: all 0.25s ease;
+    }
 
-            background: linear-gradient(135deg, #524b4b, #a1a0e7, #61a0ce);
-            background-size: 300% 300%;
-            color: white;
-            font-size: 16px;
-            font-weight: 800;
+    @keyframes glow {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
 
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
+    .btn-regresar i { font-size: 18px; }
+    .btn-regresar:hover { transform: scale(1.12); filter: brightness(1.2); }
 
-            border-radius: 50px;
-            border: none;
-
-            animation: barberGlow 4s ease infinite;
-            box-shadow: 0 0 20px rgba(103, 82, 236, 0.6);
-
-            transition: all 0.25s ease;
-        }
-
-        @keyframes barberGlow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .btn-regresar i {
-            font-size: 18px;
-        }
-
-        .btn-regresar:hover {
-            transform: scale(1.12);
-            filter: brightness(1.23);
-        }
-
-        /* ICONOS */
-        .icono-barberia {
-            color: #ffdf70;
-            text-shadow: 0 0 12px #ffdf70;
-            margin-right: 6px;
-        }
-
-        .social-container {
-            margin-top: 30px;
-            display: flex;
-            justify-content: center;
-            gap: 18px;
-        }
-
-        .social-circle {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            color: white;
-            text-decoration: none;
-            transition: 0.3s;
-            box-shadow: 0 0 12px rgba(255,255,255,0.25);
-        }
-
-        .social-circle:hover {
-            transform: scale(1.15);
-        }
-
-        .tikTok { background: #000; }
-        .facebook { background: #1877f2; }
-        .instagram { 
-            background: linear-gradient(45deg, #feda75, #fa7e1e, #d62976, #962fbf, #4f5bd5);
-        }
-             .maps {
-    background: #34a853; /* verde Google Maps */
-}
-
-        /* DIRECCIÓN CON ICONO */
-        .direccion {
-            color: white;
-            font-weight: 600;
-            font-size: 16px;
-            text-shadow: 0 0 8px black;
-            margin-top: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .seccion {
-            display: none;
-            position: relative;
-            z-index: 2;
-            padding: 40px 20px;
-            animation: fadeIn 0.8s ease;
-        }
-
-        .titulo {
-            font-size: 36px;
-            font-weight: 800;
-            margin-bottom: 25px;
-            text-shadow: 0 0 14px black;
-        }
-
-        /* ===== MODAL AVISO AL ENTRAR ===== */
-.modal-aviso {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.7);
+   .social-container {
+    margin-top: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 99999;
+    gap: 18px;
+    flex-wrap: nowrap;
 }
 
-.modal-contenido {
-    background: linear-gradient(135deg, #111, #1e1e1e);
-    padding: 30px 22px;
-    border-radius: 24px;
-    max-width: 340px;
-    width: 85%;
-    box-shadow: 0 0 30px rgba(255,255,255,0.25);
-    animation: popIn 0.4s ease;
+    .social-circle {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        color: white;
+        text-decoration: none;
+        transition: 0.3s;
+        box-shadow: 0 0 12px rgba(255,215,0,0.25);
+    }
+    .social-circle:hover { transform: scale(1.15); }
+
+    .tikTok { background: #000; }
+    .facebook { background: #1877f2; }
+    .instagram { 
+        background: linear-gradient(45deg, #feda75, #fa7e1e, #d62976, #962fbf, #4f5bd5);
+    }
+    .maps { background: #34a853; }
+
+    .direccion {
+        color: white;
+        font-weight: 600;
+        font-size: 16px;
+        text-shadow: 0 0 8px black;
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .seccion {
+        display: none;
+        position: relative;
+        z-index: 2;
+        padding: 40px 20px;
+        animation: fadeIn 0.8s ease;
+    }
+
+    .titulo {
+        font-size: 36px;
+        font-weight: 800;
+        margin-bottom: 25px;
+        text-shadow: 0 0 14px #ffd700;
+    }
+    
+/* ===== AJUSTES SOLO PARA CELULAR ===== */
+@media (max-width: 768px) {
+
+    body{
+        background-attachment: scroll;
+        background-position: center top;
+    }
+
+    .contenido{
+        padding-top: 35px;
+    }
+
+    img.logo{
+        width: 90%;
+        max-width: 280px;
+    }
+
+    h1{
+        font-size: 34px;
+        margin-top: 10px;
+        text-shadow: 0 0 8px #ffd700;
+    }
+
+    .btn{
+        width: 90%;
+        font-size: 16px;
+        padding: 14px;
+        border-radius: 18px;
+    }
+
+    .btn:hover{
+        transform: none;
+    }
+
+    .btn-regresar{
+        width: 85%;
+        font-size: 15px;
+        padding: 12px;
+    }
+
+    .titulo{
+        font-size: 28px;
+        margin-bottom: 18px;
+    }
+
+    .direccion{
+        font-size: 14px;
+        flex-wrap: wrap;
+        padding: 0 16px;
+        text-align: center;
+    }
+
+    .social-container{
+        gap: 14px;
+        margin-top: 25px;
+    }
+
+    .social-circle{
+        width: 42px;
+        height: 42px;
+        font-size: 18px;
+    }
+
+    /* Brillos más ligeros en celular */
+    .spark{
+        opacity: 0.25;
+        filter: blur(2px);
+    }
 }
 
-@keyframes popIn {
-    from { transform: scale(0.8); opacity: 0; }
-    to   { transform: scale(1); opacity: 1; }
-}
-
-.modal-contenido h3 {
-    font-size: 28px;
-    margin-bottom: 12px;
-    color: #ffdf70;
-}
-
-.modal-contenido p {
-    font-size: 18px;
-    margin-bottom: 22px;
-}
-
-.modal-contenido button {
-    background: linear-gradient(135deg, #524b4b, #a1a0e7, #61a0ce);
-    border: none;
-    padding: 12px 26px;
-    border-radius: 40px;
+/* BOTÓN WHATSAPP FLOTANTE SOLO CELULAR */
+.whatsapp-float {
+    position: fixed;
+    bottom: 18px;
+    right: 18px;
+    width: 58px;
+    height: 58px;
+    background: #25D366;
     color: white;
-    font-size: 16px;
-    font-weight: 800;
-    cursor: pointer;
-}
-
-/* ===== BARBEROS ===== */
-.contenedor-barberos {
-    display: flex;
-    flex-wrap: wrap;
+    border-radius: 50%;
+    display: none;
     justify-content: center;
-    gap: 22px;
+    align-items: center;
+    font-size: 28px;
+    box-shadow: 0 0 18px rgba(37,211,102,0.7);
+    z-index: 9999;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-.barbero-card {
-    width: 260px;
-    background: rgba(0,0,0,0.65);
-    border-radius: 20px;
-    padding: 16px;
-    box-shadow: 0 0 18px rgba(0,0,0,0.6);
+.whatsapp-float:hover {
+    transform: scale(1.12);
+    box-shadow: 0 0 25px rgba(37,211,102,1);
 }
 
-.barbero-card img {
-    width: 100%;
+/* SOLO EN CELULAR */
+@media (max-width: 768px) {
+    .whatsapp-float {
+        display: flex;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .contenido{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .contenido a[href*="wa.me"]{
+        order: -1;
+        margin-bottom: 18px;
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 768px) {
+    .btn:active,
+    .btn-regresar:active {
+        transform: scale(0.95);
+        filter: brightness(1.15);
+    }
+}
+
+@media (max-width: 768px) {
+    .contenido > a.btn[href*="wa.me"] {
+        display: none;
+    }
+}
+
+.maps {
+    animation: pulseMap 2.5s infinite;
+}
+
+@keyframes pulseMap {
+    0% { box-shadow: 0 0 0 0 rgba(52,168,83,0.6); }
+    70% { box-shadow: 0 0 0 10px rgba(52,168,83,0); }
+    100% { box-shadow: 0 0 0 0 rgba(52,168,83,0); }
+}
+
+.subtitulo {
+    margin-top: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    opacity: 0.9;
+    letter-spacing: 0.5px;
+}
+.subtitulo-servicios{
+    max-width: 420px;
+    margin: 0 auto 20px;
+    font-size: 14px;
+    line-height: 1.6;
+    opacity: 0.9;
+}
+
+.servicios-lista{
+    max-width: 360px;
+    margin: 0 auto 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.servicio-item{
+    padding: 14px;
     border-radius: 16px;
-    margin-bottom: 10px;
-}
-
-.barbero-card h3 {
-    font-size: 22px;
-    margin: 8px 0;
-}
-
-.barbero-card p {
+    background: rgba(255,255,255,0.08);
     font-size: 15px;
+    font-weight: 600;
 }
 
-.barbero-card button,
-.btn-barbero {
-    margin-top: 10px;
-    padding: 10px 16px;
-    border-radius: 30px;
-    border: none;
-    background:#ffdf70;
-    color: #000;
-    font-weight: 800;
-    cursor: pointer;
-    text-decoration: none;
-    display: inline-block;
+.servicio-item span{
+    display: block;
+    margin-top: 4px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #ffd700;
 }
 
-.barbero-card.vacante {
-    border: 2px dashed #ffdf70;
+.servicio-item small{
+    display: block;
+    font-size: 12px;
+    opacity: 0.8;
 }
 
-/* BOTÓN ENTENDIDO ESTILO "SE BUSCA BARBERO" */
-.btn-entendido {
-    padding: 12px 26px;
-    border-radius: 40px;
-    border: none;
+.nota-servicios{
+    max-width: 420px;
+    margin: 10px auto 20px;
+    font-size: 14px;
+    line-height: 1.6;
+    opacity: 0.95;
+}
+
+.garantia{
+    margin-bottom: 18px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.subtitulo-productos{
+    max-width: 420px;
+    margin: 0 auto 20px;
+    font-size: 14px;
+    line-height: 1.6;
+    opacity: 0.9;
+}
+
+/* ORDEN PROFESIONAL DE PRODUCTOS */
+.producto-marca{
+    display: block;
     font-size: 16px;
     font-weight: 800;
-    cursor: pointer;
-    color: white;
-    background: linear-gradient(135deg, #524b4b, #a1a0e7, #61a0ce);
-    transition: all 0.25s ease;
+    letter-spacing: 1px;
+    color: #ffd700;
+    margin-bottom: 4px;
 }
 
-.btn-entendido:hover {
-    transform: scale(1.08);
-    filter: brightness(1.15);
+.producto-nombre{
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 6px;
 }
 
-    </style>
+.producto-precio{
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    color: #ffd700;
+    margin-bottom: 6px;
+}
+
+.producto-desc{
+    font-size: 13px;
+    opacity: 0.85;
+    line-height: 1.5;
+}
+
+.productos-lista{
+    max-width: 380px;
+    margin: 0 auto 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.producto-item{
+    background: rgba(255,255,255,0.08);
+    border-radius: 18px;
+    overflow: hidden;
+}
+
+.producto-item img{
+    width: 100%;
+    height: auto;
+    max-height: 320px;
+    object-fit: contain;
+    background: #000;
+}
+
+.producto-info{
+    padding: 14px;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.producto-info span{
+    display: block;
+    margin-top: 4px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #ffd700;
+}
+
+.producto-info small{
+    display: block;
+    font-size: 12px;
+    opacity: 0.85;
+}
+
+.nota-productos{
+    max-width: 420px;
+    margin: 10px auto 20px;
+    font-size: 14px;
+    line-height: 1.6;
+    opacity: 0.95;
+}
+.servicios {
+  max-width: 900px;
+  margin: auto;
+  padding: 40px 20px;
+  font-family: Arial, sans-serif;
+}
+
+.servicios h2 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.nota {
+  text-align: center;
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.servicio {
+  background: rgba(0,0,0,0.05);
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+.servicio img {
+  width: 100%;
+  max-width: 320px;
+  border-radius: 12px;
+  cursor: zoom-in;
+  transition: transform 0.3s;
+}
+
+.servicio h3 {
+  margin-top: 15px;
+}
+
+.servicio p {
+  color: #eee;
+}
+
+.garantia {
+  text-align: center;
+  font-weight: bold;
+  margin-top: 30px;
+}
+
+
+
+</style>
 </head>
 <body>
 
-<!-- ===== MODAL SE BUSCA BARBERO ===== -->
-<div class="modal-aviso" id="modalBarbero" style="display:none;">
-    <div class="modal-contenido">
-        <h3>✂️ Se busca barbero</h3>
-        <p>
-            ¿Eres barbero y te gustaría<br>
-            formar parte de <strong>El Callejón del Barbero</strong>?<br><br>
-            <strong>Mándanos tus trabajos</strong><br>
-            y conoce más información.
-        </p>
-
-        <a href="https://wa.me/523314345505?text=Hola,%20vi%20el%20anuncio%20de%20*Se%20busca%20barbero*%20en%20El%20Callej%C3%B3n%20del%20Barbero%20y%20me%20gustar%C3%ADa%20recibir%20m%C3%A1s%20informaci%C3%B3n.%20Gracias."
-   target="_blank"
-   style="
-        display:block;
-        margin-bottom:14px;
-        padding:12px;
-        border-radius:40px;
-        background:#ffdf70;
-        color:#000;
-        font-weight:800;
-        text-decoration:none;
-        text-align:center;
-   ">
-    Pedir información
-</a>
-
-
-       <button class="btn-entendido" onclick="cerrarBarbero()">Entendido</button>
-    </div>
+    <div class="zoom-overlay" id="zoomOverlay" onclick="cerrarZoom()">
+    <span>&times;</span>
+    <img id="zoomImg">
 </div>
 
+<a href="https://wa.me/523112553233" 
+   class="whatsapp-float" 
+   target="_blank"
+   aria-label="Agendar cita por WhatsApp">
+   <i class="fa-brands fa-whatsapp"></i>
+</a>
 
 <div class="overlay"></div>
 
-<!-- INICIO -->
 <div class="contenido" id="inicio">
+    <img src="https://i.ibb.co/3yvrQBKx/Logotipo-arquitectura-geome-trico-moderno-minimalista-blanco-negro.png"
+         class="logo"
+         alt="Logotipo Estética Gold Glam"
+         onclick="regresar()">
+    <h1>Belleza y Estilo</h1>
+<p class="subtitulo">Atención personalizada y resultados reales</p>
 
-    <img src="https://i.ibb.co/BXWTNnd/logoya.png" class="logo" alt="Logo">
+<button class="btn" onclick="mostrar('servicios')">
+ ✂️ Servicios
+</button>
 
-    <h1>Dedicados al cuidado personal masculino</h1>
+<button class="btn" onclick="mostrar('productos')">
+ 🧴 Productos
+</button>
 
-    <a class="btn" onclick="mostrar('servicios')">
-        <i class="fa-solid fa-scissors icono-barberia"></i> Servicios y Paquetes
-    </a>
-
-    <a class="btn" onclick="mostrar('productos')">
-        <i class="fa-solid fa-pump-soap icono-barberia"></i> Productos
-    </a>
-
-    <a class="btn" onclick="mostrar('trabajos')">
-    <i class="fa-solid fa-briefcase icono-barberia"></i> Trabajos 
-</a>
-
-    <a class="btn" href="https://wa.me/523314345505?text=Hola,%20quiero%20agendar%20una%20cita%20en%20*El%20Callej%C3%B3n%20del%20Barbero*.%0A%0AServicio:%0AFecha%20aproximada:%0AHorario:%0A%0AQuedo%20pendiente,%20gracias."
-    target="_blank">
-        <i class="fa-brands fa-whatsapp icono-barberia"></i> Agendar cita
-    </a>
-
-
+<button class="btn" onclick="mostrar('galeria')">
+ 🖼️ Galería
+</button>
+  
+    <a class="btn" href="https://wa.me/523112553233" target="_blank"><i class="fa-brands fa-whatsapp"></i> Agendar Cita</a>
 
     <div class="social-container">
-        <a class="social-circle tikTok" href="https://vm.tiktok.com/ZSHKNBNFWNjTw-59O2k/" target="_blank">
+        <a class="social-circle tikTok" href="https://vm.tiktok.com/ZSHKkXs37drKQ-NFZH4/" target="_blank">
             <i class="fa-brands fa-tiktok"></i>
         </a>
-
-        <a class="social-circle facebook" href="https://www.facebook.com/share/18h2Nk3fat/" target="_blank">
+        <a class="social-circle facebook" href="https://www.facebook.com/share/1C1kpjL7ko/" target="_blank">
             <i class="fa-brands fa-facebook-f"></i>
         </a>
-
-        <a class="social-circle instagram" href="https://www.instagram.com/el_callejon_del_barbaro?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">
+        <a class="social-circle instagram" href="https://www.instagram.com/lilianamontano_prettywoman" target="_blank">
             <i class="fa-brands fa-instagram"></i>
         </a>
 
-        <a class="social-circle maps" id="btnMapa">
-    <i class="fa-solid fa-location-dot"></i>
-</a>
-    </div>
+        <a class="social-circle maps" onclick="abrirMapa()">
+            <i class="fa-solid fa-location-dot"></i>
+        </a>
 
-    <div class="direccion" onclick="document.getElementById('btnMapa').click()" style="cursor:pointer;">
-        <i class="fa-solid fa-location-dot"></i>
-        Calzada del Panteón #54, Andador 3, entre Nueva Galicia y 12 de Octubre.<br> Tepic, Nayarit Mexico 
     </div>
 </div>
 
-<!-- SECCIONES SERVICIOS, PRODUCTOS, BARBEROS -->
-<div class="seccion" id="servicios">
-    <h2 class="titulo">Servicios y Paquetes</h2>
+<!-- SECCIONES -->
+<section class="seccion servicios" id="servicios">
+  <h2 class="titulo">Nuestros Servicios</h2>
 
-    <div style="display:flex; flex-direction:column; align-items:center; gap:20px;">
-        <img src="https://i.ibb.co/d4xGrytY/1.jpg" 
-             alt="Menú 1" 
-             style="width:85%; max-width:420px; border-radius:20px; box-shadow:0 0 12px rgba(0,0,0,0.5);">
+  <p class="subtitulo-servicios">
+    Servicios profesionales de color y tratamientos capilares diseñados para realzar tu belleza natural,
+    cuidando la salud y calidad de tu cabello.
+  </p>
 
-        <img src="https://i.ibb.co/1YJ2RFrP/2.jpg" 
-             alt="Menú 2" 
-             style="width:85%; max-width:420px; border-radius:20px; box-shadow:0 0 12px rgba(0,0,0,0.5);">
-   
-          <img src="https://i.ibb.co/0jyf64D1/3.jpg" 
-             alt="Menú 3" 
-             style="width:85%; max-width:420px; border-radius:20px; box-shadow:0 0 12px rgba(0,0,0,0.5);">
+  <!-- COLORACIÓN -->
+  <div class="servicio-item">
+    ✨ <strong>Babylights</strong>
+    <small>
+      Reflejos ultra finos y delicados que aportan luminosidad natural al cabello.
+      Ideales para un look suave, juvenil y de bajo mantenimiento.
+    </small>
+  </div>
 
-            </div>
+  <div class="servicio-item">
+    ✨ <strong>Balayage</strong>
+    <small>
+      Técnica francesa aplicada a mano alzada que crea un degradado natural y elegante,
+      con raíces más oscuras y puntas iluminadas.
+    </small>
+  </div>
 
-    <a class="btn" href="https://wa.me/+523314345505" target="_blank" style="margin-top:30px;">
-        <i class="fa-brands fa-whatsapp icono-barberia"></i> Agendar Cita
-    </a>
+  <div class="servicio-item">
+    ✨ <strong>Highlights</strong>
+    <small>
+      Iluminación estratégica que aporta contraste, profundidad y brillo,
+      imitando los reflejos naturales del sol.
+    </small>
+  </div>
 
-    <a class="btn-regresar" onclick="regresar()">
-        <i class="fa-solid fa-razor"></i> Regresar
-    </a>
-</div>
+  <div class="servicio-item">
+    ✨ <strong>Diseño Blonder (Rubios personalizados)</strong>
+    <small>
+      Creación de rubios sofisticados y multidimensionales combinando tonos cálidos y fríos,
+      adaptados a tu estilo y facciones para un acabado natural y lujoso.
+    </small>
+  </div>
 
-<!-- PRODUCTOS -->
+  <!-- TRATAMIENTOS -->
+  <h3 class="subtitulo" style="margin-top:30px;">Tratamientos Capilares</h3>
+
+  <div class="servicio-item">
+    💖 <strong>Botox Reestructurante</strong>
+    <span>Alisa hasta un 80%</span>
+    <small>
+      Restaura la fibra capilar, elimina el frizz y aporta brillo, suavidad y nutrición profunda.
+      Ideal para cabellos procesados. Duración aproximada de 4 meses.
+    </small>
+  </div>
+
+  <div class="servicio-item">
+    💖 <strong>Botox Hidratante</strong>
+    <span>Alisa hasta un 20%</span>
+    <small>
+      Aporta hidratación, brillo y suavidad, controlando el frizz.
+      Ideal para cabellos secos y deshidratados.
+    </small>
+  </div>
+
+  <div class="servicio-item">
+    💖 <strong>Tratamiento de Encerado</strong>
+    <span>No alisa</span>
+    <small>
+      Nutre profundamente, elimina el frizz y aporta brillo y suavidad.
+      Apto para cabellos procesados.
+    </small>
+  </div>
+
+  <div class="servicio-item">
+    💖 <strong>Encerado Extra Fuerte</strong>
+    <span>Alisa hasta un 60%</span>
+    <small>
+      Tratamiento reestructurante que reduce la porosidad,
+      aporta brillo intenso y elimina el frizz.
+    </small>
+  </div>
+
+  <div class="servicio-item">
+    💖 <strong>Tratamiento Truss</strong>
+    <small>
+      Restaura profundamente el cabello, regula el pH,
+      combate la porosidad y devuelve elasticidad y suavidad.
+    </small>
+  </div>
+
+  <div class="servicio-item">
+    💖 <strong>Tratamiento Olaplex</strong>
+    <small>
+      Fortalece el cabello desde el interior, aporta brillo,
+      hidratación y protección contra futuros daños.
+    </small>
+  </div>
+
+  <!-- OTROS -->
+  <h3 class="subtitulo" style="margin-top:30px;">Corte y Detalles de Belleza</h3>
+
+  <div class="servicio-item">
+    ✂️ <strong>Corte de cabello</strong>
+    <span>Desde $350 MXN</span>
+    <small>
+      Incluye lavado y estilizado.
+      El precio puede variar según largo y volumen.
+    </small>
+  </div>
+
+  <div class="servicio-item">
+    ✨ <strong>Depilación facial</strong>
+    <small>
+      Cejas $150 · Bozo $85 · Rostro completo $250
+    </small>
+  </div>
+
+  <div class="servicio-item">
+    ✨ <strong>Lifting de pestañas</strong>
+    <span>$250 MXN</span>
+    <small>
+      Eleva y curva las pestañas naturales desde la raíz,
+      logrando una mirada más definida y femenina sin extensiones.
+    </small>
+  </div>
+
+  <p class="garantia">💖 Todos nuestros servicios cuentan con garantía 💖</p>
+
+  <a class="btn-regresar" onclick="regresar()">⬅️ Regresar</a>
+</section>
+
+
 <div class="seccion" id="productos">
-    <h2 class="titulo">Productos</h2>
+  <h2 class="titulo">Productos</h2>
 
-    <div style="display:flex; flex-direction:column; gap:30px; align-items:center;">
+<p class="subtitulo-productos">
+Trabajamos con productos profesionales y originales, seleccionados para
+cuidar y mantener la salud de tu cabello desde casa.
+La disponibilidad puede variar.
+</p>
 
-        <div style="width:90%; max-width:420px; background:rgba(0,0,0,0.6); padding:20px; border-radius:22px;">
-            <img src="https://i.ibb.co/JFbFkBtF/Chat-GPT-Image-11-ene-2026-10-51-50-p-m.png" style="width:100%; border-radius:18px;">
-            <div style="font-size:28px; font-weight:900;">Minoxidil</div>
-            <div style="font-size:24px; font-weight:800; color:#ffdf70;">$300 MXN</div>
-            <p>Shampoo profesional formulado con minoxidil y biotina, ideal para fortalecer el cabello y estimular su crecimiento desde la raíz. Su fórmula ayuda a reducir la caída, mejorar la densidad y mantener el cuero cabelludo limpio y saludable.Shampoo profesional formulado con minoxidil y biotina, ideal para fortalecer el cabello y estimular su crecimiento desde la raíz. Su fórmula ayuda a reducir la caída, mejorar la densidad y mantener el cuero cabelludo limpio y saludable.</p>
-        </div>
+<div class="productos-lista">
 
-         <div style="width:90%; max-width:420px; background:rgba(0,0,0,0.6); padding:20px; border-radius:22px;">
-            <img src="https://i.ibb.co/CpSRHKwd/Chat-GPT-Image-28-dic-2025-10-15-18-p-m.png" style="width:100%; border-radius:18px;">
-            <div style="font-size:28px; font-weight:900;">Minoxidil</div>
-            <div style="font-size:24px; font-weight:800; color:#ffdf70;">$200 MXN</div>
-            <p>En El Callejón del Barbero tenemos Minoxidil para barba y cabello.
-Más densidad, mejor forma y resultados con constancia.
-Pregunta por él en tu cita.</p>
-        </div>
+<div class="producto-item">
+  <img src="https://i.ibb.co/W4gN90kK/1.png"
+       alt="Davines LOVE Curl Conditioner"
+       onclick="zoomImagen(this.src)"
+       style="cursor: zoom-in;">
 
+  <div class="producto-info">
+    <strong class="producto-marca">DAVINES</strong>
 
-        <div style="width:90%; max-width:420px; background:rgba(0,0,0,0.6); padding:20px; border-radius:22px;">
-            <img src="https://i.ibb.co/BVJDH93x/Chat-GPT-Image-28-dic-2025-10-11-13-p-m.png" style="width:100%; border-radius:18px;">
-            <div style="font-size:28px; font-weight:900;">Cera Spider</div>
-            <div style="font-size:24px; font-weight:800; color:#ffdf70;">$190 MXN</div>
-            <p>En El Callejón del Barbero la usamos y también la vendemos.
-Cera Spider con fijación flexible y estilo limpio sin dejar duro el cabello.
-Llévatela el día de tu corte.</p>
-        </div>
-
-         <div style="width:90%; max-width:420px; background:rgba(0,0,0,0.6); padding:20px; border-radius:22px;">
-            <img src="https://i.ibb.co/b54nx60B/Chat-GPT-Image-28-dic-2025-01-42-19-p-m.png" style="width:100%; border-radius:18px;">
-            <div style="font-size:28px; font-weight:900;">Cera Gel</div>
-            <div style="font-size:24px; font-weight:800; color:#ffdf70;">$190 MXN</div>
-            <p>
-Fijación firme con acabado limpio y controlado. Ideal para definir peinados estructurados sin dejar residuos ni sensación pegajosa. Aporta brillo moderado, controla el frizz y mantiene el estilo por más tiempo, incluso en jornadas largas. Textura fácil de aplicar y remover, pensada para un resultado pulido y duradero.
-
-Disponible en barbería. Pregunta por él.</p>
-        </div>
-
-          <div style="width:90%; max-width:420px; background:rgba(0,0,0,0.6); padding:20px; border-radius:22px;">
-            <img src="https://i.ibb.co/Df5j4Q7p/Chat-GPT-Image-28-dic-2025-10-06-44-p-m.png" style="width:100%; border-radius:18px;">
-            <div style="font-size:28px; font-weight:900;">Cera Matte</div>
-            <div style="font-size:24px; font-weight:800; color:#ffdf70;">$190 MXN</div>
-            <p>En El Callejón del Barbero usamos Cera Matte de nivel profesional.
-Control preciso, fijación firme y acabado totalmente mate para un look definido y elegante.
-Pregunta por ella en barbería.</p>
-        </div>
-
-        <div style="width:90%; max-width:420px; background:rgba(0,0,0,0.6); padding:20px; border-radius:22px;">
-            <img src="https://i.ibb.co/99DS7MJ8/Chat-GPT-Image-28-dic-2025-10-13-48-p-m.png" style="width:100%; border-radius:18px;">
-            <div style="font-size:28px; font-weight:900;">Gel Fijador de Linaza</div>
-            <div style="font-size:24px; font-weight:800; color:#ffdf70;">$160 MXN</div>
-            <p>En El Callejón del Barbero utilizamos Gel Fijador de Linaza de calidad profesional.
-Ofrece fijación natural, control uniforme y un acabado limpio, sin rigidez ni residuos.
-
-Pregunta por ella.</p>
-        </div>
-
-        <div style="width:90%; max-width:420px; background:rgba(0,0,0,0.6); padding:20px; border-radius:22px;">
-            <img src="https://i.ibb.co/kswdQx9S/28-dic-2025-07-11-22-p-m.png" style="width:100%; border-radius:18px;">
-            <div style="font-size:28px; font-weight:900;">Gel Fijador Extra Firme</div>
-            <div style="font-size:24px; font-weight:800; color:#ffdf70;">$120 MXN</div>
-            <p>En El Callejón del Barbero trabajamos con Gel Fijador Extra Firme de calidad profesional.
-Máxima fijación, control duradero y acabado limpio para estilos que no se mueven.
-Disponible en barbería.</p>
-        </div>
-
+    <div class="producto-nombre">
+      LOVE Curl Conditioner · Acondicionador para rizos
     </div>
 
-    <a class="btn-regresar" onclick="regresar()">
-        <i class="fa-solid fa-razor"></i> Regresar
-    </a>
+    <span class="producto-precio">$750 MXN</span>
+
+    <small class="producto-desc">
+      Acondicionador profesional para cabello ondulado o rizado.
+      Define los rizos, controla el frizz y aporta suavidad y elasticidad
+      sin apelmazar, dejando el cabello más manejable y con movimiento natural.
+      <br><br>
+      📦 Presentación: 250 ml · Uso profesional y en casa.
+    </small>
+  </div>
+</div>
+
+<div class="producto-item">
+  <img src="https://i.ibb.co/DDnpxxfC/2.png"
+       alt="Davines Naturaltech Replumping Shampoo"
+       onclick="zoomImagen(this.src)"
+       style="cursor: zoom-in;">
+
+  <div class="producto-info">
+    <strong class="producto-marca">DAVINES</strong>
+
+    <div class="producto-nombre">
+      Naturaltech Replumping Shampoo · Shampoo hidratante
+    </div>
+
+    <span class="producto-precio">$685 MXN</span>
+
+    <small class="producto-desc">
+      Shampoo profesional hidratante y elasticizante ideal para cabello seco o deshidratado.
+      Limpia suavemente mientras aporta cuerpo, elasticidad y suavidad,
+      dejando el cabello más flexible, brillante y con sensación de volumen natural.
+      <br><br>
+      🌿 Ingrediente clave: extractos fitocéuticos de ciruela, ricos en antioxidantes.
+      <br>
+      📦 Presentación: 250 ml · Uso profesional y en casa.
+    </small>
+  </div>
+</div>
+
+<div class="producto-item">
+  <img src="https://i.ibb.co/NdHnWtTY/3.png"
+       alt="Davines Heart of Glass Conditioner"
+       onclick="zoomImagen(this.src)"
+       style="cursor: zoom-in;">
+
+  <div class="producto-info">
+    <strong class="producto-marca">DAVINES</strong>
+
+    <div class="producto-nombre">
+      Heart of Glass Conditioner · Acondicionador para cabello rubio
+    </div>
+
+    <span class="producto-precio">$900 MXN</span>
+
+    <small class="producto-desc">
+      Acondicionador profesional fortificante y sublimador diseñado especialmente
+      para cabello rubio natural o tratado.
+      Nutre, suaviza y fortalece la fibra capilar, ayudando a mantener el color luminoso,
+      mejorar la manejabilidad y dejar el cabello sedoso, brillante y saludable sin sensación pesada.
+      <br><br>
+      🌿 Ingrediente clave: extracto de jagua azul, que protege la fibra capilar
+      y ayuda a conservar el tono rubio.
+      <br>
+      📦 Presentación: 250 ml · Uso profesional y en casa.
+    </small>
+  </div>
+</div>
+
+<div class="producto-item">
+  <img src="https://i.ibb.co/bR1gywhy/4.png"
+       alt="Davines Heart of Glass Intense Treatment"
+       onclick="zoomImagen(this.src)"
+       style="cursor: zoom-in;">
+
+  <div class="producto-info">
+    <strong class="producto-marca">DAVINES</strong>
+
+    <div class="producto-nombre">
+      Heart of Glass Intense Treatment · Tratamiento intensivo para cabello rubio
+    </div>
+
+    <span class="producto-precio">$785 MXN</span>
+
+    <small class="producto-desc">
+      Tratamiento intensivo profesional diseñado para restaurar, fortalecer y proteger
+      el cabello rubio natural o tratado.
+      Refuerza la fibra capilar, mejora la elasticidad y ayuda a mantener el color luminoso,
+      dejando el cabello más fuerte, suave y brillante desde la primera aplicación.
+      <br><br>
+      🌿 Ingrediente clave: extracto de jagua azul, que protege la fibra capilar
+      y preserva el tono rubio.
+      <br>
+      📦 Presentación: 250 ml · Uso profesional y en casa.
+    </small>
+  </div>
+</div>
+
+<div class="producto-item">
+  <img src="https://i.ibb.co/qFJ190Qt/5.png"
+       alt="Davines Beautiful Things Restoring Leave-In"
+       onclick="zoomImagen(this.src)"
+       style="cursor: zoom-in;">
+
+  <div class="producto-info">
+    <strong class="producto-marca">DAVINES</strong>
+
+    <div class="producto-nombre">
+      Beautiful Things Restoring Leave-In · Mascarilla reparadora sin enjuague
+    </div>
+
+    <span class="producto-precio">$945 MXN</span>
+
+    <small class="producto-desc">
+      Tratamiento leave-in profesional diseñado para reparar, proteger y revitalizar
+      el cabello teñido o sensibilizado por procesos químicos.
+      Fortalece la fibra capilar, aporta brillo y suavidad con textura sedosa,
+      sin dejar sensación pesada y sin necesidad de enjuague.
+      <br><br>
+      🌿 Ingrediente clave: extractos fitocéuticos de arándano,
+      ricos en antioxidantes que ayudan a proteger el color y la fibra capilar.
+      <br>
+      📦 Presentación: 90 ml · Uso profesional y en casa.
+    </small>
+  </div>
+</div>
+
+<div class="producto-item">
+  <img src="https://i.ibb.co/v4jWzQLJ/6.png"
+       alt="Davines NOUNOU Conditioner"
+       onclick="zoomImagen(this.src)"
+       style="cursor: zoom-in;">
+
+  <div class="producto-info">
+    <strong class="producto-marca">DAVINES</strong>
+
+    <div class="producto-nombre">
+      NOUNOU Conditioner · Acondicionador nutritivo y reparador
+    </div>
+
+    <span class="producto-precio">$895 MXN</span>
+
+    <small class="producto-desc">
+      Acondicionador profesional formulado para restaurar profundamente
+      el cabello seco, maltratado o químicamente tratado.
+      Proporciona hidratación intensa, reduce el frizz y mejora la textura,
+      dejando el cabello más suave, manejable y visiblemente saludable.
+      <br><br>
+      🌿 Ideal para cabellos post-decoloración o tratamientos químicos.
+      <br>
+      📦 Presentación: 250 ml · Uso profesional y en casa.
+    </small>
+  </div>
+</div>
+
+<div class="producto-item">
+  <img src="https://i.ibb.co/sdS6JBf4/7.png"
+       alt="Davines NOUNOU Shampoo"
+       onclick="zoomImagen(this.src)"
+       style="cursor: zoom-in;">
+
+  <div class="producto-info">
+    <strong class="producto-marca">DAVINES</strong>
+
+    <div class="producto-nombre">
+      NOUNOU Shampoo · Shampoo nutritivo reparador
+    </div>
+
+    <span class="producto-precio">$685 MXN</span>
+
+    <small class="producto-desc">
+      Shampoo profesional nutritivo diseñado para restaurar el cabello seco,
+      maltratado o químicamente tratado por decoloraciones y tintes.
+      Limpia suavemente sin resecar, ayudando a fortalecer la fibra capilar
+      y dejando el cabello más suave, brillante y visiblemente saludable desde el primer uso.
+      <br><br>
+      🌿 Ideal para cabellos debilitados o post-decoloración.
+      <br>
+      📦 Presentación: 250 ml · Uso profesional y en casa.
+    </small>
+  </div>
+</div>
+
+<div class="producto-item">
+  <img src="https://i.ibb.co/3YmJFVKR/8.png"
+       alt="Davines OI All In One Milk"
+       onclick="zoomImagen(this.src)"
+       style="cursor: zoom-in;">
+
+  <div class="producto-info">
+    <strong class="producto-marca">DAVINES</strong>
+
+    <div class="producto-nombre">
+      OI All In One Milk · Tratamiento sin enjuague multifunción
+    </div>
+
+    <span class="producto-precio">$1,021 MXN</span>
+
+    <small class="producto-desc">
+      Tratamiento leave-in profesional todo en uno, ideal para todo tipo de cabello.
+      Hidrata intensamente, desenreda, controla el frizz y protege del calor,
+      dejando el cabello suave, brillante y sedoso sin apelmazar.
+      <br><br>
+      🌿 Ingrediente clave: aceite de Roucou, rico en antioxidantes que fortalecen
+      y protegen la fibra capilar.
+      <br>
+      📦 Presentación: 135 ml · Uso profesional y en casa.
+    </small>
+  </div>
+</div>
+
+<div class="producto-item">
+  <img src="https://i.ibb.co/DfhhCXWN/9.png"
+       alt="Davines OI Conditioner"
+       onclick="zoomImagen(this.src)"
+       style="cursor: zoom-in;">
+
+  <div class="producto-info">
+    <strong class="producto-marca">DAVINES</strong>
+
+    <div class="producto-nombre">
+      OI Conditioner · Acondicionador hidratante de belleza absoluta
+    </div>
+
+    <span class="producto-precio">$1,000 MXN</span>
+
+    <small class="producto-desc">
+      Acondicionador profesional de belleza absoluta ideal para todo tipo de cabello.
+      Hidrata profundamente, suaviza y aporta brillo inmediato,
+      facilitando el desenredo y controlando el frizz sin dejar sensación pesada.
+      Perfecto para uso diario y para mantener el cabello sano, sedoso y manejable.
+      <br><br>
+      🌿 Ingrediente clave: aceite de Roucou, rico en antioxidantes que nutren,
+      protegen y fortalecen la fibra capilar.
+      <br>
+      📦 Presentación: 250 ml · Uso profesional y en casa.
+    </small>
+  </div>
+</div>
+
+<div class="producto-item">
+  <img src="https://i.ibb.co/1tWzT9TC/10.png"
+       alt="Davines OI Oil"
+       onclick="zoomImagen(this.src)"
+       style="cursor: zoom-in;">
+
+  <div class="producto-info">
+    <strong class="producto-marca">DAVINES</strong>
+
+    <div class="producto-nombre">
+      OI Oil · Aceite de belleza sin enjuague
+    </div>
+
+    <span class="producto-precio">$1,280 MXN</span>
+
+    <small class="producto-desc">
+      Aceite profesional de belleza absoluta sin enjuague, ideal para todo tipo de cabello.
+      Suaviza, controla el frizz y aporta brillo inmediato, mejorando la manejabilidad
+      sin dejar sensación pesada. Perfecto para usar en cabello seco o húmedo.
+      <br><br>
+      🌿 Ingrediente clave: aceite de Roucou, rico en antioxidantes que protegen,
+      fortalecen y aportan sedosidad al cabello.
+      <br>
+      📦 Presentación: 135 ml · Uso profesional y en casa.
+    </small>
+  </div>
+</div>
+
+<div class="producto-item">
+  <img src="https://i.ibb.co/6c7L0w2X/11.png"
+       alt="Davines Naturaltech Energizing Shampoo"
+       onclick="zoomImagen(this.src)"
+       style="cursor: zoom-in;">
+
+  <div class="producto-info">
+    <strong class="producto-marca">DAVINES</strong>
+
+    <div class="producto-nombre">
+      Naturaltech Energizing Shampoo · Shampoo fortalecedor
+    </div>
+
+    <span class="producto-precio">$685 MXN</span>
+
+    <small class="producto-desc">
+      Shampoo profesional estimulante formulado para fortalecer el cuero cabelludo
+      y el cabello fino, frágil o con tendencia a la caída.
+      Ayuda a revitalizar el cuero cabelludo, aporta sensación de frescura y energía,
+      y contribuye a fortalecer el cabello debilitado con el uso continuo.
+      <br><br>
+      🌿 Ingrediente clave: Natural Hair Energy Complex con cafeína fitocéutica
+      y extracto de salvia roja, que revitalizan el cuero cabelludo.
+      <br>
+      📦 Presentación: 250 ml · Uso profesional y en casa.
+    </small>
+  </div>
+</div>
+
+<div class="producto-item">
+  <img src="https://i.ibb.co/mr41HPHY/12.png"
+       alt="Davines LOVE Curl Shampoo"
+       onclick="zoomImagen(this.src)"
+       style="cursor: zoom-in;">
+
+  <div class="producto-info">
+    <strong class="producto-marca">DAVINES</strong>
+
+    <div class="producto-nombre">
+      LOVE Curl Shampoo · Shampoo disciplinante para rizos
+    </div>
+
+    <span class="producto-precio">$685 MXN</span>
+
+    <small class="producto-desc">
+      Shampoo profesional formulado para limpiar suavemente y realzar
+      la forma natural del cabello ondulado o rizado.
+      Ayuda a controlar el frizz, aporta elasticidad y definición,
+      dejando los rizos más suaves, flexibles y manejables sin resecar.
+      <br><br>
+      🌿 Ingrediente clave: extracto de almendra, que nutre y mejora
+      la elasticidad del rizo.
+      <br>
+      📦 Presentación: 250 ml · Uso profesional y en casa.
+    </small>
+  </div>
+</div>
+
+<div class="producto-item">
+  <img src="https://i.ibb.co/0R0zsdFX/13.png"
+       alt="Davines Naturaltech Rebalancing Shampoo"
+       onclick="zoomImagen(this.src)"
+       style="cursor: zoom-in;">
+
+  <div class="producto-info">
+    <strong class="producto-marca">DAVINES</strong>
+
+    <div class="producto-nombre">
+      Naturaltech Rebalancing Shampoo · Shampoo equilibrante
+    </div>
+
+    <span class="producto-precio">$685 MXN</span>
+
+    <small class="producto-desc">
+      Shampoo profesional equilibrante formulado para limpiar profundamente
+      el cuero cabelludo con exceso de grasa.
+      Ayuda a regular la producción de sebo sin resecar la fibra capilar,
+      proporcionando una sensación de frescura, limpieza prolongada
+      y equilibrio natural.
+      <br><br>
+      🌿 Ingrediente clave: extractos fitocéuticos de limón,
+      ricos en antioxidantes que ayudan a purificar y equilibrar el cuero cabelludo.
+      <br>
+      📦 Presentación: 250 ml · Uso profesional y en casa.
+    </small>
+  </div>
+</div>
+
+<div class="producto-item">
+  <img src="https://i.ibb.co/k2f13FZC/14.png"
+       alt="Davines Heart of Glass Sheer Glaze"
+       onclick="zoomImagen(this.src)"
+       style="cursor: zoom-in;">
+
+  <div class="producto-info">
+    <strong class="producto-marca">DAVINES</strong>
+
+    <div class="producto-nombre">
+      Heart of Glass Sheer Glaze · Termoprotector iluminador para cabello rubio
+    </div>
+
+    <span class="producto-precio">$885 MXN</span>
+
+    <small class="producto-desc">
+      Fluido profesional iluminador y termoprotector diseñado especialmente
+      para cabello rubio natural o tratado.
+      Protege del calor de herramientas térmicas, aporta brillo inmediato
+      y suavidad sedosa, ayudando a mantener el tono rubio luminoso y saludable.
+      <br><br>
+      🌿 Ingrediente clave: extracto de jagua azul y filtros UV,
+      que fortalecen la fibra capilar y protegen el color.
+      <br>
+      📦 Presentación: 150 ml · Uso profesional y en casa.
+    </small>
+  </div>
+</div>
+
+<div class="producto-item">
+  <img src="https://i.ibb.co/mrjWmShK/15.png"
+       alt="Davines Heart of Glass Silkening Shampoo"
+       onclick="zoomImagen(this.src)"
+       style="cursor: zoom-in;">
+
+  <div class="producto-info">
+    <strong class="producto-marca">DAVINES</strong>
+
+    <div class="producto-nombre">
+      Heart of Glass Silkening Shampoo · Shampoo sublimador para rubios
+    </div>
+
+    <span class="producto-precio">$685 MXN</span>
+
+    <small class="producto-desc">
+      Shampoo profesional sublimador formulado para limpiar suavemente
+      y realzar la belleza del cabello rubio natural o tratado.
+      Ayuda a mantener el color luminoso, neutraliza reflejos amarillos
+      no deseados y fortalece la fibra capilar, dejando el cabello
+      suave, sedoso y con brillo natural sin resecar.
+      <br><br>
+      🌿 Ingrediente clave: extracto de jagua azul, que protege,
+      fortalece y mantiene el tono rubio luminoso.
+      <br>
+      📦 Presentación: 250 ml · Uso profesional y en casa.
+    </small>
+  </div>
 </div>
 
 
-<!-- Trabajos -->
-<div class="seccion" id="trabajos">
-    <h2 class="titulo">Trabajos</h2>
 
-    <div style="
-        display:grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap:20px;
-        max-width:900px;
-        margin:0 auto;
-    ">
 
-      <blockquote class="tiktok-embed"
-    cite="https://www.tiktok.com/@elcallejondelbarbero/video/7589350372553018632"
-    data-video-id="7589350372553018632"
-    style="max-width:100%; border-radius:20px;">
-    <section></section>
-</blockquote>
+   
+<div class="nota-productos">
+Si buscas un producto específico o deseas una recomendación personalizada,
+con gusto te asesoramos 💖
+</div>
 
-<blockquote class="tiktok-embed"
-    cite="https://www.tiktok.com/@elcallejondelbarbero/video/7558199823531265297"
-    data-video-id="7558199823531265297"
-    style="max-width:100%; border-radius:20px;">
-    <section></section>
-</blockquote>
+<a class="btn" href="https://wa.me/523112553233" target="_blank">
+💬 Consultar productos por WhatsApp
+</a>
 
-<blockquote class="tiktok-embed"
-    cite="https://www.tiktok.com/@elcallejondelbarbero/video/7535668373141736721"
-    data-video-id="7535668373141736721"
-    style="max-width:100%; border-radius:20px;">
-    <section></section>
-</blockquote>
+<a class="btn-regresar" onclick="regresar()">
+⬅️ Regresar
+</a>
+</div>
 
-     <blockquote class="tiktok-embed"
-    cite="https://www.tiktok.com/@elcallejondelbarbero/video/7556447731129109777"
-    data-video-id="7556447731129109777"
-    style="max-width:100%; border-radius:20px;">
-    <section></section>
-</blockquote>
-
-   <blockquote class="tiktok-embed"
-    cite="https://www.tiktok.com/@elcallejondelbarbero/video/7586819573010287879"
-    data-video-id="7586819573010287879"
-    style="max-width:100%; border-radius:20px;">
-    <section></section>
-</blockquote>
-
-    <blockquote class="tiktok-embed"
-    cite="https://www.tiktok.com/@elcallejondelbarbero/video/7555301939550964993"
-    data-video-id="7555301939550964993"
-    style="max-width:100%; border-radius:20px;">
-    <section></section>
-</blockquote>
-
+<div class="seccion" id="galeria">
+    <h2 class="titulo">Galería</h2>
+    <div style="display:flex; flex-direction:column; gap:20px; align-items:center;">
+        <img src="https://i.ibb.co/qyW8F6G/estilista1.jpg" style="width:85%; max-width:420px; border-radius:20px;">
+        <img src="https://i.ibb.co/jkyT0Qx/estilista2.jpg" style="width:85%; max-width:420px; border-radius:20px;">
     </div>
-
-    <a class="btn-regresar" onclick="regresar()">
-        <i class="fa-solid fa-arrow-left"></i> Regresar
-    </a>
+    <a class="btn-regresar" onclick="regresar()"><i class="fa-solid fa-arrow-left"></i> Regresar</a>
 </div>
 
 <script>
 
-function regresar() {
-    // Oculta todas las secciones
-    document.querySelectorAll(".seccion").forEach(sec => {
-        sec.style.display = "none";
-    });
+// CREAR BRILLOS
 
-    // Muestra el inicio
-    document.getElementById("inicio").style.display = "block";
+function crearBrillos() {
+    const count = window.innerWidth < 768 ? 15 : 40;
 
-    // Regresa el scroll arriba (opcional pero recomendado)
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
+    for (let i = 0; i < count; i++) {
+        const spark = document.createElement('div');
+        spark.className = 'spark';
+        spark.style.left = Math.random() * window.innerWidth + 'px';
+        spark.style.top = -(Math.random() * 100) + 'px';
+
+        const size = Math.random() * 4 + 3;
+        spark.style.width = spark.style.height = size + 'px';
+
+        spark.style.animationDuration = (Math.random() * 5 + 5) + 's';
+        spark.style.animationDelay = (Math.random() * 5) + 's';
+
+        document.body.appendChild(spark);
+    }
 }
+crearBrillos();
+
+
+// NAVEGACIÓN
 
 function mostrar(id) {
-    // Oculta inicio
     document.getElementById("inicio").style.display = "none";
-
-    // Oculta todas las secciones
-    document.querySelectorAll(".seccion").forEach(sec => {
-        sec.style.display = "none";
-    });
-
-    // Muestra la sección solicitada
-    document.getElementById(id).style.display = "block";
-
-    // Forzar render de TikTok al entrar a "Trabajos"
-    if (id === "trabajos") {
-        setTimeout(() => {
-            if (window.tiktokEmbed && window.tiktokEmbed.reload) {
-                window.tiktokEmbed.reload();
-            }
-        }, 800);
-    }
-
-    // Instagram (por si lo usas después)
-    if (window.instgrm && instgrm.Embeds) {
-        instgrm.Embeds.process();
-    }
+    document.querySelectorAll(".seccion").forEach(sec => sec.style.display = "none");
+    const seccion = document.getElementById(id);
+    seccion.style.display = "block";
+    window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-// ===== MAPA ÚNICO (APPLE / GOOGLE) =====
-document.getElementById("btnMapa").addEventListener("click", function () {
-
-    const linkAppleMaps = "https://maps.apple.com/?address=Andador%206%2051,%20Esteban%20Baca%20Calderon,%2063000%20Tepic,%20Nay.,%20M%C3%A9xico&auid=12437454849627990863&ll=21.501987,-104.886234&lsp=9902&q=El%20Callej%C3%B3n%20Del%20Barbero&_ext=CjkKBQgEEKUBCgQIBRADCgQIBhBnCgQIChAACgQIUhABCgQIVRAPCgQIWRACCgUIpAEQAQoFCMEBEAISJimWD5yOW381QDHf4uE9BzlawDmqcSXxqIE1QEEkyijgaDhawFAE";
-    const linkGoogleMaps = "https://maps.app.goo.gl/fC9s49aJyvPhe1B89?g_st=aw";
-
-    const esIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-
-    window.open(esIOS ? linkAppleMaps : linkGoogleMaps, "_blank");
-
-});
-
-function cerrarBarbero() {
-    document.getElementById("modalBarbero").style.display = "none";
+function regresar() {
+    document.querySelectorAll(".seccion").forEach(sec => sec.style.display = "none");
+    document.getElementById("inicio").style.display = "block";
 }
 
-// ===== MOSTRAR MODAL "SE BUSCA BARBERO" AL INICIO =====
-window.addEventListener("load", function () {
-    setTimeout(function () {
-        document.getElementById("modalBarbero").style.display = "flex";
-    }, 1200); // 1.2 segundos después de entrar
-});
+function abrirMapa() {
+    if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+        window.open(
+            "https://maps.apple.com/?address=Calle%20Quebec%2088,%20Ciudad%20del%20Valle,%2063157%20Tepic,%20Nay.,%20M%C3%A9xico&auid=7897208075626208427&ll=21.496440,-104.886634&lsp=9902&q=Liliana%20Monta%C3%B1o%20Pretty%20woman&_ext=CjkKBQgEEKUBCgQIBRADCgQIBhBnCgQIChAACgQIUhABCgQIVRAQCgQIWRADCgUIpAEQAQoFCMEBEAESJil//AD/7301QDHnXhbJDTlawDmTXophPYA1QEFWxQptbzhawFAE"
+        );
+    } else {
+        window.open(
+            "https://maps.app.goo.gl/dza9uPuFsoeZUvx79?g_st=aw",
+            "_blank"
+        );
+    }
+}
+ 
+function zoomImagen(src) {
+    const overlay = document.getElementById("zoomOverlay");
+    const img = document.getElementById("zoomImg");
+    img.src = src;
+    overlay.style.display = "flex";
+}
+
+function cerrarZoom() {
+    document.getElementById("zoomOverlay").style.display = "none";
+}
 
 </script>
 
