@@ -12,8 +12,6 @@
     <!-- TIPOGRAFÍA PREMIUM -->
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
 
-   <script async src="https://www.tiktok.com/embed.js"></script>
-
     <style>
       
         body {
@@ -401,10 +399,6 @@
         <i class="fa-solid fa-pump-soap icono-barberia"></i> Productos
     </a>
 
-    <a class="btn" onclick="mostrar('trabajos')">
-    <i class="fa-solid fa-briefcase icono-barberia"></i> Trabajos 
-</a>
-
     <a class="btn" href="https://wa.me/523314345505?text=Hola,%20quiero%20agendar%20una%20cita%20en%20*El%20Callej%C3%B3n%20del%20Barbero*.%0A%0AServicio:%0AFecha%20aproximada:%0AHorario:%0A%0AQuedo%20pendiente,%20gracias."
     target="_blank">
         <i class="fa-brands fa-whatsapp icono-barberia"></i> Agendar cita
@@ -542,67 +536,6 @@ Disponible en barbería.</p>
 </div>
 
 
-<!-- Trabajos -->
-<div class="seccion" id="trabajos">
-    <h2 class="titulo">Trabajos</h2>
-
-    <div style="
-        display:grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap:20px;
-        max-width:900px;
-        margin:0 auto;
-    ">
-
-      <blockquote class="tiktok-embed"
-    cite="https://www.tiktok.com/@elcallejondelbarbero/video/7589350372553018632"
-    data-video-id="7589350372553018632"
-    style="max-width:100%; border-radius:20px;">
-    <section></section>
-</blockquote>
-
-<blockquote class="tiktok-embed"
-    cite="https://www.tiktok.com/@elcallejondelbarbero/video/7558199823531265297"
-    data-video-id="7558199823531265297"
-    style="max-width:100%; border-radius:20px;">
-    <section></section>
-</blockquote>
-
-<blockquote class="tiktok-embed"
-    cite="https://www.tiktok.com/@elcallejondelbarbero/video/7535668373141736721"
-    data-video-id="7535668373141736721"
-    style="max-width:100%; border-radius:20px;">
-    <section></section>
-</blockquote>
-
-     <blockquote class="tiktok-embed"
-    cite="https://www.tiktok.com/@elcallejondelbarbero/video/7556447731129109777"
-    data-video-id="7556447731129109777"
-    style="max-width:100%; border-radius:20px;">
-    <section></section>
-</blockquote>
-
-   <blockquote class="tiktok-embed"
-    cite="https://www.tiktok.com/@elcallejondelbarbero/video/7586819573010287879"
-    data-video-id="7586819573010287879"
-    style="max-width:100%; border-radius:20px;">
-    <section></section>
-</blockquote>
-
-    <blockquote class="tiktok-embed"
-    cite="https://www.tiktok.com/@elcallejondelbarbero/video/7555301939550964993"
-    data-video-id="7555301939550964993"
-    style="max-width:100%; border-radius:20px;">
-    <section></section>
-</blockquote>
-
-    </div>
-
-    <a class="btn-regresar" onclick="regresar()">
-        <i class="fa-solid fa-arrow-left"></i> Regresar
-    </a>
-</div>
-
 <script>
 
 function regresar() {
@@ -632,15 +565,6 @@ function mostrar(id) {
 
     // Muestra la sección solicitada
     document.getElementById(id).style.display = "block";
-
-    // Forzar render de TikTok al entrar a "Trabajos"
-    if (id === "trabajos") {
-        setTimeout(() => {
-            if (window.tiktokEmbed && window.tiktokEmbed.reload) {
-                window.tiktokEmbed.reload();
-            }
-        }, 800);
-    }
 
     // Instagram (por si lo usas después)
     if (window.instgrm && instgrm.Embeds) {
