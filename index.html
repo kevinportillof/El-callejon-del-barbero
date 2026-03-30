@@ -636,8 +636,25 @@ function mostrar(id) {
     // Forzar render de TikTok al entrar a "Trabajos"
     if (id === "trabajos") {
         setTimeout(() => {
-            if (window.tiktokEmbed && window.tiktokEmbed.reload) {
+            // API pública del script oficial de TikTok.
+            if (typeof window.tiktokEmbedLoad === "function") {
+                window.tiktokEmbedLoad();
+                return;
+            }
+
+            // Compatibilidad con posibles variantes del SDK.
+            if (window.tiktokEmbed && typeof window.tiktokEmbed.reload === "function") {
                 window.tiktokEmbed.reload();
+                return;
+            }
+
+            // Fallback: volver a inyectar el script para reprocesar blockquotes.
+            const embedScript = document.querySelector('script[src="https://www.tiktok.com/embed.js"]');
+            if (!embedScript) {
+                const script = document.createElement("script");
+                script.async = true;
+                script.src = "https://www.tiktok.com/embed.js";
+                document.body.appendChild(script);
             }
         }, 800);
     }
