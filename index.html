@@ -486,52 +486,54 @@
 
 <!-- CITAS DISPONIBLES -->
 <div class="seccion" id="horarios">
-    <h2 class="titulo">Citas disponibles</h2>
+<h2 class="titulo">Citas disponibles</h2>
 
-    <div class="horario-card">
-        <h3>Lunes</h3>
-        <p id="Lunes">Sin citas disponibles</p>
-    </div>
+<div class="horario-card">
+<h3 id="titulo-lunes">Lunes</h3>
+<p id="lunes">Sin citas disponibles</p>
+</div>
 
-    <div class="horario-card">
-        <h3>Martes</h3>
-        <p id="martes">Sin citas disponibles</p>
-    </div>
+<div class="horario-card">
+<h3 id="titulo-martes">Martes</h3>
+<p id="martes">Sin citas disponibles</p>
+</div>
 
-    <div class="horario-card">
-        <h3>Miércoles</h3>
-        <p id="miercoles">Sin citas disponibles</p>
-    </div>
+<div class="horario-card">
+<h3 id="titulo-miercoles">Miércoles</h3>
+<p id="miercoles">Sin citas disponibles</p>
+</div>
 
-    <div class="horario-card">
-        <h3>Jueves</h3>
-        <p id="jueves">Sin citas disponibles</p>
-    </div>
+<div class="horario-card">
+<h3 id="titulo-jueves">Jueves</h3>
+<p id="jueves">Sin citas disponibles</p>
+</div>
 
-    <div class="horario-card">
-        <h3>Viernes</h3>
-        <p id="viernes">Sin citas disponibles</p>
-    </div>
+<div class="horario-card">
+<h3 id="titulo-viernes">Viernes</h3>
+<p id="viernes">Sin citas disponibles</p>
+</div>
 
-    <div class="horario-card">
-        <h3>Sábado</h3>
-        <p id="sabado">Sin citas disponibles</p>
-    </div>
+<div class="horario-card">
+<h3 id="titulo-sabado">Sábado</h3>
+<p id="sabado">Sin citas disponibles</p>
+</div>
 
-    <div class="horario-card">
-        <h3>Domingo</h3>
-        <p id="domingo">Sin citas disponibles</p>
-    </div>
+<div class="horario-card">
+<h3 id="titulo-domingo">Domingo</h3>
+<p id="domingo">Sin citas disponibles</p>
+</div>
 
-    <a class="btn" href="https://wa.me/523314345505?text=Hola,%20quiero%20agendar%20una%20cita%20en%20*El%20Callej%C3%B3n%20del%20Barbero*."
+ <a class="btn" href="https://wa.me/523314345505?text=Hola,%20quiero%20agendar%20una%20cita%20en%20*El%20Callej%C3%B3n%20del%20Barbero*."
     target="_blank" style="margin-top:30px;">
         <i class="fa-brands fa-whatsapp icono-barberia"></i> Agendar cita
     </a>
 
-    <a class="btn-regresar" onclick="regresar()">
-        <i class="fa-solid fa-razor"></i> Regresar
-    </a>
+<a class="btn-regresar" onclick="regresar()">
+<i class="fa-solid fa-razor"></i> Regresar
+</a>
+
 </div>
+  
 
 <!-- PRODUCTOS -->
 <div class="seccion" id="productos">
@@ -669,21 +671,94 @@ window.addEventListener("load", function () {
     }, 1200); // 1.2 segundos después de entrar
 });
 
-function cargarCitas() {
-    const martesEl = document.getElementById("martes");
-    const miercolesEl = document.getElementById("miercoles");
-    const juevesEl = document.getElementById("jueves");
-    const viernesEl = document.getElementById("viernes");
-    const sabadoEl = document.getElementById("sabado");
+function cargarCitas(){
 
-    if (martesEl) martesEl.innerText = localStorage.getItem("martes") || "Sin citas disponibles";
-    if (miercolesEl) miercolesEl.innerText = localStorage.getItem("miercoles") || "Sin citas disponibles";
-    if (juevesEl) juevesEl.innerText = localStorage.getItem("jueves") || "Sin citas disponibles";
-    if (viernesEl) viernesEl.innerText = localStorage.getItem("viernes") || "Sin citas disponibles";
-    if (sabadoEl) sabadoEl.innerText = localStorage.getItem("sabado") || "Sin citas disponibles";
+document.getElementById("lunes").innerText =
+localStorage.getItem("lunes") || "Sin citas disponibles";
+
+document.getElementById("martes").innerText =
+localStorage.getItem("martes") || "Sin citas disponibles";
+
+document.getElementById("miercoles").innerText =
+localStorage.getItem("miercoles") || "Sin citas disponibles";
+
+document.getElementById("jueves").innerText =
+localStorage.getItem("jueves") || "Sin citas disponibles";
+
+document.getElementById("viernes").innerText =
+localStorage.getItem("viernes") || "Sin citas disponibles";
+
+document.getElementById("sabado").innerText =
+localStorage.getItem("sabado") || "Sin citas disponibles";
+
+document.getElementById("domingo").innerText =
+localStorage.getItem("domingo") || "Sin citas disponibles";
+
 }
 
-window.addEventListener("load", cargarCitas);
+
+function ponerFechas(){
+
+const dias = [
+"Domingo",
+"Lunes",
+"Martes",
+"Miércoles",
+"Jueves",
+"Viernes",
+"Sábado"
+];
+
+const meses = [
+"enero",
+"febrero",
+"marzo",
+"abril",
+"mayo",
+"junio",
+"julio",
+"agosto",
+"septiembre",
+"octubre",
+"noviembre",
+"diciembre"
+];
+
+const hoy = new Date();
+
+const diasOrden = [
+"lunes",
+"martes",
+"miercoles",
+"jueves",
+"viernes",
+"sabado",
+"domingo"
+];
+
+diasOrden.forEach((dia, index) => {
+
+const fecha = new Date();
+fecha.setDate(hoy.getDate() + index);
+
+const nombreDia = dias[fecha.getDay()];
+const texto = `${nombreDia} ${fecha.getDate()} de ${meses[fecha.getMonth()]}`;
+
+const titulo = document.getElementById("titulo-" + dia);
+
+if(titulo){
+titulo.innerText = texto;
+}
+
+});
+
+}
+
+
+window.addEventListener("load", function(){
+cargarCitas();
+ponerFechas();
+});
 
 </script>
 
