@@ -99,19 +99,28 @@ cursor:pointer;
 </div>
 
 <script>
-
 function guardar(){
 
-localStorage.setItem("martes",document.getElementById("martes").value);
-localStorage.setItem("miercoles",document.getElementById("miercoles").value);
-localStorage.setItem("jueves",document.getElementById("jueves").value);
-localStorage.setItem("viernes",document.getElementById("viernes").value);
-localStorage.setItem("sabado",document.getElementById("sabado").value);
+localStorage.setItem("lunes", document.getElementById("lunes").value);
+localStorage.setItem("martes", document.getElementById("martes").value);
+localStorage.setItem("miercoles", document.getElementById("miercoles").value);
+localStorage.setItem("jueves", document.getElementById("jueves").value);
+localStorage.setItem("viernes", document.getElementById("viernes").value);
+localStorage.setItem("sabado", document.getElementById("sabado").value);
+localStorage.setItem("domingo", document.getElementById("domingo").value);
 
 alert("Citas guardadas correctamente");
-
 }
 
+window.addEventListener("load", function () {
+document.getElementById("lunes").value = localStorage.getItem("lunes") || "";
+document.getElementById("martes").value = localStorage.getItem("martes") || "";
+document.getElementById("miercoles").value = localStorage.getItem("miercoles") || "";
+document.getElementById("jueves").value = localStorage.getItem("jueves") || "";
+document.getElementById("viernes").value = localStorage.getItem("viernes") || "";
+document.getElementById("sabado").value = localStorage.getItem("sabado") || "";
+document.getElementById("domingo").value = localStorage.getItem("domingo") || "";
+});
 </script>
 
 </body>
