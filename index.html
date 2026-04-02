@@ -388,29 +388,29 @@
 
 <!-- INICIO -->
 <div class="contenido" id="inicio">
+    
+<div class="contenido" id="inicio">
 
     <img src="https://i.ibb.co/BXWTNnd/logoya.png" class="logo" alt="Logo">
 
     <h1>Dedicados al cuidado personal masculino</h1>
-
+    
     <a class="btn" onclick="mostrar('servicios')">
-        <i class="fa-solid fa-scissors icono-barberia"></i> Servicios y Paquetes
+        <i class="fa-solid fa-scissors icono-barberia"></i> Servicios
     </a>
 
-    <a class="btn" onclick="mostrar('productos')">
-        <i class="fa-solid fa-pump-soap icono-barberia"></i> Productos
+    <a class="btn" onclick="mostrar('horarios')">
+        <i class="fa-regular fa-clock icono-barberia"></i> Horarios disponibles
     </a>
-
-    <a class="btn" onclick="mostrar('trabajos')">
-    <i class="fa-solid fa-briefcase icono-barberia"></i> Trabajos 
-</a>
 
     <a class="btn" href="https://wa.me/523314345505?text=Hola,%20quiero%20agendar%20una%20cita%20en%20*El%20Callej%C3%B3n%20del%20Barbero*.%0A%0AServicio:%0AFecha%20aproximada:%0AHorario:%0A%0AQuedo%20pendiente,%20gracias."
     target="_blank">
         <i class="fa-brands fa-whatsapp icono-barberia"></i> Agendar cita
     </a>
 
-
+    <a class="btn" onclick="mostrar('productos')">
+        <i class="fa-solid fa-pump-soap icono-barberia"></i> Productos
+    </a>
 
     <div class="social-container">
         <a class="social-circle tikTok" href="https://vm.tiktok.com/ZSHKNBNFWNjTw-59O2k/" target="_blank">
@@ -438,7 +438,7 @@
 
 <!-- SECCIONES SERVICIOS, PRODUCTOS, BARBEROS -->
 <div class="seccion" id="servicios">
-    <h2 class="titulo">Servicios y Paquetes</h2>
+    <h2 class="titulo">Servicios</h2>
 
     <div style="display:flex; flex-direction:column; align-items:center; gap:20px;">
         <img src="https://i.ibb.co/d4xGrytY/1.jpg" 
@@ -457,6 +457,59 @@
 
     <a class="btn" href="https://wa.me/+523314345505" target="_blank" style="margin-top:30px;">
         <i class="fa-brands fa-whatsapp icono-barberia"></i> Agendar Cita
+    </a>
+
+    <a class="btn-regresar" onclick="regresar()">
+        <i class="fa-solid fa-razor"></i> Regresar
+    </a>
+</div>
+
+<!-- HORARIOS -->
+<div class="seccion" id="horarios">
+    <h2 class="titulo">Horarios disponibles</h2>
+
+    <div style="display:flex; flex-direction:column; align-items:center; gap:16px;">
+
+        <div style="width:90%; max-width:420px; background:rgba(0,0,0,0.6); padding:18px; border-radius:20px;">
+            <div style="font-size:24px; font-weight:800; color:#ffdf70;">Lunes</div>
+            <p style="font-size:18px; margin:8px 0 0;">10:00 AM - 8:00 PM</p>
+        </div>
+
+        <div style="width:90%; max-width:420px; background:rgba(0,0,0,0.6); padding:18px; border-radius:20px;">
+            <div style="font-size:24px; font-weight:800; color:#ffdf70;">Martes</div>
+            <p style="font-size:18px; margin:8px 0 0;">10:00 AM - 8:00 PM</p>
+        </div>
+
+        <div style="width:90%; max-width:420px; background:rgba(0,0,0,0.6); padding:18px; border-radius:20px;">
+            <div style="font-size:24px; font-weight:800; color:#ffdf70;">Miércoles</div>
+            <p style="font-size:18px; margin:8px 0 0;">10:00 AM - 8:00 PM</p>
+        </div>
+
+        <div style="width:90%; max-width:420px; background:rgba(0,0,0,0.6); padding:18px; border-radius:20px;">
+            <div style="font-size:24px; font-weight:800; color:#ffdf70;">Jueves</div>
+            <p style="font-size:18px; margin:8px 0 0;">10:00 AM - 8:00 PM</p>
+        </div>
+
+        <div style="width:90%; max-width:420px; background:rgba(0,0,0,0.6); padding:18px; border-radius:20px;">
+            <div style="font-size:24px; font-weight:800; color:#ffdf70;">Viernes</div>
+            <p style="font-size:18px; margin:8px 0 0;">10:00 AM - 8:00 PM</p>
+        </div>
+
+        <div style="width:90%; max-width:420px; background:rgba(0,0,0,0.6); padding:18px; border-radius:20px;">
+            <div style="font-size:24px; font-weight:800; color:#ffdf70;">Sábado</div>
+            <p style="font-size:18px; margin:8px 0 0;">10:00 AM - 6:00 PM</p>
+        </div>
+
+        <div style="width:90%; max-width:420px; background:rgba(0,0,0,0.6); padding:18px; border-radius:20px;">
+            <div style="font-size:24px; font-weight:800; color:#ffdf70;">Domingo</div>
+            <p style="font-size:18px; margin:8px 0 0;">Cerrado</p>
+        </div>
+
+    </div>
+
+    <a class="btn" href="https://wa.me/523314345505?text=Hola,%20quiero%20agendar%20una%20cita%20en%20*El%20Callej%C3%B3n%20del%20Barbero*.%0A%0AServicio:%0AFecha%20aproximada:%0AHorario:%0A%0AQuedo%20pendiente,%20gracias."
+    target="_blank" style="margin-top:30px;">
+        <i class="fa-brands fa-whatsapp icono-barberia"></i> Agendar cita
     </a>
 
     <a class="btn-regresar" onclick="regresar()">
@@ -541,68 +594,6 @@ Disponible en barbería.</p>
     </a>
 </div>
 
-
-<!-- Trabajos -->
-<div class="seccion" id="trabajos">
-    <h2 class="titulo">Trabajos</h2>
-
-    <div style="
-        display:grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap:20px;
-        max-width:900px;
-        margin:0 auto;
-    ">
-
-      <blockquote class="tiktok-embed"
-    cite="https://www.tiktok.com/@elcallejondelbarbero/video/7589350372553018632"
-    data-video-id="7589350372553018632"
-    style="max-width:100%; border-radius:20px;">
-    <section></section>
-</blockquote>
-
-<blockquote class="tiktok-embed"
-    cite="https://www.tiktok.com/@elcallejondelbarbero/video/7558199823531265297"
-    data-video-id="7558199823531265297"
-    style="max-width:100%; border-radius:20px;">
-    <section></section>
-</blockquote>
-
-<blockquote class="tiktok-embed"
-    cite="https://www.tiktok.com/@elcallejondelbarbero/video/7535668373141736721"
-    data-video-id="7535668373141736721"
-    style="max-width:100%; border-radius:20px;">
-    <section></section>
-</blockquote>
-
-     <blockquote class="tiktok-embed"
-    cite="https://www.tiktok.com/@elcallejondelbarbero/video/7556447731129109777"
-    data-video-id="7556447731129109777"
-    style="max-width:100%; border-radius:20px;">
-    <section></section>
-</blockquote>
-
-   <blockquote class="tiktok-embed"
-    cite="https://www.tiktok.com/@elcallejondelbarbero/video/7586819573010287879"
-    data-video-id="7586819573010287879"
-    style="max-width:100%; border-radius:20px;">
-    <section></section>
-</blockquote>
-
-    <blockquote class="tiktok-embed"
-    cite="https://www.tiktok.com/@elcallejondelbarbero/video/7555301939550964993"
-    data-video-id="7555301939550964993"
-    style="max-width:100%; border-radius:20px;">
-    <section></section>
-</blockquote>
-
-    </div>
-
-    <a class="btn-regresar" onclick="regresar()">
-        <i class="fa-solid fa-arrow-left"></i> Regresar
-    </a>
-</div>
-
 <script>
 
 function regresar() {
@@ -632,32 +623,6 @@ function mostrar(id) {
 
     // Muestra la sección solicitada
     document.getElementById(id).style.display = "block";
-
-    // Forzar render de TikTok al entrar a "Trabajos"
-    if (id === "trabajos") {
-        setTimeout(() => {
-            // API pública del script oficial de TikTok.
-            if (typeof window.tiktokEmbedLoad === "function") {
-                window.tiktokEmbedLoad();
-                return;
-            }
-
-            // Compatibilidad con posibles variantes del SDK.
-            if (window.tiktokEmbed && typeof window.tiktokEmbed.reload === "function") {
-                window.tiktokEmbed.reload();
-                return;
-            }
-
-            // Fallback: volver a inyectar el script para reprocesar blockquotes.
-            const embedScript = document.querySelector('script[src="https://www.tiktok.com/embed.js"]');
-            if (!embedScript) {
-                const script = document.createElement("script");
-                script.async = true;
-                script.src = "https://www.tiktok.com/embed.js";
-                document.body.appendChild(script);
-            }
-        }, 800);
-    }
 
     // Instagram (por si lo usas después)
     if (window.instgrm && instgrm.Embeds) {
