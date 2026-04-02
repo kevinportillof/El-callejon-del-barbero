@@ -1,1 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Panel Administrador - El Callejón del Barbero</title>
+
+<style>
+
+body{
+background:#111;
+color:white;
+font-family:Arial, sans-serif;
+text-align:center;
+padding:20px;
+}
+
+h1{
+margin-bottom:20px;
+}
+
+.panel{
+max-width:500px;
+margin:auto;
+}
+
+.dia{
+background:#1b1b1b;
+padding:15px;
+margin-bottom:15px;
+border-radius:12px;
+}
+
+input{
+width:90%;
+padding:10px;
+margin-top:8px;
+border-radius:8px;
+border:none;
+}
+
+button{
+margin-top:20px;
+padding:12px 25px;
+border:none;
+border-radius:25px;
+background:#ffdf70;
+font-weight:bold;
+cursor:pointer;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>Panel Administrador</h1>
+
+<div class="panel">
+
+<div class="dia">
+<h3>Martes</h3>
+<input type="text" id="martes" placeholder="Ej: 4:00 pm, 6:00 pm">
+</div>
+
+<div class="dia">
+<h3>Miércoles</h3>
+<input type="text" id="miercoles" placeholder="Ej: 3:00 pm, 5:00 pm">
+</div>
+
+<div class="dia">
+<h3>Jueves</h3>
+<input type="text" id="jueves" placeholder="Ej: 11:00 am, 2:00 pm">
+</div>
+
+<div class="dia">
+<h3>Viernes</h3>
+<input type="text" id="viernes" placeholder="Ej: 12:00 pm, 4:00 pm">
+</div>
+
+<div class="dia">
+<h3>Sábado</h3>
+<input type="text" id="sabado" placeholder="Ej: 10:00 am, 1:00 pm">
+</div>
+
+<button onclick="guardar()">Guardar Citas</button>
+
+</div>
+
+<script>
+
+function guardar(){
+
+localStorage.setItem("martes",document.getElementById("martes").value);
+localStorage.setItem("miercoles",document.getElementById("miercoles").value);
+localStorage.setItem("jueves",document.getElementById("jueves").value);
+localStorage.setItem("viernes",document.getElementById("viernes").value);
+localStorage.setItem("sabado",document.getElementById("sabado").value);
+
+alert("Citas guardadas correctamente");
+
+}
+
+</script>
+
+</body>
+</html>
