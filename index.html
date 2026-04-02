@@ -52,15 +52,15 @@
         }
 
         .overlay {
-    background: rgba(0, 0, 0, 0.55);
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1;
-    pointer-events: none;
-}
+        background: rgba(0, 0, 0, 0.55);
+       width: 100%;
+       height: 100%;
+       position: fixed;
+      top: 0;
+      left: 0;
+     z-index: 1;
+     pointer-events: none;
+      }
 
 
         .contenido {
@@ -201,8 +201,8 @@
             background: linear-gradient(45deg, #feda75, #fa7e1e, #d62976, #962fbf, #4f5bd5);
         }
              .maps {
-    background: #34a853; /* verde Google Maps */
-}
+       background: #34a853; /* verde Google Maps */
+         }
 
         /* DIRECCIÓN CON ICONO */
         .direccion {
@@ -347,6 +347,28 @@
     filter: brightness(1.15);
 }
 
+.horario-card{
+    width: 90%;
+    max-width: 420px;
+    margin: 16px auto;
+    padding: 18px;
+    border-radius: 20px;
+    background: rgba(0,0,0,0.60);
+    box-shadow: 0 0 14px rgba(0,0,0,0.35);
+    border: 1px solid rgba(255,255,255,0.10);
+}
+
+.horario-card h3{
+    margin: 0 0 8px 0;
+    color: #ffdf70;
+    font-size: 24px;
+}
+
+.horario-card p{
+    margin: 0;
+    font-size: 18px;
+    color: white;
+}
     </style>
 </head>
 <body>
@@ -387,8 +409,6 @@
 <div class="overlay"></div>
 
 <!-- INICIO -->
-<div class="contenido" id="inicio">
-    
 <div class="contenido" id="inicio">
 
     <img src="https://i.ibb.co/BXWTNnd/logoya.png" class="logo" alt="Logo">
@@ -464,50 +484,36 @@
     </a>
 </div>
 
-<!-- HORARIOS -->
+<!-- CITAS DISPONIBLES -->
 <div class="seccion" id="horarios">
-    <h2 class="titulo">Horarios disponibles</h2>
+    <h2 class="titulo">Citas disponibles</h2>
 
-    <div style="display:flex; flex-direction:column; align-items:center; gap:16px;">
-
-        <div style="width:90%; max-width:420px; background:rgba(0,0,0,0.6); padding:18px; border-radius:20px;">
-            <div style="font-size:24px; font-weight:800; color:#ffdf70;">Lunes</div>
-            <p style="font-size:18px; margin:8px 0 0;">10:00 AM - 8:00 PM</p>
-        </div>
-
-        <div style="width:90%; max-width:420px; background:rgba(0,0,0,0.6); padding:18px; border-radius:20px;">
-            <div style="font-size:24px; font-weight:800; color:#ffdf70;">Martes</div>
-            <p style="font-size:18px; margin:8px 0 0;">10:00 AM - 8:00 PM</p>
-        </div>
-
-        <div style="width:90%; max-width:420px; background:rgba(0,0,0,0.6); padding:18px; border-radius:20px;">
-            <div style="font-size:24px; font-weight:800; color:#ffdf70;">Miércoles</div>
-            <p style="font-size:18px; margin:8px 0 0;">10:00 AM - 8:00 PM</p>
-        </div>
-
-        <div style="width:90%; max-width:420px; background:rgba(0,0,0,0.6); padding:18px; border-radius:20px;">
-            <div style="font-size:24px; font-weight:800; color:#ffdf70;">Jueves</div>
-            <p style="font-size:18px; margin:8px 0 0;">10:00 AM - 8:00 PM</p>
-        </div>
-
-        <div style="width:90%; max-width:420px; background:rgba(0,0,0,0.6); padding:18px; border-radius:20px;">
-            <div style="font-size:24px; font-weight:800; color:#ffdf70;">Viernes</div>
-            <p style="font-size:18px; margin:8px 0 0;">10:00 AM - 8:00 PM</p>
-        </div>
-
-        <div style="width:90%; max-width:420px; background:rgba(0,0,0,0.6); padding:18px; border-radius:20px;">
-            <div style="font-size:24px; font-weight:800; color:#ffdf70;">Sábado</div>
-            <p style="font-size:18px; margin:8px 0 0;">10:00 AM - 6:00 PM</p>
-        </div>
-
-        <div style="width:90%; max-width:420px; background:rgba(0,0,0,0.6); padding:18px; border-radius:20px;">
-            <div style="font-size:24px; font-weight:800; color:#ffdf70;">Domingo</div>
-            <p style="font-size:18px; margin:8px 0 0;">Cerrado</p>
-        </div>
-
+    <div class="horario-card">
+        <h3>Martes</h3>
+        <p id="martes">Sin citas disponibles</p>
     </div>
 
-    <a class="btn" href="https://wa.me/523314345505?text=Hola,%20quiero%20agendar%20una%20cita%20en%20*El%20Callej%C3%B3n%20del%20Barbero*.%0A%0AServicio:%0AFecha%20aproximada:%0AHorario:%0A%0AQuedo%20pendiente,%20gracias."
+    <div class="horario-card">
+        <h3>Miércoles</h3>
+        <p id="miercoles">Sin citas disponibles</p>
+    </div>
+
+    <div class="horario-card">
+        <h3>Jueves</h3>
+        <p id="jueves">Sin citas disponibles</p>
+    </div>
+
+    <div class="horario-card">
+        <h3>Viernes</h3>
+        <p id="viernes">Sin citas disponibles</p>
+    </div>
+
+    <div class="horario-card">
+        <h3>Sábado</h3>
+        <p id="sabado">Sin citas disponibles</p>
+    </div>
+
+    <a class="btn" href="https://wa.me/523314345505?text=Hola,%20quiero%20agendar%20una%20cita%20en%20*El%20Callej%C3%B3n%20del%20Barbero*."
     target="_blank" style="margin-top:30px;">
         <i class="fa-brands fa-whatsapp icono-barberia"></i> Agendar cita
     </a>
@@ -652,6 +658,22 @@ window.addEventListener("load", function () {
         document.getElementById("modalBarbero").style.display = "flex";
     }, 1200); // 1.2 segundos después de entrar
 });
+
+function cargarCitas() {
+    const martesEl = document.getElementById("martes");
+    const miercolesEl = document.getElementById("miercoles");
+    const juevesEl = document.getElementById("jueves");
+    const viernesEl = document.getElementById("viernes");
+    const sabadoEl = document.getElementById("sabado");
+
+    if (martesEl) martesEl.innerText = localStorage.getItem("martes") || "Sin citas disponibles";
+    if (miercolesEl) miercolesEl.innerText = localStorage.getItem("miercoles") || "Sin citas disponibles";
+    if (juevesEl) juevesEl.innerText = localStorage.getItem("jueves") || "Sin citas disponibles";
+    if (viernesEl) viernesEl.innerText = localStorage.getItem("viernes") || "Sin citas disponibles";
+    if (sabadoEl) sabadoEl.innerText = localStorage.getItem("sabado") || "Sin citas disponibles";
+}
+
+window.addEventListener("load", cargarCitas);
 
 </script>
 
