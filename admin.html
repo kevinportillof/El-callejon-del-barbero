@@ -7,7 +7,6 @@
 <title>Panel Administrador - El Callejón del Barbero</title>
 
 <style>
-
 body{
 background:#111;
 color:white;
@@ -49,9 +48,7 @@ background:#ffdf70;
 font-weight:bold;
 cursor:pointer;
 }
-
 </style>
-
 </head>
 
 <body>
@@ -64,11 +61,12 @@ cursor:pointer;
 <h3>Lunes</h3>
 <input type="text" id="lunes" placeholder="Ej: 4:00 pm, 6:00 pm">
 </div>
-  
+
 <div class="dia">
 <h3>Martes</h3>
 <input type="text" id="martes" placeholder="Ej: 4:00 pm, 6:00 pm">
 </div>
+
 <div class="dia">
 <h3>Miércoles</h3>
 <input type="text" id="miercoles" placeholder="Ej: 3:00 pm, 5:00 pm">
@@ -92,7 +90,7 @@ cursor:pointer;
 <div class="dia">
 <h3>Domingo</h3>
 <input type="text" id="domingo" placeholder="Ej: 4:00 pm, 6:00 pm">
-</div>  
+</div>
 
 <button onclick="guardar()">Guardar Citas</button>
 
@@ -100,7 +98,6 @@ cursor:pointer;
 
 <script>
 function guardar(){
-
 localStorage.setItem("lunes", document.getElementById("lunes").value);
 localStorage.setItem("martes", document.getElementById("martes").value);
 localStorage.setItem("miercoles", document.getElementById("miercoles").value);
