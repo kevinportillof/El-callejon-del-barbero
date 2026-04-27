@@ -3,51 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Panel Administrador - El Callejón del Barbero</title>
 
 <style>
-body{
-background:#111;
-color:white;
-font-family:Arial, sans-serif;
-text-align:center;
-padding:20px;
-}
-
-h1{
-margin-bottom:20px;
-}
-
-.panel{
-max-width:500px;
-margin:auto;
-}
-
-.dia{
-background:#1b1b1b;
-padding:15px;
-margin-bottom:15px;
-border-radius:12px;
-}
-
-input{
-width:90%;
-padding:10px;
-margin-top:8px;
-border-radius:8px;
-border:none;
-}
-
-button{
-margin-top:20px;
-padding:12px 25px;
-border:none;
-border-radius:25px;
-background:#ffdf70;
-font-weight:bold;
-cursor:pointer;
-}
+body{background:#111;color:white;font-family:Arial,sans-serif;text-align:center;padding:20px;}
+.panel{max-width:500px;margin:auto;}
+.dia,.cliente{background:#1b1b1b;padding:15px;margin-bottom:15px;border-radius:12px;}
+input{width:90%;padding:10px;margin-top:8px;border-radius:8px;border:none;}
+button{margin-top:15px;padding:12px 25px;border:none;border-radius:25px;background:#ffdf70;font-weight:bold;cursor:pointer;}
+.estado{color:#ffdf70;font-weight:bold;}
 </style>
 </head>
 
@@ -57,67 +21,109 @@ cursor:pointer;
 
 <div class="panel">
 
-<div class="dia">
-<h3>Lunes</h3>
-<input type="text" id="lunes" placeholder="Ej: 4:00 pm, 6:00 pm">
-</div>
+<h2>Horarios disponibles</h2>
 
-<div class="dia">
-<h3>Martes</h3>
-<input type="text" id="martes" placeholder="Ej: 4:00 pm, 6:00 pm">
-</div>
-
-<div class="dia">
-<h3>Miércoles</h3>
-<input type="text" id="miercoles" placeholder="Ej: 3:00 pm, 5:00 pm">
-</div>
-
-<div class="dia">
-<h3>Jueves</h3>
-<input type="text" id="jueves" placeholder="Ej: 11:00 am, 2:00 pm">
-</div>
-
-<div class="dia">
-<h3>Viernes</h3>
-<input type="text" id="viernes" placeholder="Ej: 12:00 pm, 4:00 pm">
-</div>
-
-<div class="dia">
-<h3>Sábado</h3>
-<input type="text" id="sabado" placeholder="Ej: 10:00 am, 1:00 pm">
-</div>
-
-<div class="dia">
-<h3>Domingo</h3>
-<input type="text" id="domingo" placeholder="Ej: 4:00 pm, 6:00 pm">
-</div>
+<div class="dia"><h3>Lunes</h3><input type="text" id="lunes" placeholder="Ej: 4/5/6/7"></div>
+<div class="dia"><h3>Martes</h3><input type="text" id="martes" placeholder="Ej: 4/5/6/7"></div>
+<div class="dia"><h3>Miércoles</h3><input type="text" id="miercoles" placeholder="Ej: 4/5/6/7"></div>
+<div class="dia"><h3>Jueves</h3><input type="text" id="jueves" placeholder="Ej: 4/5/6/7"></div>
+<div class="dia"><h3>Viernes</h3><input type="text" id="viernes" placeholder="Ej: 4/5/6/7"></div>
+<div class="dia"><h3>Sábado</h3><input type="text" id="sabado" placeholder="Ej: 11/12/1/3/5"></div>
+<div class="dia"><h3>Domingo</h3><input type="text" id="domingo" placeholder="Ej: 4/5/6/7"></div>
 
 <button onclick="guardar()">Guardar Citas</button>
+
+<h2 style="margin-top:35px;">Clientes registrados</h2>
+<div id="listaClientes"></div>
 
 </div>
 
 <script>
-function guardar(){
-localStorage.setItem("lunes", document.getElementById("lunes").value);
-localStorage.setItem("martes", document.getElementById("martes").value);
-localStorage.setItem("miercoles", document.getElementById("miercoles").value);
-localStorage.setItem("jueves", document.getElementById("jueves").value);
-localStorage.setItem("viernes", document.getElementById("viernes").value);
-localStorage.setItem("sabado", document.getElementById("sabado").value);
-localStorage.setItem("domingo", document.getElementById("domingo").value);
+function guardar() {
+    const dias = ["lunes","martes","miercoles","jueves","viernes","sabado","domingo"];
 
-alert("Citas guardadas correctamente");
+    dias.forEach(dia => {
+        const valor = document.getElementById(dia).value.trim();
+
+        if (valor) {
+            localStorage.setItem(dia, valor);
+        } else {
+            localStorage.removeItem(dia);
+        }
+    });
+
+    alert("Citas guardadas correctamente");
 }
 
-window.addEventListener("load", function () {
-document.getElementById("lunes").value = localStorage.getItem("lunes") || "";
-document.getElementById("martes").value = localStorage.getItem("martes") || "";
-document.getElementById("miercoles").value = localStorage.getItem("miercoles") || "";
-document.getElementById("jueves").value = localStorage.getItem("jueves") || "";
-document.getElementById("viernes").value = localStorage.getItem("viernes") || "";
-document.getElementById("sabado").value = localStorage.getItem("sabado") || "";
-document.getElementById("domingo").value = localStorage.getItem("domingo") || "";
-});
+function cargarHorarios() {
+    const dias = ["lunes","martes","miercoles","jueves","viernes","sabado","domingo"];
+
+    dias.forEach(dia => {
+        const valor = localStorage.getItem(dia);
+        if (valor) {
+            document.getElementById(dia).value = valor;
+        }
+    });
+}
+
+function cargarClientes() {
+    const contenedor = document.getElementById("listaClientes");
+    contenedor.innerHTML = "";
+
+    const cliente = JSON.parse(localStorage.getItem("clientePerfil"));
+
+    if (!cliente) {
+        contenedor.innerHTML = "<p>No hay clientes registrados.</p>";
+        return;
+    }
+
+    contenedor.innerHTML = `
+        <div class="cliente">
+            <p><strong>Nombre:</strong> ${cliente.nombre}</p>
+            <p><strong>WhatsApp:</strong> ${cliente.telefono}</p>
+            <p><strong>Correo:</strong> ${cliente.correo || "No registrado"}</p>
+            <p><strong>Estado:</strong> <span class="estado">${cliente.estado}</span></p>
+
+            <button onclick="aprobarCliente()">Aprobar cliente</button>
+            <button onclick="rechazarCliente()">Rechazar cliente</button>
+        </div>
+    `;
+}
+
+function aprobarCliente() {
+    const cliente = JSON.parse(localStorage.getItem("clientePerfil"));
+
+    if (!cliente) {
+        alert("No hay cliente registrado");
+        return;
+    }
+
+    cliente.estado = "Aprobado";
+    localStorage.setItem("clientePerfil", JSON.stringify(cliente));
+
+    alert("Cliente aprobado");
+    cargarClientes();
+}
+
+function rechazarCliente() {
+    const cliente = JSON.parse(localStorage.getItem("clientePerfil"));
+
+    if (!cliente) {
+        alert("No hay cliente registrado");
+        return;
+    }
+
+    cliente.estado = "Rechazado";
+    localStorage.setItem("clientePerfil", JSON.stringify(cliente));
+
+    alert("Cliente rechazado");
+    cargarClientes();
+}
+
+window.onload = function() {
+    cargarHorarios();
+    cargarClientes();
+};
 </script>
 
 </body>
