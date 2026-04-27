@@ -369,6 +369,83 @@
     font-size: 18px;
     color: white;
 }
+
+.hora-btn {
+    margin: 6px;
+    padding: 10px 14px;
+    border-radius: 12px;
+    border: 1px solid #fff;
+    background: transparent;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+    font-weight: 600;
+}
+
+.hora-btn:hover {
+    background: white;
+    color: black;
+}
+
+.servicios-grid {
+    display: grid;
+    gap: 16px;
+    width: 90%;
+    max-width: 430px;
+    margin: 0 auto;
+}
+
+.servicio-card {
+    background: rgba(0,0,0,0.65);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.22);
+    border-radius: 20px;
+    padding: 18px;
+    cursor: pointer;
+    transition: 0.25s;
+    font-family: 'Playfair Display', serif;
+}
+
+.servicio-card h3 {
+    margin: 0;
+    color: #ffdf70;
+    font-size: 24px;
+}
+
+.servicio-card p {
+    margin: 6px 0 0;
+    font-size: 16px;
+}
+
+.servicio-card:hover,
+.servicio-card.activo {
+    background: white;
+    color: black;
+}
+
+.servicio-card:hover h3,
+.servicio-card.activo h3 {
+    color: black;
+}
+
+.perfil-circulo {
+    position: fixed;
+    top: 18px;
+    right: 18px;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.75);
+    border: 1px solid rgba(255,255,255,0.35);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    font-size: 22px;
+    cursor: pointer;
+}
+
     </style>
 </head>
 <body>
@@ -407,6 +484,10 @@
 
 
 <div class="overlay"></div>
+
+<div class="perfil-circulo" onclick="mostrar('perfil')">
+    <i class="fa-solid fa-user"></i>
+</div>
 
 <!-- INICIO -->
 <div class="contenido" id="inicio">
@@ -458,27 +539,115 @@
 
 <!-- SECCIONES SERVICIOS, PRODUCTOS, BARBEROS -->
 <div class="seccion" id="servicios">
-    <h2 class="titulo">Servicios</h2>
+    <div style="margin-top:15px;">
+<p>¿Para quién es la cita?</p>
 
-    <div style="display:flex; flex-direction:column; align-items:center; gap:20px;">
-        <img src="https://i.ibb.co/d4xGrytY/1.jpg" 
-             alt="Menú 1" 
-             style="width:85%; max-width:420px; border-radius:20px; box-shadow:0 0 12px rgba(0,0,0,0.5);">
+<button class="btn" onclick="seleccionarCliente('Para mí')">Para mí</button>
+<button class="btn" onclick="seleccionarCliente('Hijo')">Hijo</button>
+<button class="btn" onclick="seleccionarCliente('Regalo')">Regalo 🎁</button>
+</div>
 
-        <img src="https://i.ibb.co/1YJ2RFrP/2.jpg" 
-             alt="Menú 2" 
-             style="width:85%; max-width:420px; border-radius:20px; box-shadow:0 0 12px rgba(0,0,0,0.5);">
+   <h2 class="titulo">Servicios</h2>
+
+<div class="servicios-grid">
+
+    <button class="servicio-card" onclick="seleccionarServicio(event, 'Corte', '1 hora', 200)">
+        <h3>Corte</h3>
+        <p>$200 · 1h</p>
+    </button>
+
+    <button class="servicio-card" onclick="seleccionarServicio(event, 'Barba en frío', '1 hora', 200)">
+        <h3>Barba en frío</h3>
+        <p>$200 · 1h</p>
+    </button>
+
+    <button class="servicio-card" onclick="seleccionarServicio(event, 'Tinta en barba', '1 hora', 150)">
+        <h3>Tinta en barba</h3>
+        <p>$150 · 1h</p>
+    </button>
+
+    <button class="servicio-card" onclick="seleccionarServicio(event, 'Barba con ritual de vapor', '1 hora', 250)">
+        <h3>Barba con ritual de vapor</h3>
+        <p>$250 · 1h</p>
+    </button>
+
+    <button class="servicio-card" onclick="seleccionarServicio(event, 'Limpieza de vello facial', '1 hora', 150)">
+        <h3>Limpieza de vello facial</h3>
+        <p>$150 · 1h</p>
+        <small>Cejas, nariz y orejas</small>
+    </button>
+
+    <button class="servicio-card" onclick="seleccionarServicio(event, 'Mascarilla para puntos negros', '1 hora', 150)">
+        <h3>Mascarilla para puntos negros</h3>
+        <p>$150 · 1h</p>
+    </button>
+
+    <button class="servicio-card" onclick="seleccionarServicio(event, 'Exfoliación facial', '1 hora', 150)">
+        <h3>Exfoliación facial</h3>
+        <p>$150 · 1h</p>
+    </button>
+
+    <button class="servicio-card" onclick="seleccionarServicio(event, 'Parche para ojeras', '1 hora', 130)">
+        <h3>Parche para ojeras</h3>
+        <p>$130 · 1h</p>
+    </button>
+
+    <button class="servicio-card" onclick="seleccionarServicio(event, 'Rasurado de cabeza', '1 hora', 250)">
+        <h3>Rasurado de cabeza</h3>
+        <p>$250 · 1h</p>
+    </button>
+
+</div>
+
+<h2 class="titulo" style="font-size:30px; margin-top:35px;">Paquetes</h2>
+
+<div class="servicios-grid">
+
+    <button class="servicio-card paquete" onclick="seleccionarServicio(event, 'Emperador', '1 hora 30 min', 390)">
+        <h3>Emperador</h3>
+        <p>$390 · 1h 30min</p>
+        <small>Corte, parches para ojeras, exfoliación y masaje capilar</small>
+    </button>
+
+    <button class="servicio-card paquete" onclick="seleccionarServicio(event, 'Espartano', '1 hora 30 min', 390)">
+        <h3>Espartano</h3>
+        <p>$390 · 1h 30min</p>
+        <small>Arreglo de barba, ritual de vapor, parches para ojeras, exfoliación y masaje antiestrés</small>
+    </button>
+
+    <button class="servicio-card paquete" onclick="seleccionarServicio(event, 'Ejecutivo', '1 hora 30 min', 530)">
+        <h3>Ejecutivo</h3>
+        <p>$530 · 1h 30min</p>
+        <small>Corte, barba con vapor, parches, mascarilla/tinta y masaje capilar</small>
+    </button>
+
+    <button class="servicio-card paquete" onclick="seleccionarServicio(event, 'Imperial', '1 hora 30 min', 680)">
+        <h3>Imperial</h3>
+        <p>$680 · 1h 30min</p>
+        <small>Corte, barba con vapor, parches, mascarilla/tinta, masaje capilar y limpieza de vello facial</small>
+    </button>
+
+    <button class="servicio-card paquete" onclick="seleccionarServicio(event, 'Renovación Facial', '1 hora 30 min', 400)">
+        <h3>Renovación Facial</h3>
+        <p>$400 · 1h 30min</p>
+        <small>Ritual de vapor, mascarilla para puntos negros, exfoliación facial, parches para ojeras y ligero masaje</small>
+    </button>
+
+    <button class="servicio-card paquete" onclick="seleccionarServicio(event, 'Baby Face', '1 hora 30 min', 500)">
+        <h3>Baby Face</h3>
+        <p>$500 · 1h 30min</p>
+        <small>Ritual de vapor, mascarilla para puntos negros, exfoliación facial, parches para ojeras, limpieza de vello facial y ligero masaje</small>
+    </button>
+
+</div>
+
+<p id="servicio-seleccionado" style="margin-top:18px; font-size:18px;"></p>
+
+<a class="btn" onclick="mostrar('horarios')" style="margin-top:30px;">
+    <i class="fa-regular fa-clock icono-barberia"></i> Elegir horario
+</a>
+
    
-          <img src="https://i.ibb.co/0jyf64D1/3.jpg" 
-             alt="Menú 3" 
-             style="width:85%; max-width:420px; border-radius:20px; box-shadow:0 0 12px rgba(0,0,0,0.5);">
-
-            </div>
-
-    <a class="btn" href="https://wa.me/+523314345505" target="_blank" style="margin-top:30px;">
-        <i class="fa-brands fa-whatsapp icono-barberia"></i> Agendar Cita
-    </a>
-
     <a class="btn-regresar" onclick="regresar()">
         <i class="fa-solid fa-razor"></i> Regresar
     </a>
@@ -487,6 +656,10 @@
 <!-- CITAS DISPONIBLES -->
 <div class="seccion" id="horarios">
 <h2 class="titulo">Citas disponibles</h2>
+
+<p style="font-size:16px; margin-bottom:20px;">
+Selecciona una hora disponible para confirmar tu cita esta semana.
+</p>
 
 <div class="horario-card">
 <h3 id="titulo-lunes">Lunes</h3>
@@ -523,17 +696,41 @@
 <p id="domingo">Sin citas disponibles</p>
 </div>
 
- <a class="btn" href="https://wa.me/523314345505?text=Hola,%20quiero%20agendar%20una%20cita%20en%20*El%20Callej%C3%B3n%20del%20Barbero*."
-    target="_blank" style="margin-top:30px;">
-        <i class="fa-brands fa-whatsapp icono-barberia"></i> Agendar cita
-    </a>
+<h2 class="titulo" style="font-size:28px; margin-top:30px;">Agendar para otra fecha</h2>
+
+<p style="font-size:16px; margin-bottom:20px;">
+Solicita una cita para días posteriores. Quedará pendiente de confirmación.
+</p>
+
+<button class="btn" onclick="agendarDespues()">
+    <i class="fa-brands fa-whatsapp icono-barberia"></i> Agendar para después
+</button>
 
 <a class="btn-regresar" onclick="regresar()">
 <i class="fa-solid fa-razor"></i> Regresar
 </a>
 
 </div>
-  
+
+<div class="seccion" id="perfil">
+    <h2 class="titulo">Mi cuenta</h2>
+
+    <div class="horario-card">
+        <h3>Crear perfil</h3>
+
+        <input id="nombreCliente" placeholder="Nombre completo" style="width:90%; padding:12px; margin:8px; border-radius:12px; border:none;">
+        <input id="telefonoCliente" placeholder="WhatsApp" style="width:90%; padding:12px; margin:8px; border-radius:12px; border:none;">
+        <input id="correoCliente" placeholder="Correo" style="width:90%; padding:12px; margin:8px; border-radius:12px; border:none;">
+
+        <button class="btn" onclick="crearCuentaDemo()">Crear cuenta</button>
+
+        <p id="estadoCuenta" style="margin-top:15px;"></p>
+    </div>
+
+    <a class="btn-regresar" onclick="regresar()">
+        <i class="fa-solid fa-razor"></i> Regresar
+    </a>
+</div>
 
 <!-- PRODUCTOS -->
 <div class="seccion" id="productos">
@@ -671,32 +868,6 @@ window.addEventListener("load", function () {
     }, 1200); // 1.2 segundos después de entrar
 });
 
-function cargarCitas(){
-
-document.getElementById("lunes").innerText =
-localStorage.getItem("lunes") || "Sin citas disponibles";
-
-document.getElementById("martes").innerText =
-localStorage.getItem("martes") || "Sin citas disponibles";
-
-document.getElementById("miercoles").innerText =
-localStorage.getItem("miercoles") || "Sin citas disponibles";
-
-document.getElementById("jueves").innerText =
-localStorage.getItem("jueves") || "Sin citas disponibles";
-
-document.getElementById("viernes").innerText =
-localStorage.getItem("viernes") || "Sin citas disponibles";
-
-document.getElementById("sabado").innerText =
-localStorage.getItem("sabado") || "Sin citas disponibles";
-
-document.getElementById("domingo").innerText =
-localStorage.getItem("domingo") || "Sin citas disponibles";
-
-}
-
-
 function ponerFechas(){
 
 const dias = [
@@ -754,35 +925,208 @@ titulo.innerText = texto;
 
 }
 
+function generarBotones(dia, texto) {
+
+    const contenedor = document.getElementById(dia);
+
+    if (!texto || texto === "Sin citas disponibles") {
+        contenedor.innerHTML = "Sin citas disponibles";
+        return;
+    }
+
+    const horas = texto.split("/");
+    contenedor.innerHTML = "";
+
+    horas.forEach(hora => {
+
+        const btn = document.createElement("button");
+        btn.innerText = hora + ":00";
+        btn.classList.add("hora-btn");
+
+        btn.onclick = () => {
+
+            if (carritoServicios.length === 0) {
+                alert("Selecciona al menos un servicio");
+                mostrar("servicios");
+                return;
+            }
+
+            const numero = "523314345505";
+
+            const total = carritoServicios.reduce((suma, item) => suma + item.precio, 0);
+
+            const serviciosTexto = carritoServicios
+                .map(item => `- ${item.servicio} · ${item.duracion} · $${item.precio}`)
+                .join("\n");
+
+            const mensaje = `Hola, quiero agendar una cita en El Callejón del Barbero.
+
+Servicios:
+${serviciosTexto}
+
+Total: $${total}
+Día: ${dia}
+Hora: ${hora}:00
+
+Nombre:
+`;
+
+            const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
+            window.open(url, "_blank");
+        };
+
+        contenedor.appendChild(btn);
+    });
+}
+
+let carritoServicios = [];
+let clienteSeleccionado = "Para mí";
+let esRegalo = false;
+let mensajeEspecial = "";
+
+function seleccionarServicio(event, servicio, duracion, precio) {
+
+    const existe = carritoServicios.find(item => item.servicio === servicio);
+
+    if (existe) {
+        carritoServicios = carritoServicios.filter(item => item.servicio !== servicio);
+        event.currentTarget.classList.remove("activo");
+    } else {
+        carritoServicios.push({
+            servicio: servicio,
+            duracion: duracion,
+            precio: precio
+        });
+        event.currentTarget.classList.add("activo");
+    }
+
+    actualizarCarrito();
+}
+
+function actualizarCarrito() {
+
+    const resumen = document.getElementById("servicio-seleccionado");
+
+    if (carritoServicios.length === 0) {
+        resumen.innerText = "";
+        return;
+    }
+
+    let total = carritoServicios.reduce((suma, item) => suma + item.precio, 0);
+
+    resumen.innerHTML = `
+        <strong>Seleccionado:</strong><br>
+        ${carritoServicios.map(item => `• ${item.servicio} - $${item.precio}`).join("<br>")}
+        <br><br>
+        <strong>Total: $${total}</strong>
+    `;
+}
+function seleccionarCliente(tipo){
+
+    clienteSeleccionado = tipo;
+
+    if(tipo === "Regalo"){
+        esRegalo = true;
+
+        const mensaje = prompt("Escribe un mensaje especial (opcional):");
+
+        if(mensaje){
+            mensajeEspecial = mensaje;
+        } else {
+            mensajeEspecial = "";
+        }
+
+    } else {
+        esRegalo = false;
+        mensajeEspecial = "";
+    }
+
+    alert("Cita para: " + tipo);
+}
+function cargarCitas(){
+    generarBotones("lunes", localStorage.getItem("lunes"));
+    generarBotones("martes", localStorage.getItem("martes"));
+    generarBotones("miercoles", localStorage.getItem("miercoles"));
+    generarBotones("jueves", localStorage.getItem("jueves"));
+    generarBotones("viernes", localStorage.getItem("viernes"));
+    generarBotones("sabado", localStorage.getItem("sabado"));
+    generarBotones("domingo", localStorage.getItem("domingo"));
+}
 
 window.addEventListener("load", function(){
-cargarCitas();
-ponerFechas();
+    cargarCitas();
+    ponerFechas();
 });
 
+function agendarDespues(){
 
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-analytics.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
+    if (carritoServicios.length === 0) {
+        alert("Selecciona al menos un servicio");
+        mostrar("servicios");
+        return;
+    }
 
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyCaLuLg_Tp-0bgzpB1DiPR7VmIrmLLFFSM",
-    authDomain: "elcallejondelbarbero-54.firebaseapp.com",
-    projectId: "elcallejondelbarbero-54",
-    storageBucket: "elcallejondelbarbero-54.firebasestorage.app",
-    messagingSenderId: "1002549966536",
-    appId: "1:1002549966536:web:dd2120c83dcc2377a257fd",
-    measurementId: "G-CLHLYYXJ31"
-  };
+    const numero = "523314345505";
 
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
+    const total = carritoServicios.reduce((suma, item) => suma + item.precio, 0);
 
+    const serviciosTexto = carritoServicios
+        .map(item => `- ${item.servicio} · ${item.duracion} · $${item.precio}`)
+        .join("\n");
+
+   const mensaje = `Hola, quiero agendar una cita en El Callejón del Barbero.
+
+Cita para: ${clienteSeleccionado}
+
+Nombre de la persona:
+Quién agenda:
+
+Servicios:
+${serviciosTexto}
+
+Total: $${total}
+Día: ${dia}
+Hora: ${hora}:00
+
+${esRegalo ? `Mensaje especial: ${mensajeEspecial}` : ""}
+
+Servicios:
+${serviciosTexto}
+
+Total aproximado: $${total}
+
+Fecha que quiero:
+Hora aproximada:
+Nombre:
+
+Entiendo que esta cita queda pendiente de confirmación.`;
+
+    const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
+    window.open(url, "_blank");
+}
+
+function crearCuentaDemo() {
+    const nombre = document.getElementById("nombreCliente").value;
+    const telefono = document.getElementById("telefonoCliente").value;
+    const correo = document.getElementById("correoCliente").value;
+
+    if (!nombre || !telefono) {
+        alert("Agrega nombre y WhatsApp");
+        return;
+    }
+
+    const cliente = {
+        nombre,
+        telefono,
+        correo,
+        estado: "Pendiente de aprobación"
+    };
+
+    localStorage.setItem("clientePerfil", JSON.stringify(cliente));
+
+    document.getElementById("estadoCuenta").innerText =
+        "Perfil creado. Queda pendiente de aprobación por el dueño.";
+}
 </script>
 
 </body>
