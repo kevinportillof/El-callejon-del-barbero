@@ -21,7 +21,7 @@
             font-family: 'Playfair Display', serif;
 
             /* FONDO AJUSTADO */
-            background-image: url('https://i.ibb.co/cKjcgGnL/Whats-App-Image-2025-12-05-at-12-53-23-AM.jpg');
+            background-image: url('https://i.ibb.co/dSp2ry3/fondobm.png');
             background-size: cover;
             background-position: center top;
             background-repeat: no-repeat;
@@ -99,26 +99,41 @@
 
         /* BOTONES PROFESIONALES */
         .btn {
-            display: block;
-            width: 80%;
-            max-width: 300px;
-            margin: 14px auto;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            color: white;
-            font-size: 19px;
-            font-weight: 700;
-            border-radius: 16px;
-            text-decoration: none;
-            transition: 0.25s;
-            box-shadow: 0 5px 18px rgba(0,0,0,0.4);
+         display: block;
+         width: 82%;
+         max-width: 320px;
+         margin: 14px auto;
+         padding: 16px;
+
+         background: linear-gradient(145deg, #1c1c1f, #2f3e46);
+         border: 1px solid rgba(255,255,255,0.12);
+
+         color: #f5f5f5;
+         font-size: 18px;
+         font-weight: 700;
+
+         border-radius: 18px;
+         text-decoration: none;
+
+         box-shadow:
+         0 6px 20px rgba(0,0,0,0.6),
+         inset 0 1px 0 rgba(255,255,255,0.05);
+
+         transition: all 0.25s ease;
         }
 
         .btn:hover {
-            background: rgba(255, 255, 255, 0.28);
-            transform: scale(1.04);
+          background: linear-gradient(145deg, #2f3e46, #3a4f57);
+         transform: translateY(-3px) scale(1.02);
+
+         box-shadow:
+         0 10px 25px rgba(0,0,0,0.8),
+         0 0 12px rgba(141,153,174,0.3);
+        }
+
+        .btn:active {
+         transform: scale(0.96);
+         box-shadow: inset 0 3px 10px rgba(0,0,0,0.8);
         }
 
         /* BOTÓN REGRESAR PROFESIONAL */
@@ -165,8 +180,8 @@
 
         /* ICONOS */
         .icono-barberia {
-            color: #ffdf70;
-            text-shadow: 0 0 12px #ffdf70;
+            color: #8d99ae;
+            text-shadow: 0 0 12px #8d99ae;
             margin-right: 6px;
         }
 
@@ -198,7 +213,7 @@
         .tikTok { background: #000; }
         .facebook { background: #1877f2; }
         .instagram { 
-            background: linear-gradient(45deg, #feda75, #fa7e1e, #d62976, #962fbf, #4f5bd5);
+            background: linear-gradient(45deg, #8d99ae, #fa7e1e, #d62976, #962fbf, #4f5bd5);
         }
              .maps {
        background: #34a853; /* verde Google Maps */
@@ -261,7 +276,7 @@
 .modal-contenido h3 {
     font-size: 28px;
     margin-bottom: 12px;
-    color: #ffdf70;
+    color: #8d99ae;
 }
 
 .modal-contenido p {
@@ -317,7 +332,7 @@
     padding: 10px 16px;
     border-radius: 30px;
     border: none;
-    background:#ffdf70;
+    background:#8d99ae;
     color: #000;
     font-weight: 800;
     cursor: pointer;
@@ -326,7 +341,7 @@
 }
 
 .barbero-card.vacante {
-    border: 2px dashed #ffdf70;
+    border: 2px dashed #8d99ae;
 }
 
 /* BOTÓN ENTENDIDO ESTILO "SE BUSCA BARBERO" */
@@ -360,7 +375,7 @@
 
 .horario-card h3{
     margin: 0 0 8px 0;
-    color: #ffdf70;
+    color: #8d99ae;
     font-size: 24px;
 }
 
@@ -374,17 +389,20 @@
     margin: 6px;
     padding: 10px 14px;
     border-radius: 12px;
-    border: 1px solid #fff;
-    background: transparent;
-    color: white;
+
+    border: 1px solid rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.05);
+
+    color: #f5f5f5;
     cursor: pointer;
-    transition: 0.3s;
+    transition: 0.25s;
     font-weight: 600;
 }
 
 .hora-btn:hover {
-    background: white;
-    color: black;
+    background: #f5f5f5;
+    color: #111;
+    transform: scale(1.08);
 }
 
 .servicios-grid {
@@ -408,7 +426,7 @@
 
 .servicio-card h3 {
     margin: 0;
-    color: #ffdf70;
+    color: #8d99ae;
     font-size: 24px;
 }
 
@@ -417,10 +435,29 @@
     font-size: 16px;
 }
 
-.servicio-card:hover,
+.servicio-card {
+    background: linear-gradient(145deg, #111, #1c1c1f);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 20px;
+    padding: 18px;
+
+    box-shadow:
+        0 5px 15px rgba(0,0,0,0.6),
+        inset 0 1px 0 rgba(255,255,255,0.05);
+
+    transition: all 0.25s ease;
+}
+
+.servicio-card:hover {
+    transform: translateY(-4px);
+    box-shadow:
+        0 10px 25px rgba(0,0,0,0.8),
+        0 0 10px rgba(141,153,174,0.25);
+}
+
 .servicio-card.activo {
-    background: white;
-    color: black;
+    background: #f5f5f5;
+    color: #111;
 }
 
 .servicio-card:hover h3,
