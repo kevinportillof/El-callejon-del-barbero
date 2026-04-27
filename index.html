@@ -16,6 +16,7 @@
 
     <style>
       
+      
         body {
             margin: 0;
             font-family: 'Playfair Display', serif;
@@ -414,38 +415,84 @@
 }
 
 .servicio-card {
-    background: rgba(0,0,0,0.65);
+    position: relative;
+    overflow: hidden;
+    text-align: left;
+
+    background: linear-gradient(145deg, rgba(10,10,12,0.95), rgba(35,43,50,0.88));
     color: white;
-    border: 1px solid rgba(255,255,255,0.22);
-    border-radius: 20px;
-    padding: 18px;
+
+    border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 26px;
+
+    padding: 22px 24px;
+    min-height: 110px;
+
     cursor: pointer;
-    transition: 0.25s;
-    font-family: 'Playfair Display', serif;
+
+    box-shadow:
+        0 12px 28px rgba(0,0,0,0.75),
+        inset 0 1px 0 rgba(255,255,255,0.08);
+
+    transition: all 0.28s ease;
+}
+
+.servicio-card::after {
+    content: "✦";
+    position: absolute;
+    top: 18px;
+    right: 22px;
+    color: rgba(255,255,255,0.25);
+    font-size: 20px;
 }
 
 .servicio-card h3 {
     margin: 0;
-    color: #8d99ae;
-    font-size: 24px;
+    font-size: 26px;
+    color: #c7d0df;
 }
 
 .servicio-card p {
-    margin: 6px 0 0;
-    font-size: 16px;
+    display: inline-block;
+    margin-top: 10px;
+    padding: 6px 12px;
+
+    background: rgba(255,255,255,0.08);
+    border-radius: 20px;
+
+    font-size: 15px;
+    font-weight: 700;
 }
 
-.servicio-card {
-    background: linear-gradient(145deg, #111, #1c1c1f);
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 20px;
-    padding: 18px;
+.servicio-card small {
+    display: block;
+    margin-top: 8px;
+    font-size: 13px;
+    color: #b8c0cc;
+}
 
+.servicio-card:hover {
+    transform: translateY(-5px);
     box-shadow:
-        0 5px 15px rgba(0,0,0,0.6),
-        inset 0 1px 0 rgba(255,255,255,0.05);
+        0 18px 35px rgba(0,0,0,0.9),
+        0 0 15px rgba(141,153,174,0.2);
+}
 
-    transition: all 0.25s ease;
+.servicio-card.activo {
+    background: #f5f5f5;
+    color: #111;
+}
+
+.servicio-card.activo h3,
+.servicio-card.activo p,
+.servicio-card.activo small {
+    color: #111;
+}
+
+.servicio-card.activo::after {
+    content: "✓";
+    color: #111;
+    font-weight: bold;
 }
 
 .servicio-card:hover {
@@ -576,17 +623,15 @@
 
 <!-- SECCIONES SERVICIOS, PRODUCTOS, BARBEROS -->
 <div class="seccion" id="servicios">
-    <div style="margin-top:15px;">
-<p>¿Para quién es la cita?</p>
-
-<button class="btn" onclick="seleccionarCliente('Para mí')">Para mí</button>
-<button class="btn" onclick="seleccionarCliente('Hijo')">Hijo</button>
-<button class="btn" onclick="seleccionarCliente('Regalo')">Regalo 🎁</button>
-</div>
 
    <h2 class="titulo">Servicios</h2>
 
+   <p style="color:#c7d0df; margin-bottom:25px;">
+Selecciona uno o varios servicios antes de elegir tu horario.
+</p>
+
 <div class="servicios-grid">
+
 
     <button class="servicio-card" onclick="seleccionarServicio(event, 'Corte', '1 hora', 200)">
         <h3>Corte</h3>
@@ -680,10 +725,19 @@
 
 <p id="servicio-seleccionado" style="margin-top:18px; font-size:18px;"></p>
 
-<a class="btn" onclick="mostrar('horarios')" style="margin-top:30px;">
-    <i class="fa-regular fa-clock icono-barberia"></i> Elegir horario
-</a>
+<div id="acciones-agenda" style="display:none; margin-top:25px;">
 
+    <p style="color:#c7d0df; margin-top:20px;">
+     Elige cómo quieres agendar tu cita
+    </p>
+
+   <button class="btn" onclick="mostrar('horarios')">
+    <i class="fa-regular fa-clock icono-barberia"></i> Agendar cita disponible
+   </button>
+
+    <button class="btn" onclick="agendarDespues()">
+        <i class="fa-brands fa-whatsapp icono-barberia"></i> Agendar para después
+    </button>
    
     <a class="btn-regresar" onclick="regresar()">
         <i class="fa-solid fa-razor"></i> Regresar
@@ -1043,9 +1097,11 @@ function seleccionarServicio(event, servicio, duracion, precio) {
 function actualizarCarrito() {
 
     const resumen = document.getElementById("servicio-seleccionado");
+    const acciones = document.getElementById("acciones-agenda");
 
     if (carritoServicios.length === 0) {
         resumen.innerText = "";
+        acciones.style.display = "none";
         return;
     }
 
@@ -1057,7 +1113,10 @@ function actualizarCarrito() {
         <br><br>
         <strong>Total: $${total}</strong>
     `;
+
+    acciones.style.display = "block";
 }
+
 function seleccionarCliente(tipo){
 
     clienteSeleccionado = tipo;
@@ -1111,7 +1170,7 @@ function agendarDespues(){
         .map(item => `- ${item.servicio} · ${item.duracion} · $${item.precio}`)
         .join("\n");
 
-   const mensaje = `Hola, quiero agendar una cita en El Callejón del Barbero.
+    const mensaje = `Hola, quiero solicitar una cita para otra fecha en El Callejón del Barbero.
 
 Cita para: ${clienteSeleccionado}
 
@@ -1121,20 +1180,12 @@ Quién agenda:
 Servicios:
 ${serviciosTexto}
 
-Total: $${total}
-Día: ${dia}
-Hora: ${hora}:00
-
-${esRegalo ? `Mensaje especial: ${mensajeEspecial}` : ""}
-
-Servicios:
-${serviciosTexto}
-
 Total aproximado: $${total}
 
 Fecha que quiero:
 Hora aproximada:
-Nombre:
+
+${esRegalo ? `Mensaje especial: ${mensajeEspecial}` : ""}
 
 Entiendo que esta cita queda pendiente de confirmación.`;
 
