@@ -164,6 +164,18 @@
             transition: all 0.25s ease;
         }
 
+        #servicios .btn-regresar {
+    position: fixed;
+    bottom: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+}
+
+#servicios .btn-regresar:hover {
+    transform: translateX(-50%) scale(1.08);
+}
+
         @keyframes barberGlow {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
@@ -172,11 +184,6 @@
 
         .btn-regresar i {
             font-size: 18px;
-        }
-
-        .btn-regresar:hover {
-            transform: scale(1.12);
-            filter: brightness(1.23);
         }
 
         /* ICONOS */
@@ -495,23 +502,6 @@
     font-weight: bold;
 }
 
-.servicio-card:hover {
-    transform: translateY(-4px);
-    box-shadow:
-        0 10px 25px rgba(0,0,0,0.8),
-        0 0 10px rgba(141,153,174,0.25);
-}
-
-.servicio-card.activo {
-    background: #f5f5f5;
-    color: #111;
-}
-
-.servicio-card:hover h3,
-.servicio-card.activo h3 {
-    color: black;
-}
-
 .perfil-circulo {
     position: fixed;
     top: 18px;
@@ -544,24 +534,22 @@
             <strong>Mándanos tus trabajos</strong><br>
             y conoce más información.
         </p>
-
-        <a href="https://wa.me/523314345505?text=Hola,%20vi%20el%20anuncio%20de%20*Se%20busca%20barbero*%20en%20El%20Callej%C3%B3n%20del%20Barbero%20y%20me%20gustar%C3%ADa%20recibir%20m%C3%A1s%20informaci%C3%B3n.%20Gracias."
+            
+<a href="https://wa.me/523314345505?text=Hola,%20vi%20el%20anuncio%20de%20*Se%20busca%20barbero*%20en%20El%20Callej%C3%B3n%20del%20Barbero%20y%20me%20gustar%C3%ADa%20recibir%20m%C3%A1s%20informaci%C3%B3n.%20Gracias."
    target="_blank"
    style="
         display:block;
         margin-bottom:14px;
         padding:12px;
         border-radius:40px;
-        background:#ffdf70;
-        color:#000;
+        background:#8d99ae;
+        color:white;
         font-weight:800;
         text-decoration:none;
         text-align:center;
    ">
     Pedir información
 </a>
-
-
        <button class="btn-entendido" onclick="cerrarBarbero()">Entendido</button>
     </div>
 </div>
@@ -735,14 +723,17 @@ Selecciona uno o varios servicios antes de elegir tu horario.
     <i class="fa-regular fa-clock icono-barberia"></i> Agendar cita disponible
    </button>
 
-    <button class="btn" onclick="agendarDespues()">
-        <i class="fa-brands fa-whatsapp icono-barberia"></i> Agendar para después
-    </button>
+    <button class="btn" onclick="mostrar('agendarDespuesSeccion')">
+    <i class="fa-solid fa-calendar-days icono-barberia"></i> Agendar para después
+</button>
    
-    <a class="btn-regresar" onclick="regresar()">
-        <i class="fa-solid fa-razor"></i> Regresar
-    </a>
-</div>
+</div> <!-- acciones-agenda -->
+
+<a class="btn-regresar" onclick="regresar()">
+    <i class="fa-solid fa-razor"></i> Regresar
+</a>
+
+</div> 
 
 <!-- CITAS DISPONIBLES -->
 <div class="seccion" id="horarios">
@@ -793,8 +784,8 @@ Selecciona una hora disponible para confirmar tu cita esta semana.
 Solicita una cita para días posteriores. Quedará pendiente de confirmación.
 </p>
 
-<button class="btn" onclick="agendarDespues()">
-    <i class="fa-brands fa-whatsapp icono-barberia"></i> Agendar para después
+<button class="btn" onclick="mostrar('agendarDespuesSeccion')">
+    <i class="fa-solid fa-calendar-days icono-barberia"></i> Agendar para después
 </button>
 
 <a class="btn-regresar" onclick="regresar()">
@@ -823,6 +814,30 @@ Solicita una cita para días posteriores. Quedará pendiente de confirmación.
     </a>
 </div>
 
+<div class="seccion" id="agendarDespuesSeccion">
+    <h2 class="titulo">Agendar para después</h2>
+
+    <div class="horario-card">
+        <p>Selecciona la fecha y hora que te gustaría apartar.</p>
+
+        <label>Fecha</label>
+        <input type="date" id="fechaDespues"
+        style="width:90%; padding:12px; margin:10px; border-radius:12px; border:none;">
+
+        <label>Hora</label>
+        <input type="time" id="horaDespues"
+        style="width:90%; padding:12px; margin:10px; border-radius:12px; border:none;">
+
+        <button class="btn" onclick="agendarDespues()">
+            <i class="fa-brands fa-whatsapp icono-barberia"></i> Enviar solicitud
+        </button>
+    </div>
+
+    <a class="btn-regresar" onclick="regresar()">
+        <i class="fa-solid fa-razor"></i> Regresar
+    </a>
+</div>
+
 <!-- PRODUCTOS -->
 <div class="seccion" id="productos">
     <h2 class="titulo">Productos</h2>
@@ -832,14 +847,14 @@ Solicita una cita para días posteriores. Quedará pendiente de confirmación.
         <div style="width:90%; max-width:420px; background:rgba(0,0,0,0.6); padding:20px; border-radius:22px;">
             <img src="https://i.ibb.co/JFbFkBtF/Chat-GPT-Image-11-ene-2026-10-51-50-p-m.png" style="width:100%; border-radius:18px;">
             <div style="font-size:28px; font-weight:900;">Minoxidil</div>
-            <div style="font-size:24px; font-weight:800; color:#ffdf70;">$300 MXN</div>
+            <div style="font-size:24px; font-weight:800; color:#8d99ae">$300 MXN</div>
             <p>Shampoo profesional formulado con minoxidil y biotina, ideal para fortalecer el cabello y estimular su crecimiento desde la raíz. Su fórmula ayuda a reducir la caída, mejorar la densidad y mantener el cuero cabelludo limpio y saludable.Shampoo profesional formulado con minoxidil y biotina, ideal para fortalecer el cabello y estimular su crecimiento desde la raíz. Su fórmula ayuda a reducir la caída, mejorar la densidad y mantener el cuero cabelludo limpio y saludable.</p>
         </div>
 
          <div style="width:90%; max-width:420px; background:rgba(0,0,0,0.6); padding:20px; border-radius:22px;">
             <img src="https://i.ibb.co/CpSRHKwd/Chat-GPT-Image-28-dic-2025-10-15-18-p-m.png" style="width:100%; border-radius:18px;">
             <div style="font-size:28px; font-weight:900;">Minoxidil</div>
-            <div style="font-size:24px; font-weight:800; color:#ffdf70;">$200 MXN</div>
+            <div style="font-size:24px; font-weight:800; color:#8d99ae">$200 MXN</div>
             <p>En El Callejón del Barbero tenemos Minoxidil para barba y cabello.
 Más densidad, mejor forma y resultados con constancia.
 Pregunta por él en tu cita.</p>
@@ -849,7 +864,7 @@ Pregunta por él en tu cita.</p>
         <div style="width:90%; max-width:420px; background:rgba(0,0,0,0.6); padding:20px; border-radius:22px;">
             <img src="https://i.ibb.co/BVJDH93x/Chat-GPT-Image-28-dic-2025-10-11-13-p-m.png" style="width:100%; border-radius:18px;">
             <div style="font-size:28px; font-weight:900;">Cera Spider</div>
-            <div style="font-size:24px; font-weight:800; color:#ffdf70;">$190 MXN</div>
+            <div style="font-size:24px; font-weight:800; color:#8d99ae">$190 MXN</div>
             <p>En El Callejón del Barbero la usamos y también la vendemos.
 Cera Spider con fijación flexible y estilo limpio sin dejar duro el cabello.
 Llévatela el día de tu corte.</p>
@@ -858,7 +873,7 @@ Llévatela el día de tu corte.</p>
          <div style="width:90%; max-width:420px; background:rgba(0,0,0,0.6); padding:20px; border-radius:22px;">
             <img src="https://i.ibb.co/b54nx60B/Chat-GPT-Image-28-dic-2025-01-42-19-p-m.png" style="width:100%; border-radius:18px;">
             <div style="font-size:28px; font-weight:900;">Cera Gel</div>
-            <div style="font-size:24px; font-weight:800; color:#ffdf70;">$190 MXN</div>
+            <div style="font-size:24px; font-weight:800; color:#8d99ae">$190 MXN</div>
             <p>
 Fijación firme con acabado limpio y controlado. Ideal para definir peinados estructurados sin dejar residuos ni sensación pegajosa. Aporta brillo moderado, controla el frizz y mantiene el estilo por más tiempo, incluso en jornadas largas. Textura fácil de aplicar y remover, pensada para un resultado pulido y duradero.
 
@@ -868,7 +883,7 @@ Disponible en barbería. Pregunta por él.</p>
           <div style="width:90%; max-width:420px; background:rgba(0,0,0,0.6); padding:20px; border-radius:22px;">
             <img src="https://i.ibb.co/Df5j4Q7p/Chat-GPT-Image-28-dic-2025-10-06-44-p-m.png" style="width:100%; border-radius:18px;">
             <div style="font-size:28px; font-weight:900;">Cera Matte</div>
-            <div style="font-size:24px; font-weight:800; color:#ffdf70;">$190 MXN</div>
+            <div style="font-size:24px; font-weight:800; color:#8d99ae">$190 MXN</div>
             <p>En El Callejón del Barbero usamos Cera Matte de nivel profesional.
 Control preciso, fijación firme y acabado totalmente mate para un look definido y elegante.
 Pregunta por ella en barbería.</p>
@@ -877,7 +892,7 @@ Pregunta por ella en barbería.</p>
         <div style="width:90%; max-width:420px; background:rgba(0,0,0,0.6); padding:20px; border-radius:22px;">
             <img src="https://i.ibb.co/99DS7MJ8/Chat-GPT-Image-28-dic-2025-10-13-48-p-m.png" style="width:100%; border-radius:18px;">
             <div style="font-size:28px; font-weight:900;">Gel Fijador de Linaza</div>
-            <div style="font-size:24px; font-weight:800; color:#ffdf70;">$160 MXN</div>
+            <div style="font-size:24px; font-weight:800; color:#8d99ae">$160 MXN</div>
             <p>En El Callejón del Barbero utilizamos Gel Fijador de Linaza de calidad profesional.
 Ofrece fijación natural, control uniforme y un acabado limpio, sin rigidez ni residuos.
 
@@ -887,7 +902,7 @@ Pregunta por ella.</p>
         <div style="width:90%; max-width:420px; background:rgba(0,0,0,0.6); padding:20px; border-radius:22px;">
             <img src="https://i.ibb.co/kswdQx9S/28-dic-2025-07-11-22-p-m.png" style="width:100%; border-radius:18px;">
             <div style="font-size:28px; font-weight:900;">Gel Fijador Extra Firme</div>
-            <div style="font-size:24px; font-weight:800; color:#ffdf70;">$120 MXN</div>
+            <div style="font-size:24px; font-weight:800; color:#8d99ae">$120 MXN</div>
             <p>En El Callejón del Barbero trabajamos con Gel Fijador Extra Firme de calidad profesional.
 Máxima fijación, control duradero y acabado limpio para estilos que no se mueven.
 Disponible en barbería.</p>
@@ -1162,6 +1177,14 @@ function agendarDespues(){
         return;
     }
 
+    const fecha = document.getElementById("fechaDespues").value;
+    const hora = document.getElementById("horaDespues").value;
+
+    if (!fecha || !hora) {
+        alert("Selecciona fecha y hora");
+        return;
+    }
+
     const numero = "523314345505";
 
     const total = carritoServicios.reduce((suma, item) => suma + item.precio, 0);
@@ -1182,8 +1205,8 @@ ${serviciosTexto}
 
 Total aproximado: $${total}
 
-Fecha que quiero:
-Hora aproximada:
+Fecha que quiero: ${fecha}
+Hora aproximada: ${hora}
 
 ${esRegalo ? `Mensaje especial: ${mensajeEspecial}` : ""}
 
