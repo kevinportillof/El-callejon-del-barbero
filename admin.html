@@ -609,9 +609,11 @@ window.renderClientes = function(){
     Avisar denegación
   </button>
 
-  <button class="btn-blue" onclick="mandarMensajeCumple('${cliente.id}')">
-    Cumpleaños
-  </button>
+  <button class="${esCumpleHoy(cliente.fechaNacimiento) ? 'btn-primary' : 'btn-secondary'}"
+onclick="mandarMensajeCumple('${cliente.id}')"
+${esCumpleHoy(cliente.fechaNacimiento) ? '' : 'disabled'}>
+${esCumpleHoy(cliente.fechaNacimiento) ? 'Felicitar' : 'Cumple no activo'}
+</button>
   ` : ""}
 
 </div>
@@ -727,6 +729,17 @@ window.ponerPendiente = function(id){
     return;
   }
 
+const citaRepetida = citas.some(c =>
+  c.fecha === cita.fecha &&
+  c.hora === cita.hora &&
+  c.estado !== "Cancelada"
+);
+
+if(citaRepetida){
+  alert("Ese horario ya está ocupado");
+  return;
+}
+    
   await addDoc(collection(db, "citas"), cita);
 
   mostrarToast("Cita agregada");
@@ -742,6 +755,10 @@ window.cargarCitas = async function(){
   querySnapshot.forEach(doc => {
     citas.push({ id: doc.id, ...doc.data() });
   });
+
+  citas.sort((a,b) => {
+  return `${a.fecha} ${a.hora}`.localeCompare(`${b.fecha} ${b.hora}`);
+});
 
   contenedor.innerHTML = citas.map(cita => `
     <div class="client">
