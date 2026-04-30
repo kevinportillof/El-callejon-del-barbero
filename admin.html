@@ -580,7 +580,18 @@ async function cambiarEstadoCliente(id, estado, mensajeAdmin){
 }
 
 window.aprobarCliente = function(id){
-  cambiarEstadoCliente(id, "Aprobado", "Tu cuenta fue aprobada ✅ Ya puedes usar tu perfil.");
+
+  const cliente = clientes.find(c => c.id === id);
+
+  const mensaje = `Hola ${cliente.nombre} 👋
+
+Tu acceso a *El Callejón del Barbero* ya está activo ✅
+
+Ya puedes entrar y agendar tu cita directamente desde la página.
+
+Aparta tu lugar y asegura tu horario 💈🔥`;
+
+  cambiarEstadoCliente(id, "Aprobado", mensaje);
 };
 
 window.rechazarCliente = function(id){
