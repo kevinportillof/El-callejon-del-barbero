@@ -569,16 +569,13 @@ window.renderClientes = function(){
     contenedor.innerHTML = '<div class="empty">No hay clientes con ese filtro.</div>';
     return;
   }
-
-  contenedor.innerHTML = lista.map(cliente => {
-    const estado = normalizarEstado(cliente.estado);
-    const telefonoLimpio = String(cliente.telefono || "").replace(/\D/g, "");
-
-    return `
     
-      const cumpleHoy = esCumpleHoy(cliente.fechaNacimiento);
+contenedor.innerHTML = lista.map(cliente => {
+  const estado = normalizarEstado(cliente.estado);
+  const telefonoLimpio = String(cliente.telefono || "").replace(/\D/g, "");
+  const cumpleHoy = esCumpleHoy(cliente.fechaNacimiento);
 
-return `
+  return `
       
   <article class="client" style="${cumpleHoy ? 'border:1px solid #f3c969; box-shadow:0 0 20px rgba(243,201,105,.25);' : ''}">
         <div class="client-top">
