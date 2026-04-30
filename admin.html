@@ -573,7 +573,6 @@ window.limpiarHorarios = function(){
 };
 
 async function cargarClientes(){
-
   try{
     const querySnapshot = await getDocs(collection(db, "clientes"));
     clientes = [];
@@ -582,11 +581,19 @@ async function cargarClientes(){
       clientes.push({ id: documento.id, ...documento.data() });
     });
 
- actualizarEstadisticas();
-llenarSelectClientes();
-renderClientes();
-document.getElementById("listaClientesAprobados").innerHTML = '<div class="empty">No se pudieron cargar los clientes.</div>';
-document.getElementById("listaSolicitudes").innerHTML = '<div class="empty">No se pudieron cargar las solicitudes.</div>';
+    actualizarEstadisticas();
+    llenarSelectClientes();
+    renderClientes();
+
+  }catch(error){
+    console.error(error);
+
+    document.getElementById("listaClientesAprobados").innerHTML =
+      '<div class="empty">Error cargando clientes</div>';
+
+    document.getElementById("listaSolicitudes").innerHTML =
+      '<div class="empty">Error cargando solicitudes</div>';
+  }
 }
 
 function esCumpleHoy(fechaNacimiento){
@@ -865,8 +872,7 @@ window.cargarCitas = async function(){
   contenedorManana.innerHTML = renderCitas(citasManana, true);
   contenedorSemana.innerHTML = renderCitas(citasSemana, false);
 };
-
-  function renderCitas(lista, permitirRecordatorio){
+function renderCitas(lista, permitirRecordatorio){
   if(lista.length === 0){
     return `<div class="empty">No hay citas registradas.</div>`;
   }
@@ -875,24 +881,21 @@ window.cargarCitas = async function(){
     const puedeRecordar = permitirRecordatorio && cita.estado !== "Cancelada";
 
     return 
-      <div class="client" style="${cita.estado === 'Cancelada' ? 'opacity:.5; border:1px solid #e57373;' : ''}">
+      <div class="client">
         <h3>${cita.cliente}</h3>
-        <p><strong>Fecha:</strong> ${cita.fecha}</p>
-        <p><strong>Hora:</strong> ${cita.hora}</p>
-        <p><strong>Servicio:</strong> ${cita.servicio}</p>
-        <p><strong>Estado:</strong> ${cita.estado}</p>
+        <p>${cita.fecha} - ${cita.hora}</p>
 
         <div class="actions">
           <button class="btn-whatsapp"
             onclick="mandarRecordatorio('${cita.id}')"
             ${puedeRecordar ? '' : 'disabled'}>
-            ${puedeRecordar ? 'Mandar recordatorio' : 'Recordatorio no activo'}
+            Recordatorio
           </button>
 
           <button class="btn-danger"
             onclick="cancelarCita('${cita.id}')"
             ${cita.estado === 'Cancelada' ? 'disabled' : ''}>
-            ${cita.estado === 'Cancelada' ? 'Cancelada' : 'Cancelar'}
+            Cancelar
           </button>
         </div>
       </div>
