@@ -519,9 +519,7 @@ window.renderClientes = function(){
   let lista = clientes.filter(cliente => {
     const estado = normalizarEstado(cliente.estado);
     const texto = `${cliente.nombre || ""} ${cliente.telefono || ""} ${cliente.correo || ""}`.toLowerCase();
-    const coincideBusqueda = texto.includes(busqueda);
-    const coincideEstado = filtro === "todos" || estado === filtro;
-    return coincideBusqueda && coincideEstado;
+    return texto.includes(busqueda) && (filtro === "todos" || estado === filtro);
   });
 
   if(lista.length === 0){
@@ -532,7 +530,6 @@ window.renderClientes = function(){
   contenedor.innerHTML = lista.map(cliente => {
     const estado = normalizarEstado(cliente.estado);
     const telefonoLimpio = String(cliente.telefono || "").replace(/\D/g, "");
-    const whatsapp = telefonoLimpio ? `https://wa.me/52${telefonoLimpio}` : "#";
 
     return `
       <article class="client">
@@ -550,29 +547,13 @@ window.renderClientes = function(){
           <button class="btn-success" onclick="aprobarCliente('${cliente.id}')">Aprobar</button>
           <button class="btn-danger" onclick="rechazarCliente('${cliente.id}')">Rechazar</button>
           <button class="btn-secondary" onclick="ponerPendiente('${cliente.id}')">Pendiente</button>
-         ${telefonoLimpio ? `
-<button class="btn-whatsapp" onclick="mandarMensajeAprobacion('${cliente.id}')">
-  Aprobación
-</button>
 
-<button class="btn-danger" onclick="mandarMensajeRechazo('${cliente.id}')">
-  Rechazo
-</button>
-
-<button class="btn-secondary" onclick="mandarMensajeCumple('${cliente.id}')">
-  Cumple
-</button>
-` : ""}
-  Mensaje aprobación
-</button>
-
-<button class="btn-warning" onclick="mandarMensajeRechazo('${cliente.id}')">
-  Mensaje rechazo
-</button>
-
-<button class="btn-blue" onclick="mandarMensajeCumple('${cliente.id}')">
-  Cumpleaños
-</button>
+          ${telefonoLimpio ? `
+            <button class="btn-whatsapp" onclick="mandarMensajeAprobacion('${cliente.id}')">Aprobación</button>
+            <button class="btn-danger" onclick="mandarMensajeRechazo('${cliente.id}')">Rechazo</button>
+            <button class="btn-secondary" onclick="mandarMensajeCumple('${cliente.id}')">Cumple</button>
+          ` : ""}
+        </div>
       </article>
     `;
   }).join("");
@@ -599,43 +580,7 @@ async function cambiarEstadoCliente(id, estado, mensajeAdmin){
     alert("Error al actualizar cliente.");
   }
 }
-function abrirWhatsApp(telefono, mensaje){
-  const tel = String(telefono || "").replace(/\D/g, "");
 
-  if(!tel){
-    alert("Este cliente no tiene WhatsApp registrado");
-    return;
-  }
-
-  const url = `https://wa.me/52${tel}?text=${encodeURIComponent(mensaje)}`;
-  window.open(url, "_blank");
-
-window.mandarMensajeAprobacion = function(id){
-  const cliente = clientes.find(c => c.id === id);
-  abrirWhatsApp(cliente.telefono, mensajeAprobacion(cliente));
-};
-
-window.mandarMensajeRechazo = function(id){
-  const cliente = clientes.find(c => c.id === id);
-  abrirWhatsApp(cliente.telefono, mensajeRechazo(cliente));
-};
-
-window.mandarMensajeCumple = function(id){
-  const cliente = clientes.find(c => c.id === id);
-  abrirWhatsApp(cliente.telefono, mensajeCumple(cliente));
-};
-  
-window.aprobarCliente = function(id){
-  cambiarEstadoCliente(id, "Aprobado", "Tu cuenta fue aprobada ✅ Ya puedes usar tu perfil.");
-};
-
-window.rechazarCliente = function(id){
-  cambiarEstadoCliente(id, "Rechazado", "Tu cuenta no fue aprobada por el momento. Puedes seguir agendando por WhatsApp.");
-};
-
-window.ponerPendiente = function(id){
-  cambiarEstadoCliente(id, "Pendiente", "Tu cuenta está en revisión. Espera la aprobación del administrador.");
-};
 function abrirWhatsApp(telefono, mensaje){
   const tel = String(telefono || "").replace(/\D/g, "");
 
@@ -669,6 +614,35 @@ function mensajeCumple(cliente){
 
 Te esperamos para tu corte 🔥`;
 }
+
+window.mandarMensajeAprobacion = function(id){
+  const cliente = clientes.find(c => c.id === id);
+  abrirWhatsApp(cliente.telefono, mensajeAprobacion(cliente));
+};
+
+window.mandarMensajeRechazo = function(id){
+  const cliente = clientes.find(c => c.id === id);
+  abrirWhatsApp(cliente.telefono, mensajeRechazo(cliente));
+};
+
+window.mandarMensajeCumple = function(id){
+  const cliente = clientes.find(c => c.id === id);
+  abrirWhatsApp(cliente.telefono, mensajeCumple(cliente));
+};
+
+window.aprobarCliente = function(id){
+  const cliente = clientes.find(c => c.id === id);
+  cambiarEstadoCliente(id, "Aprobado", mensajeAprobacion(cliente));
+};
+
+window.rechazarCliente = function(id){
+  const cliente = clientes.find(c => c.id === id);
+  cambiarEstadoCliente(id, "Rechazado", mensajeRechazo(cliente));
+};
+
+window.ponerPendiente = function(id){
+  cambiarEstadoCliente(id, "Pendiente", "Tu cuenta está en revisión. Espera la aprobación del administrador.");
+};
   
 window.addEventListener("load", () => {
   cargarHorarios();
