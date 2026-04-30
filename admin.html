@@ -543,17 +543,35 @@ window.renderClientes = function(){
           <span class="status ${claseEstado(estado)}">${estado}</span>
         </div>
 
-        <div class="actions">
-          <button class="btn-success" onclick="aprobarCliente('${cliente.id}')">Aprobar</button>
-          <button class="btn-danger" onclick="rechazarCliente('${cliente.id}')">Rechazar</button>
-          <button class="btn-secondary" onclick="ponerPendiente('${cliente.id}')">Pendiente</button>
+       <div class="actions">
 
-          ${telefonoLimpio ? `
-            <button class="btn-whatsapp" onclick="mandarMensajeAprobacion('${cliente.id}')">Aprobación</button>
-            <button class="btn-danger" onclick="mandarMensajeRechazo('${cliente.id}')">Rechazo</button>
-            <button class="btn-secondary" onclick="mandarMensajeCumple('${cliente.id}')">Cumple</button>
-          ` : ""}
-        </div>
+  <button class="btn-success" onclick="aprobarCliente('${cliente.id}')">
+    Aprobar
+  </button>
+
+  <button class="btn-danger" onclick="rechazarCliente('${cliente.id}')">
+    Denegar
+  </button>
+
+  <button class="btn-secondary" onclick="ponerPendiente('${cliente.id}')">
+    Pendiente
+  </button>
+
+  ${telefonoLimpio ? `
+  <button class="btn-whatsapp" onclick="mandarMensajeAprobacion('${cliente.id}')">
+    Avisar aprobación
+  </button>
+
+  <button class="btn-warning" onclick="mandarMensajeRechazo('${cliente.id}')">
+    Avisar denegación
+  </button>
+
+  <button class="btn-blue" onclick="mandarMensajeCumple('${cliente.id}')">
+    Cumpleaños
+  </button>
+  ` : ""}
+
+</div>
       </article>
     `;
   }).join("");
