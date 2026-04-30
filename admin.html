@@ -303,7 +303,8 @@ button:disabled{opacity:.5;cursor:not-allowed;transform:none}
   .days{grid-template-columns:1fr}
   .toolbar{grid-template-columns:1fr}
   .stats{grid-template-columns:1fr 1fr}
-  .stat strong{font-size:24px}}
+  .stat strong{font-size:24px}
+}
 .menu-admin{
   max-width:1200px;
   margin:20px auto 0;
@@ -666,48 +667,6 @@ function renderListaClientes(lista, mostrarAcciones){
     return `<div class="empty">No hay registros.</div>`;
   }
 
-  lista.sort((a, b) => {
-    return esCumpleHoy(b.fechaNacimiento) - esCumpleHoy(a.fechaNacimiento);
-  });
-
-  return lista.map(cliente => {
-    const estado = normalizarEstado(cliente.estado);
-    const telefonoLimpio = String(cliente.telefono || "").replace(/\D/g, "");
-    const cumpleHoy = esCumpleHoy(cliente.fechaNacimiento);
-
-    return `
-      <article class="client" style="${cumpleHoy ? 'border:1px solid #f3c969; box-shadow:0 0 20px rgba(243,201,105,.25);' : ''}">
-        <div class="client-top">
-          <div>
-            ${cumpleHoy ? '<p style="color:#f3c969;font-weight:800;">🎂 Cumpleaños hoy</p>' : ''}
-            <h3>${cliente.nombre || "Sin nombre"}</h3>
-            <p><strong>WhatsApp:</strong> ${cliente.telefono || "No registrado"}</p>
-            <p><strong>Correo:</strong> ${cliente.correo || "No registrado"}</p>
-            <p><strong>Nacimiento:</strong> ${cliente.fechaNacimiento || "No registrado"}</p>
-          </div>
-          <span class="status ${claseEstado(estado)}">${estado}</span>
-        </div>
-
-        <div class="actions">
-          ${mostrarAcciones ? `
-            <button class="btn-success" onclick="aprobarCliente('${cliente.id}')">Aprobar</button>
-            <button class="btn-danger" onclick="rechazarCliente('${cliente.id}')">Denegar</button>
-          ` : ""}
-
-          ${telefonoLimpio ? `
-            <button class="btn-whatsapp" onclick="mandarMensajeAprobacion('${cliente.id}')">Avisar aprobación</button>
-            <button class="btn-danger" onclick="mandarMensajeRechazo('${cliente.id}')">Avisar denegación</button>
-            <button class="${cumpleHoy ? 'btn-primary' : 'btn-secondary'}"
-              onclick="mandarMensajeCumple('${cliente.id}')"
-              ${cumpleHoy ? '' : 'disabled'}>
-              ${cumpleHoy ? 'Felicitar' : 'Cumple no activo'}
-            </button>
-          ` : ""}
-        </div>
-      </article>
-    `;
-  }).join("");
-}
   
   lista.sort((a, b) => {
     return esCumpleHoy(b.fechaNacimiento) - esCumpleHoy(a.fechaNacimiento);
