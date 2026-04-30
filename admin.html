@@ -612,11 +612,13 @@ function abrirWhatsApp(telefono, mensaje){
 }
 
 function mensajeAprobacion(cliente){
-  return `Hola ${cliente.nombre} 
+  return `Hola ${cliente.nombre}.
 
-Tu acceso a El Callejón del Barbero ya está activo
+Tu acceso a El Callejón del Barbero ya está activo.
 
-Ya puedes agendar tu cita desde la página;
+Ya puedes agendar tu cita directamente desde la página.
+
+Aparta tu lugar y asegura tu horario.`;
 }
 
 function mensajeRechazo(cliente){
@@ -630,11 +632,13 @@ Si tienes alguna duda, puedes contactarnos por WhatsApp.`;
 }
 
 function mensajeCumple(cliente){
-  return `Feliz cumpleaños ${cliente.nombre} 
+  return `Feliz cumpleaños, ${cliente.nombre}.
 
-Te esperamos para tu corte;
+De parte de El Callejón del Barbero, te deseamos un excelente día.
+
+Cuando quieras caer por tu corte, aquí te esperamos.`;
 }
-
+  
 window.mandarMensajeAprobacion = function(id){
   const cliente = clientes.find(c => c.id === id);
   abrirWhatsApp(cliente.telefono, mensajeAprobacion(cliente));
