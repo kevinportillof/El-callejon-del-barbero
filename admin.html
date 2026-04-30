@@ -665,21 +665,7 @@ window.renderClientes = function(){
   document.getElementById("listaSolicitudes").innerHTML = renderListaClientes(pendientes, true);
 };
 
-function renderListaClientes(lista, mostrarAcciones){
-  if(lista.length === 0){
-    return `<div class="empty">No hay registros.</div>`;
-  }
-
-  lista.sort((a, b) => {
-    return esCumpleHoy(b.fechaNacimiento) - esCumpleHoy(a.fechaNacimiento);
-  });
-
-  return lista.map(cliente => {
-    const estado = normalizarEstado(cliente.estado);
-    const telefonoLimpio = String(cliente.telefono || "").replace(/\D/g, "");
-    const cumpleHoy = esCumpleHoy(cliente.fechaNacimiento);
-    
-return 
+return `
   <article class="client" style="${cumpleHoy ? 'border:1px solid #f3c969; box-shadow:0 0 20px rgba(243,201,105,.25);' : ''}">
     <div class="client-top">
       <div>
@@ -693,12 +679,12 @@ return
     </div>
 
     <div class="actions">
-      ${mostrarAcciones ? 
+    ${mostrarAcciones ? `
         <button class="btn-success" onclick="aprobarCliente('${cliente.id}')">Aprobar</button>
         <button class="btn-danger" onclick="rechazarCliente('${cliente.id}')">Denegar</button>
       ` : ""}
 
-      ${telefonoLimpio ? 
+      ${telefonoLimpio ? `
         <button class="btn-whatsapp" onclick="mandarMensajeAprobacion('${cliente.id}')">Avisar aprobación</button>
         <button class="btn-danger" onclick="mandarMensajeRechazo('${cliente.id}')">Avisar denegación</button>
         <button class="${cumpleHoy ? 'btn-primary' : 'btn-secondary'}"
@@ -710,8 +696,6 @@ return
     </div>
   </article>
 `;
-  }).join("");
-  }
 
 async function cambiarEstadoCliente(id, estado, mensajeAdmin){
   try{
