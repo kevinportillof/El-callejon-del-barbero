@@ -550,8 +550,29 @@ window.renderClientes = function(){
           <button class="btn-success" onclick="aprobarCliente('${cliente.id}')">Aprobar</button>
           <button class="btn-danger" onclick="rechazarCliente('${cliente.id}')">Rechazar</button>
           <button class="btn-secondary" onclick="ponerPendiente('${cliente.id}')">Pendiente</button>
-          ${telefonoLimpio ? `<button class="btn-whatsapp" onclick="window.open('${whatsapp}','_blank')">WhatsApp</button>` : ""}
-        </div>
+         ${telefonoLimpio ? `
+<button class="btn-whatsapp" onclick="mandarMensajeAprobacion('${cliente.id}')">
+  Aprobación
+</button>
+
+<button class="btn-danger" onclick="mandarMensajeRechazo('${cliente.id}')">
+  Rechazo
+</button>
+
+<button class="btn-secondary" onclick="mandarMensajeCumple('${cliente.id}')">
+  Cumple
+</button>
+` : ""}
+  Mensaje aprobación
+</button>
+
+<button class="btn-warning" onclick="mandarMensajeRechazo('${cliente.id}')">
+  Mensaje rechazo
+</button>
+
+<button class="btn-blue" onclick="mandarMensajeCumple('${cliente.id}')">
+  Cumpleaños
+</button>
       </article>
     `;
   }).join("");
@@ -578,7 +599,59 @@ async function cambiarEstadoCliente(id, estado, mensajeAdmin){
     alert("Error al actualizar cliente.");
   }
 }
+function abrirWhatsApp(telefono, mensaje){
+  const tel = String(telefono || "").replace(/\D/g, "");
 
+  if(!tel){
+    alert("Este cliente no tiene WhatsApp registrado");
+    return;
+  }
+
+  const url = `https://wa.me/52${tel}?text=${encodeURIComponent(mensaje)}`;
+  window.open(url, "_blank");
+}
+
+function mensajeAprobacion(cliente){
+  return `Hola ${cliente.nombre} 👋
+
+Tu acceso a *El Callejón del Barbero* ya está activo ✅
+
+Ya puedes entrar y agendar tu cita directamente desde la página.
+
+Aparta tu lugar y asegura tu horario 💈🔥`;
+}
+
+function mensajeRechazo(cliente){
+  return `Hola ${cliente.nombre} 👋
+
+Por el momento tu cuenta en *El Callejón del Barbero* no fue aprobada.
+
+Puedes seguir agendando directamente por WhatsApp y con gusto te atendemos 💈`;
+}
+
+function mensajeCumple(cliente){
+  return `¡Feliz cumpleaños, ${cliente.nombre}! 🎂💈
+
+De parte de *El Callejón del Barbero*, te deseamos un excelente día.
+
+Cuando quieras caer por tu corte, aquí te esperamos 🔥`;
+}
+
+window.mandarMensajeAprobacion = function(id){
+  const cliente = clientes.find(c => c.id === id);
+  abrirWhatsApp(cliente.telefono, mensajeAprobacion(cliente));
+};
+
+window.mandarMensajeRechazo = function(id){
+  const cliente = clientes.find(c => c.id === id);
+  abrirWhatsApp(cliente.telefono, mensajeRechazo(cliente));
+};
+
+window.mandarMensajeCumple = function(id){
+  const cliente = clientes.find(c => c.id === id);
+  abrirWhatsApp(cliente.telefono, mensajeCumple(cliente));
+};
+  
 window.aprobarCliente = function(id){
   cambiarEstadoCliente(id, "Aprobado", "Tu cuenta fue aprobada ✅ Ya puedes usar tu perfil.");
 };
@@ -590,7 +663,55 @@ window.rechazarCliente = function(id){
 window.ponerPendiente = function(id){
   cambiarEstadoCliente(id, "Pendiente", "Tu cuenta está en revisión. Espera la aprobación del administrador.");
 };
+function abrirWhatsApp(telefono, mensaje){
+  const tel = String(telefono || "").replace(/\D/g, "");
 
+  if(!tel){
+    alert("No tiene WhatsApp");
+    return;
+  }
+
+  const url = `https://wa.me/52${tel}?text=${encodeURIComponent(mensaje)}`;
+  window.open(url, "_blank");
+}
+
+function mensajeAprobacion(cliente){
+  return `Hola ${cliente.nombre} 👋
+
+Tu acceso a El Callejón del Barbero ya está activo ✅
+
+Ya puedes agendar tu cita desde la página 💈🔥`;
+}
+
+function mensajeRechazo(cliente){
+  return `Hola ${cliente.nombre} 👋
+
+Por el momento tu cuenta no fue aprobada.
+
+Puedes agendar por WhatsApp 💈`;
+}
+
+function mensajeCumple(cliente){
+  return `Feliz cumpleaños ${cliente.nombre} 🎂💈
+
+Te esperamos para tu corte 🔥`;
+}
+
+window.mandarMensajeAprobacion = function(id){
+  const cliente = clientes.find(c => c.id === id);
+  abrirWhatsApp(cliente.telefono, mensajeAprobacion(cliente));
+};
+
+window.mandarMensajeRechazo = function(id){
+  const cliente = clientes.find(c => c.id === id);
+  abrirWhatsApp(cliente.telefono, mensajeRechazo(cliente));
+};
+
+window.mandarMensajeCumple = function(id){
+  const cliente = clientes.find(c => c.id === id);
+  abrirWhatsApp(cliente.telefono, mensajeCumple(cliente));
+};
+  
 window.addEventListener("load", () => {
   cargarHorarios();
   cargarClientes();
