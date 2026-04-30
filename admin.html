@@ -1,59 +1,403 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Panel Administrador - El Callejón del Barbero</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
 <style>
-body{background:#111;color:white;font-family:Arial,sans-serif;text-align:center;padding:20px;}
-.panel{max-width:500px;margin:auto;}
-.dia,.cliente{background:#1b1b1b;padding:15px;margin-bottom:15px;border-radius:12px;}
-input{width:90%;padding:10px;margin-top:8px;border-radius:8px;border:none;}
-button{
-    margin-top:15px;
-    padding:12px 25px;
-    border:none;
-    border-radius:25px;
-    background:#8d99ae;
-    color:white;
-    font-weight:bold;
-    cursor:pointer;
+:root{
+  --bg:#090909;
+  --panel:#141414;
+  --card:#1b1b1b;
+  --card2:#111;
+  --border:#2b2b2b;
+  --text:#f4f4f4;
+  --muted:#a7a7a7;
+  --accent:#d7d7d7;
+  --success:#8fd19e;
+  --danger:#e57373;
+  --warning:#f3c969;
+  --shadow:0 18px 40px rgba(0,0,0,.45);
 }
 
-.estado{
-    color:#8d99ae;
-    font-weight:bold;
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  background:
+    radial-gradient(circle at top, rgba(255,255,255,.08), transparent 32%),
+    linear-gradient(135deg,#050505,#111 45%,#050505);
+  color:var(--text);
+  font-family:'Inter',Arial,sans-serif;
+  min-height:100vh;
+}
+
+.header{
+  position:sticky;
+  top:0;
+  z-index:10;
+  backdrop-filter:blur(14px);
+  background:rgba(9,9,9,.82);
+  border-bottom:1px solid var(--border);
+}
+
+.header-inner{
+  max-width:1200px;
+  margin:auto;
+  padding:18px 20px;
+  display:flex;
+  justify-content:space-between;
+  gap:16px;
+  align-items:center;
+}
+
+.brand h1{
+  font-family:'Playfair Display',serif;
+  margin:0;
+  font-size:clamp(24px,4vw,38px);
+  letter-spacing:.5px;
+}
+
+.brand p{
+  margin:4px 0 0;
+  color:var(--muted);
+  font-size:14px;
+}
+
+.badge{
+  border:1px solid var(--border);
+  background:#151515;
+  color:var(--accent);
+  padding:10px 14px;
+  border-radius:999px;
+  font-size:13px;
+  font-weight:700;
+  white-space:nowrap;
+}
+
+.layout{
+  max-width:1200px;
+  margin:auto;
+  padding:24px 20px 50px;
+  display:grid;
+  grid-template-columns:1fr;
+  gap:22px;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+}
+
+.stat{
+  background:linear-gradient(180deg,#191919,#101010);
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:18px;
+  box-shadow:var(--shadow);
+}
+
+.stat span{
+  color:var(--muted);
+  font-size:13px;
+}
+
+.stat strong{
+  display:block;
+  margin-top:8px;
+  font-size:30px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1.05fr .95fr;
+  gap:22px;
+}
+
+.section{
+  background:rgba(20,20,20,.92);
+  border:1px solid var(--border);
+  border-radius:26px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+
+.section-head{
+  padding:22px;
+  border-bottom:1px solid var(--border);
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  align-items:center;
+}
+
+.section-head h2{
+  margin:0;
+  font-size:20px;
+}
+
+.section-head p{
+  margin:5px 0 0;
+  color:var(--muted);
+  font-size:13px;
+}
+
+.section-body{padding:22px}
+
+.days{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+}
+
+.day{
+  background:var(--card2);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:14px;
+}
+
+.day label{
+  display:block;
+  font-weight:800;
+  margin-bottom:8px;
+}
+
+input,select,textarea{
+  width:100%;
+  border:1px solid #313131;
+  outline:none;
+  background:#080808;
+  color:white;
+  border-radius:14px;
+  padding:13px 14px;
+  font-size:15px;
+}
+
+input:focus,select:focus,textarea:focus{
+  border-color:#888;
+  box-shadow:0 0 0 3px rgba(255,255,255,.08);
+}
+
+.help{
+  margin:10px 0 0;
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.4;
+}
+
+.actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:18px;
+}
+
+button{
+  border:none;
+  border-radius:999px;
+  padding:12px 17px;
+  font-weight:800;
+  cursor:pointer;
+  transition:.2s ease;
+}
+
+button:hover{transform:translateY(-1px);filter:brightness(1.08)}
+button:disabled{opacity:.5;cursor:not-allowed;transform:none}
+
+.btn-primary{background:#f5f5f5;color:#111}
+.btn-secondary{background:#2b2b2b;color:white;border:1px solid #3a3a3a}
+.btn-success{background:rgba(143,209,158,.15);color:var(--success);border:1px solid rgba(143,209,158,.35)}
+.btn-danger{background:rgba(229,115,115,.15);color:var(--danger);border:1px solid rgba(229,115,115,.35)}
+.btn-whatsapp{background:#1f6f43;color:white}
+
+.toolbar{
+  display:grid;
+  grid-template-columns:1fr 180px;
+  gap:10px;
+  margin-bottom:16px;
+}
+
+.client-list{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+
+.client{
+  background:linear-gradient(180deg,#181818,#101010);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:16px;
+}
+
+.client-top{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  align-items:flex-start;
+}
+
+.client h3{
+  margin:0 0 6px;
+  font-size:17px;
+}
+
+.client p{
+  margin:6px 0;
+  color:#d7d7d7;
+  font-size:14px;
+  line-height:1.35;
+}
+
+.status{
+  display:inline-flex;
+  padding:7px 10px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:900;
+  white-space:nowrap;
+}
+
+.status.pendiente{color:var(--warning);background:rgba(243,201,105,.12);border:1px solid rgba(243,201,105,.3)}
+.status.aprobado{color:var(--success);background:rgba(143,209,158,.12);border:1px solid rgba(143,209,158,.3)}
+.status.rechazado{color:var(--danger);background:rgba(229,115,115,.12);border:1px solid rgba(229,115,115,.3)}
+
+.toast{
+  position:fixed;
+  right:18px;
+  bottom:18px;
+  background:#f5f5f5;
+  color:#111;
+  padding:14px 18px;
+  border-radius:16px;
+  box-shadow:var(--shadow);
+  font-weight:800;
+  transform:translateY(120px);
+  opacity:0;
+  transition:.25s ease;
+  z-index:50;
+}
+
+.toast.show{transform:translateY(0);opacity:1}
+
+.empty,.loading{
+  text-align:center;
+  color:var(--muted);
+  padding:24px 10px;
+}
+
+@media(max-width:900px){
+  .grid{grid-template-columns:1fr}
+  .stats{grid-template-columns:repeat(2,1fr)}
+}
+
+@media(max-width:560px){
+  .header-inner{align-items:flex-start;flex-direction:column}
+  .days{grid-template-columns:1fr}
+  .toolbar{grid-template-columns:1fr}
+  .stats{grid-template-columns:1fr 1fr}
+  .stat strong{font-size:24px}
 }
 </style>
 </head>
 
 <body>
+<header class="header">
+  <div class="header-inner">
+    <div class="brand">
+      <h1>Panel Administrador</h1>
+      <p>El Callejón del Barbero · Control de horarios y clientes</p>
+    </div>
+    <div class="badge">Conectado a Firebase</div>
+  </div>
+</header>
 
-<h1>Panel Administrador</h1>
+<main class="layout">
+  <section class="stats">
+    <div class="stat"><span>Total clientes</span><strong id="totalClientes">0</strong></div>
+    <div class="stat"><span>Pendientes</span><strong id="totalPendientes">0</strong></div>
+    <div class="stat"><span>Aprobados</span><strong id="totalAprobados">0</strong></div>
+    <div class="stat"><span>Rechazados</span><strong id="totalRechazados">0</strong></div>
+  </section>
 
-<div class="panel">
+  <section class="grid">
+    <div class="section">
+      <div class="section-head">
+        <div>
+          <h2>Horarios disponibles</h2>
+          <p>Escribe las horas separadas por diagonal. Ejemplo: 4/5/6/7</p>
+        </div>
+      </div>
 
-<h2>Horarios disponibles</h2>
+      <div class="section-body">
+        <div class="days">
+          <div class="day"><label for="lunes">Lunes</label><input id="lunes" type="text" placeholder="Ej: 4/5/6/7"></div>
+          <div class="day"><label for="martes">Martes</label><input id="martes" type="text" placeholder="Ej: 4/5/6/7"></div>
+          <div class="day"><label for="miercoles">Miércoles</label><input id="miercoles" type="text" placeholder="Ej: 4/5/6/7"></div>
+          <div class="day"><label for="jueves">Jueves</label><input id="jueves" type="text" placeholder="Ej: 4/5/6/7"></div>
+          <div class="day"><label for="viernes">Viernes</label><input id="viernes" type="text" placeholder="Ej: 4/5/6/7"></div>
+          <div class="day"><label for="sabado">Sábado</label><input id="sabado" type="text" placeholder="Ej: 11/12/1/3/5"></div>
+          <div class="day"><label for="domingo">Domingo</label><input id="domingo" type="text" placeholder="Ej: Cerrado o 4/5/6"></div>
+        </div>
 
-<div class="dia"><h3>Lunes</h3><input type="text" id="lunes" placeholder="Ej: 4/5/6/7"></div>
-<div class="dia"><h3>Martes</h3><input type="text" id="martes" placeholder="Ej: 4/5/6/7"></div>
-<div class="dia"><h3>Miércoles</h3><input type="text" id="miercoles" placeholder="Ej: 4/5/6/7"></div>
-<div class="dia"><h3>Jueves</h3><input type="text" id="jueves" placeholder="Ej: 4/5/6/7"></div>
-<div class="dia"><h3>Viernes</h3><input type="text" id="viernes" placeholder="Ej: 4/5/6/7"></div>
-<div class="dia"><h3>Sábado</h3><input type="text" id="sabado" placeholder="Ej: 11/12/1/3/5"></div>
-<div class="dia"><h3>Domingo</h3><input type="text" id="domingo" placeholder="Ej: 4/5/6/7"></div>
+        <p class="help">Tip: si un día no trabajas, escribe “Cerrado”. Después podemos convertir esto a botones por hora para que el cliente seleccione su cita.</p>
 
-<button onclick="guardar()">Guardar Citas</button>
+        <div class="actions">
+          <button class="btn-primary" id="btnGuardar" onclick="guardarHorarios()">Guardar horarios</button>
+          <button class="btn-secondary" onclick="cargarHorarios()">Recargar</button>
+          <button class="btn-secondary" onclick="limpiarHorarios()">Limpiar campos</button>
+        </div>
+      </div>
+    </div>
 
-<h2 style="margin-top:35px;">Clientes registrados</h2>
-<div id="listaClientes"></div>
+    <div class="section">
+      <div class="section-head">
+        <div>
+          <h2>Clientes registrados</h2>
+          <p>Aprueba o rechaza cuentas desde aquí.</p>
+        </div>
+      </div>
 
-</div>
+      <div class="section-body">
+        <div class="toolbar">
+          <input id="buscador" type="search" placeholder="Buscar por nombre, correo o WhatsApp..." oninput="renderClientes()">
+          <select id="filtroEstado" onchange="renderClientes()">
+            <option value="todos">Todos</option>
+            <option value="Pendiente">Pendientes</option>
+            <option value="Aprobado">Aprobados</option>
+            <option value="Rechazado">Rechazados</option>
+          </select>
+        </div>
+
+        <div id="listaClientes" class="client-list">
+          <div class="loading">Cargando clientes...</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="toast" class="toast"></div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
-import { getFirestore, collection, getDocs, updateDoc, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  updateDoc,
+  doc,
+  setDoc,
+  getDoc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCaLuLg_Tp-0bgzpB1DiPR7VmIrmLLFFSM",
@@ -67,116 +411,190 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const dias = ["lunes","martes","miercoles","jueves","viernes","sabado","domingo"];
+let clientes = [];
 
-window.guardar = async function() {
-    const dias = ["lunes","martes","miercoles","jueves","viernes","sabado","domingo"];
+function mostrarToast(mensaje){
+  const toast = document.getElementById("toast");
+  toast.textContent = mensaje;
+  toast.classList.add("show");
+  setTimeout(() => toast.classList.remove("show"), 2600);
+}
 
-    const horarios = {};
+function normalizarEstado(estado){
+  if(!estado) return "Pendiente";
+  const limpio = String(estado).trim().toLowerCase();
+  if(limpio === "aprobado") return "Aprobado";
+  if(limpio === "rechazado") return "Rechazado";
+  return "Pendiente";
+}
 
-    dias.forEach(dia => {
-        horarios[dia] = document.getElementById(dia).value.trim();
+function claseEstado(estado){
+  return normalizarEstado(estado).toLowerCase();
+}
+
+function actualizarEstadisticas(){
+  const total = clientes.length;
+  const pendientes = clientes.filter(c => normalizarEstado(c.estado) === "Pendiente").length;
+  const aprobados = clientes.filter(c => normalizarEstado(c.estado) === "Aprobado").length;
+  const rechazados = clientes.filter(c => normalizarEstado(c.estado) === "Rechazado").length;
+
+  document.getElementById("totalClientes").textContent = total;
+  document.getElementById("totalPendientes").textContent = pendientes;
+  document.getElementById("totalAprobados").textContent = aprobados;
+  document.getElementById("totalRechazados").textContent = rechazados;
+}
+
+window.guardarHorarios = async function(){
+  const btn = document.getElementById("btnGuardar");
+  btn.disabled = true;
+  btn.textContent = "Guardando...";
+
+  const horarios = {};
+  dias.forEach(dia => {
+    horarios[dia] = document.getElementById(dia).value.trim();
+  });
+
+  try{
+    await setDoc(doc(db, "configuracion", "horarios"), {
+      ...horarios,
+      actualizadoEn: serverTimestamp()
     });
+    mostrarToast("Horarios guardados correctamente");
+  }catch(error){
+    console.error(error);
+    alert("Error al guardar horarios. Revisa conexión o reglas de Firebase.");
+  }finally{
+    btn.disabled = false;
+    btn.textContent = "Guardar horarios";
+  }
+};
 
-    try {
-        await setDoc(doc(db, "configuracion", "horarios"), horarios);
-        alert("Citas guardadas correctamente en Firebase");
-    } catch (error) {
-        console.error(error);
-        alert("Error al guardar horarios");
-    }
-}
+window.cargarHorarios = async function(){
+  try{
+    const referencia = doc(db, "configuracion", "horarios");
+    const documento = await getDoc(referencia);
+    if(!documento.exists()) return;
 
-async function cargarHorarios() {
-    try {
-        const referencia = doc(db, "configuracion", "horarios");
-        const documento = await getDoc(referencia);
+    const horarios = documento.data();
+    dias.forEach(dia => {
+      const input = document.getElementById(dia);
+      if(input) input.value = horarios[dia] || "";
+    });
+  }catch(error){
+    console.error(error);
+    alert("Error al cargar horarios.");
+  }
+};
 
-        if (!documento.exists()) return;
+window.limpiarHorarios = function(){
+  dias.forEach(dia => document.getElementById(dia).value = "");
+};
 
-        const horarios = documento.data();
+async function cargarClientes(){
+  const contenedor = document.getElementById("listaClientes");
+  contenedor.innerHTML = '<div class="loading">Cargando clientes...</div>';
 
-        Object.keys(horarios).forEach(dia => {
-            const input = document.getElementById(dia);
-            if (input) {
-                input.value = horarios[dia];
-            }
-        });
-
-    } catch (error) {
-        console.error(error);
-        alert("Error al cargar horarios");
-    }
-}
-    
-async function cargarClientes() {
-    const contenedor = document.getElementById("listaClientes");
-    contenedor.innerHTML = "<p>Cargando clientes...</p>";
-
+  try{
     const querySnapshot = await getDocs(collection(db, "clientes"));
-
-    if (querySnapshot.empty) {
-        contenedor.innerHTML = "<p>No hay clientes registrados.</p>";
-        return;
-    }
-
-    contenedor.innerHTML = "";
+    clientes = [];
 
     querySnapshot.forEach((documento) => {
-        const cliente = documento.data();
-        const id = documento.id;
-
-        contenedor.innerHTML += `
-            <div class="cliente">
-                <p><strong>Nombre:</strong> ${cliente.nombre || "Sin nombre"}</p>
-                <p><strong>WhatsApp:</strong> ${cliente.telefono || "No registrado"}</p>
-                <p><strong>Correo:</strong> ${cliente.correo || "No registrado"}</p>
-                <p><strong>Nacimiento:</strong> ${cliente.fechaNacimiento || "No registrado"}</p>
-                <p><strong>Estado:</strong> <span class="estado">${cliente.estado || "Pendiente"}</span></p>
-
-                <button onclick="aprobarCliente('${id}')">Aprobar cliente</button>
-                <button onclick="rechazarCliente('${id}')">Rechazar cliente</button>
-            </div>
-        `;
+      clientes.push({ id: documento.id, ...documento.data() });
     });
+
+    actualizarEstadisticas();
+    renderClientes();
+  }catch(error){
+    console.error(error);
+    contenedor.innerHTML = '<div class="empty">No se pudieron cargar los clientes. Revisa reglas de Firebase.</div>';
+  }
 }
 
-window.aprobarCliente = async function(id) {
-    try {
-        await updateDoc(doc(db, "clientes", id), {
-            estado: "Aprobado",
-            mensajeAdmin: "Tu cuenta fue aprobada ✅ Ya puedes usar tu perfil."
-        });
+window.renderClientes = function(){
+  const contenedor = document.getElementById("listaClientes");
+  const busqueda = document.getElementById("buscador").value.toLowerCase().trim();
+  const filtro = document.getElementById("filtroEstado").value;
 
-        alert("Cliente aprobado");
-        cargarClientes();
+  let lista = clientes.filter(cliente => {
+    const estado = normalizarEstado(cliente.estado);
+    const texto = `${cliente.nombre || ""} ${cliente.telefono || ""} ${cliente.correo || ""}`.toLowerCase();
+    const coincideBusqueda = texto.includes(busqueda);
+    const coincideEstado = filtro === "todos" || estado === filtro;
+    return coincideBusqueda && coincideEstado;
+  });
 
-    } catch (error) {
-        console.error(error);
-        alert("Error al aprobar cliente");
-    }
-}
+  if(lista.length === 0){
+    contenedor.innerHTML = '<div class="empty">No hay clientes con ese filtro.</div>';
+    return;
+  }
 
-window.rechazarCliente = async function(id) {
-    try {
-        await updateDoc(doc(db, "clientes", id), {
-            estado: "Rechazado",
-            mensajeAdmin: "Tu cuenta no fue aprobada por el momento. Puedes seguir agendando por WhatsApp."
-        });
+  contenedor.innerHTML = lista.map(cliente => {
+    const estado = normalizarEstado(cliente.estado);
+    const telefonoLimpio = String(cliente.telefono || "").replace(/\D/g, "");
+    const whatsapp = telefonoLimpio ? `https://wa.me/52${telefonoLimpio}` : "#";
 
-        alert("Cliente rechazado");
-        cargarClientes();
+    return `
+      <article class="client">
+        <div class="client-top">
+          <div>
+            <h3>${cliente.nombre || "Sin nombre"}</h3>
+            <p><strong>WhatsApp:</strong> ${cliente.telefono || "No registrado"}</p>
+            <p><strong>Correo:</strong> ${cliente.correo || "No registrado"}</p>
+            <p><strong>Nacimiento:</strong> ${cliente.fechaNacimiento || "No registrado"}</p>
+          </div>
+          <span class="status ${claseEstado(estado)}">${estado}</span>
+        </div>
 
-    } catch (error) {
-        console.error(error);
-        alert("Error al rechazar cliente");
-    }
-}
-
-window.onload = function() {
-    cargarHorarios();
-    cargarClientes();
+        <div class="actions">
+          <button class="btn-success" onclick="aprobarCliente('${cliente.id}')">Aprobar</button>
+          <button class="btn-danger" onclick="rechazarCliente('${cliente.id}')">Rechazar</button>
+          <button class="btn-secondary" onclick="ponerPendiente('${cliente.id}')">Pendiente</button>
+          ${telefonoLimpio ? `<button class="btn-whatsapp" onclick="window.open('${whatsapp}','_blank')">WhatsApp</button>` : ""}
+        </div>
+      </article>
+    `;
+  }).join("");
 };
-</script>
 
+async function cambiarEstadoCliente(id, estado, mensajeAdmin){
+  try{
+    await updateDoc(doc(db, "clientes", id), {
+      estado,
+      mensajeAdmin,
+      actualizadoEn: serverTimestamp()
+    });
+
+    clientes = clientes.map(cliente => {
+      if(cliente.id === id) return { ...cliente, estado, mensajeAdmin };
+      return cliente;
+    });
+
+    actualizarEstadisticas();
+    renderClientes();
+    mostrarToast(`Cliente marcado como ${estado}`);
+  }catch(error){
+    console.error(error);
+    alert("Error al actualizar cliente.");
+  }
+}
+
+window.aprobarCliente = function(id){
+  cambiarEstadoCliente(id, "Aprobado", "Tu cuenta fue aprobada ✅ Ya puedes usar tu perfil.");
+};
+
+window.rechazarCliente = function(id){
+  cambiarEstadoCliente(id, "Rechazado", "Tu cuenta no fue aprobada por el momento. Puedes seguir agendando por WhatsApp.");
+};
+
+window.ponerPendiente = function(id){
+  cambiarEstadoCliente(id, "Pendiente", "Tu cuenta está en revisión. Espera la aprobación del administrador.");
+};
+
+window.addEventListener("load", () => {
+  cargarHorarios();
+  cargarClientes();
+});
+</script>
 </body>
 </html>
