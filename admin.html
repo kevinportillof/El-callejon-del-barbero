@@ -609,33 +609,6 @@ function abrirWhatsApp(telefono, mensaje){
 
   const url = `https://wa.me/52${tel}?text=${encodeURIComponent(mensaje)}`;
   window.open(url, "_blank");
-}
-
-function mensajeAprobacion(cliente){
-  return `Hola ${cliente.nombre} 👋
-
-Tu acceso a *El Callejón del Barbero* ya está activo ✅
-
-Ya puedes entrar y agendar tu cita directamente desde la página.
-
-Aparta tu lugar y asegura tu horario 💈🔥`;
-}
-
-function mensajeRechazo(cliente){
-  return `Hola ${cliente.nombre} 👋
-
-Por el momento tu cuenta en *El Callejón del Barbero* no fue aprobada.
-
-Puedes seguir agendando directamente por WhatsApp y con gusto te atendemos 💈`;
-}
-
-function mensajeCumple(cliente){
-  return `¡Feliz cumpleaños, ${cliente.nombre}! 🎂💈
-
-De parte de *El Callejón del Barbero*, te deseamos un excelente día.
-
-Cuando quieras caer por tu corte, aquí te esperamos 🔥`;
-}
 
 window.mandarMensajeAprobacion = function(id){
   const cliente = clientes.find(c => c.id === id);
@@ -696,21 +669,6 @@ function mensajeCumple(cliente){
 
 Te esperamos para tu corte 🔥`;
 }
-
-window.mandarMensajeAprobacion = function(id){
-  const cliente = clientes.find(c => c.id === id);
-  abrirWhatsApp(cliente.telefono, mensajeAprobacion(cliente));
-};
-
-window.mandarMensajeRechazo = function(id){
-  const cliente = clientes.find(c => c.id === id);
-  abrirWhatsApp(cliente.telefono, mensajeRechazo(cliente));
-};
-
-window.mandarMensajeCumple = function(id){
-  const cliente = clientes.find(c => c.id === id);
-  abrirWhatsApp(cliente.telefono, mensajeCumple(cliente));
-};
   
 window.addEventListener("load", () => {
   cargarHorarios();
