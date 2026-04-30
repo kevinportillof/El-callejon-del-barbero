@@ -10,8 +10,21 @@ body{background:#111;color:white;font-family:Arial,sans-serif;text-align:center;
 .panel{max-width:500px;margin:auto;}
 .dia,.cliente{background:#1b1b1b;padding:15px;margin-bottom:15px;border-radius:12px;}
 input{width:90%;padding:10px;margin-top:8px;border-radius:8px;border:none;}
-button{margin-top:15px;padding:12px 25px;border:none;border-radius:25px;background:#ffdf70;font-weight:bold;cursor:pointer;}
-.estado{color:#ffdf70;font-weight:bold;}
+button{
+    margin-top:15px;
+    padding:12px 25px;
+    border:none;
+    border-radius:25px;
+    background:#8d99ae;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.estado{
+    color:#8d99ae;
+    font-weight:bold;
+}
 </style>
 </head>
 
@@ -38,86 +51,125 @@ button{margin-top:15px;padding:12px 25px;border:none;border-radius:25px;backgrou
 
 </div>
 
-<script>
-function guardar() {
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
+import { getFirestore, collection, getDocs, updateDoc, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCaLuLg_Tp-0bgzpB1DiPR7VmIrmLLFFSM",
+  authDomain: "elcallejondelbarbero-54.firebaseapp.com",
+  projectId: "elcallejondelbarbero-54",
+  storageBucket: "elcallejondelbarbero-54.firebasestorage.app",
+  messagingSenderId: "1002549966536",
+  appId: "1:1002549966536:web:d805a8e535d25198a257fd",
+  measurementId: "G-EQBV95SNJV"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+window.guardar = async function() {
     const dias = ["lunes","martes","miercoles","jueves","viernes","sabado","domingo"];
 
-    dias.forEach(dia => {
-        const valor = document.getElementById(dia).value.trim();
-
-        if (valor) {
-            localStorage.setItem(dia, valor);
-        } else {
-            localStorage.removeItem(dia);
-        }
-    });
-
-    alert("Citas guardadas correctamente");
-}
-
-function cargarHorarios() {
-    const dias = ["lunes","martes","miercoles","jueves","viernes","sabado","domingo"];
+    const horarios = {};
 
     dias.forEach(dia => {
-        const valor = localStorage.getItem(dia);
-        if (valor) {
-            document.getElementById(dia).value = valor;
-        }
+        horarios[dia] = document.getElementById(dia).value.trim();
     });
+
+    try {
+        await setDoc(doc(db, "configuracion", "horarios"), horarios);
+        alert("Citas guardadas correctamente en Firebase");
+    } catch (error) {
+        console.error(error);
+        alert("Error al guardar horarios");
+    }
 }
 
-function cargarClientes() {
+async function cargarHorarios() {
+    try {
+        const referencia = doc(db, "configuracion", "horarios");
+        const documento = await getDoc(referencia);
+
+        if (!documento.exists()) return;
+
+        const horarios = documento.data();
+
+        Object.keys(horarios).forEach(dia => {
+            const input = document.getElementById(dia);
+            if (input) {
+                input.value = horarios[dia];
+            }
+        });
+
+    } catch (error) {
+        console.error(error);
+        alert("Error al cargar horarios");
+    }
+}
+    
+async function cargarClientes() {
     const contenedor = document.getElementById("listaClientes");
-    contenedor.innerHTML = "";
+    contenedor.innerHTML = "<p>Cargando clientes...</p>";
 
-    const cliente = JSON.parse(localStorage.getItem("clientePerfil"));
+    const querySnapshot = await getDocs(collection(db, "clientes"));
 
-    if (!cliente) {
+    if (querySnapshot.empty) {
         contenedor.innerHTML = "<p>No hay clientes registrados.</p>";
         return;
     }
 
-    contenedor.innerHTML = `
-        <div class="cliente">
-            <p><strong>Nombre:</strong> ${cliente.nombre}</p>
-            <p><strong>WhatsApp:</strong> ${cliente.telefono}</p>
-            <p><strong>Correo:</strong> ${cliente.correo || "No registrado"}</p>
-            <p><strong>Estado:</strong> <span class="estado">${cliente.estado}</span></p>
+    contenedor.innerHTML = "";
 
-            <button onclick="aprobarCliente()">Aprobar cliente</button>
-            <button onclick="rechazarCliente()">Rechazar cliente</button>
-        </div>
-    `;
+    querySnapshot.forEach((documento) => {
+        const cliente = documento.data();
+        const id = documento.id;
+
+        contenedor.innerHTML += `
+            <div class="cliente">
+                <p><strong>Nombre:</strong> ${cliente.nombre || "Sin nombre"}</p>
+                <p><strong>WhatsApp:</strong> ${cliente.telefono || "No registrado"}</p>
+                <p><strong>Correo:</strong> ${cliente.correo || "No registrado"}</p>
+                <p><strong>Nacimiento:</strong> ${cliente.fechaNacimiento || "No registrado"}</p>
+                <p><strong>Estado:</strong> <span class="estado">${cliente.estado || "Pendiente"}</span></p>
+
+                <button onclick="aprobarCliente('${id}')">Aprobar cliente</button>
+                <button onclick="rechazarCliente('${id}')">Rechazar cliente</button>
+            </div>
+        `;
+    });
 }
 
-function aprobarCliente() {
-    const cliente = JSON.parse(localStorage.getItem("clientePerfil"));
+window.aprobarCliente = async function(id) {
+    try {
+        await updateDoc(doc(db, "clientes", id), {
+            estado: "Aprobado",
+            mensajeAdmin: "Tu cuenta fue aprobada ✅ Ya puedes usar tu perfil."
+        });
 
-    if (!cliente) {
-        alert("No hay cliente registrado");
-        return;
+        alert("Cliente aprobado");
+        cargarClientes();
+
+    } catch (error) {
+        console.error(error);
+        alert("Error al aprobar cliente");
     }
-
-    cliente.estado = "Aprobado";
-    localStorage.setItem("clientePerfil", JSON.stringify(cliente));
-
-    alert("Cliente aprobado");
-    cargarClientes();
 }
 
-function rechazarCliente() {
-    const cliente = JSON.parse(localStorage.getItem("clientePerfil"));
+window.rechazarCliente = async function(id) {
+    try {
+        await updateDoc(doc(db, "clientes", id), {
+            estado: "Rechazado",
+            mensajeAdmin: "Tu cuenta no fue aprobada por el momento. Puedes seguir agendando por WhatsApp."
+        });
 
-    if (!cliente) {
-        alert("No hay cliente registrado");
-        return;
+        alert("Cliente rechazado");
+        cargarClientes();
+
+    } catch (error) {
+        console.error(error);
+        alert("Error al rechazar cliente");
     }
-
-    cliente.estado = "Rechazado";
-    localStorage.setItem("clientePerfil", JSON.stringify(cliente));
-
-    alert("Cliente rechazado");
-    cargarClientes();
 }
 
 window.onload = function() {
