@@ -803,7 +803,8 @@ Solicita una cita para días posteriores. Quedará pendiente de confirmación.
         <input id="nombreCliente" placeholder="Nombre completo" style="width:90%; padding:12px; margin:8px; border-radius:12px; border:none;">
         <input id="telefonoCliente" placeholder="WhatsApp" style="width:90%; padding:12px; margin:8px; border-radius:12px; border:none;">
         <input id="correoCliente" placeholder="Correo" style="width:90%; padding:12px; margin:8px; border-radius:12px; border:none;">
-
+        <input id="fechaNacimiento" type="date" style="width:90%; padding:12px; margin:8px; border-radius:12px; border:none;">
+        <input id="passwordCliente" placeholder="Contraseña" type="password"  style="width:90%; padding:12px; margin:8px; border-radius:12px; border:none;">
         <button class="btn" onclick="crearCuentaDemo()">Crear cuenta</button>
 
         <p id="estadoCuenta" style="margin-top:15px;"></p>
@@ -1216,28 +1217,74 @@ Entiendo que esta cita queda pendiente de confirmación.`;
     window.open(url, "_blank");
 }
 
-function crearCuentaDemo() {
+async function crearCuentaDemo() {
     const nombre = document.getElementById("nombreCliente").value;
     const telefono = document.getElementById("telefonoCliente").value;
     const correo = document.getElementById("correoCliente").value;
+    const password = document.getElementById("passwordCliente").value;
+    const fechaNacimiento = document.getElementById("fechaNacimiento").value;
 
-    if (!nombre || !telefono) {
-        alert("Agrega nombre y WhatsApp");
+    if (!nombre || !telefono || !correo || !password || !fechaNacimiento) {
+        alert("Completa todos los campos");
         return;
     }
 
-    const cliente = {
-        nombre,
-        telefono,
-        correo,
-        estado: "Pendiente de aprobación"
-    };
+    try {
 
-    localStorage.setItem("clientePerfil", JSON.stringify(cliente));
+        const userCredential = await window.createUserWithEmailAndPassword(window.auth, correo, password);
 
-    document.getElementById("estadoCuenta").innerText =
-        "Perfil creado. Queda pendiente de aprobación por el dueño.";
+        await window.addDoc(window.collection(window.db, "clientes"), {
+            uid: userCredential.user.uid,
+            nombre: nombre,
+            telefono: telefono,
+            correo: correo,
+            fechaNacimiento: fechaNacimiento,
+            estado: "Pendiente",
+            fechaRegistro: new Date()
+        });
+
+        document.getElementById("estadoCuenta").innerText =
+            "Cuenta creada. Esperando aprobación.";
+
+        alert("Cuenta creada correctamente");
+
+    } catch (error) {
+        console.error(error);
+        alert("Error: " + error.message);
+    }
 }
+
+</script>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs, updateDoc, doc } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCaLuLg_Tp-0bgzpB1DiPR7VmIrmLLFFSM",
+  authDomain: "elcallejondelbarbero-54.firebaseapp.com",
+  projectId: "elcallejondelbarbero-54",
+  storageBucket: "elcallejondelbarbero-54.firebasestorage.app",
+  messagingSenderId: "1002549966536",
+  appId: "1:1002549966536:web:d805a8e535d25198a257fd",
+  measurementId: "G-EQBV95SNJV"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+
+window.db = db;
+window.auth = auth;
+window.collection = collection;
+window.addDoc = addDoc;
+window.getDocs = getDocs;
+window.updateDoc = updateDoc;
+window.doc = doc;
+window.createUserWithEmailAndPassword = createUserWithEmailAndPassword;
+window.signInWithEmailAndPassword = signInWithEmailAndPassword;
 </script>
 
 </body>
