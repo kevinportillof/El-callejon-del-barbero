@@ -575,7 +575,12 @@ window.renderClientes = function(){
     const telefonoLimpio = String(cliente.telefono || "").replace(/\D/g, "");
 
     return `
-      <article class="client">
+    
+      const cumpleHoy = esCumpleHoy(cliente.fechaNacimiento);
+
+return `
+      
+  <article class="client" style="${cumpleHoy ? 'border:1px solid #f3c969; box-shadow:0 0 20px rgba(243,201,105,.25);' : ''}">
         <div class="client-top">
           <div>
             <h3>${cliente.nombre || "Sin nombre"}</h3>
@@ -761,9 +766,10 @@ window.cargarCitas = async function(){
 });
 
   contenedor.innerHTML = citas.map(cita => `
-    <div class="client">
-      <h3>${cita.cliente}</h3>
-      <p>${cita.fecha} - ${cita.hora}</p>
+  
+   ${cumpleHoy ? '<p style="color:#f3c969;font-weight:800;">🎂 Cumpleaños hoy</p>' : ''}
+<h3>${cliente.nombre || "Sin nombre"}</h3>
+    
 
       <button onclick="mandarRecordatorio('${cita.id}')">Recordatorio</button>
       <button onclick="cancelarCita('${cita.id}')">Cancelar</button>
