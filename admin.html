@@ -325,6 +325,26 @@ button:disabled{opacity:.5;cursor:not-allowed;transform:none}
     <div class="stat"><span>Pendientes</span><strong id="totalPendientes">0</strong></div>
     <div class="stat"><span>Aprobados</span><strong id="totalAprobados">0</strong></div>
     <div class="stat"><span>Rechazados</span><strong id="totalRechazados">0</strong></div>
+    <div class="section" style="grid-column:1/-1;">
+  <div class="section-head">
+    <div>
+      <h2>Agenda de citas</h2>
+      <p>Agrega citas, cancela y manda recordatorios.</p>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <input id="citaCliente" placeholder="Nombre del cliente">
+    <input id="citaTelefono" placeholder="WhatsApp del cliente">
+    <input id="citaFecha" type="date">
+    <input id="citaHora" type="time">
+    <input id="citaServicio" placeholder="Servicio">
+
+    <button class="btn-primary" onclick="agregarCita()">Agregar cita</button>
+
+    <div id="listaCitas" class="client-list" style="margin-top:20px;"></div>
+  </div>
+</div>
   </section>
 
   <section class="grid">
@@ -396,7 +416,8 @@ import {
   doc,
   setDoc,
   getDoc,
-  serverTimestamp
+  serverTimestamp, 
+  addDoc
 } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -413,6 +434,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const dias = ["lunes","martes","miercoles","jueves","viernes","sabado","domingo"];
 let clientes = [];
+let citas = [];
 
 function mostrarToast(mensaje){
   const toast = document.getElementById("toast");
@@ -667,10 +689,70 @@ window.rechazarCliente = function(id){
 window.ponerPendiente = function(id){
   cambiarEstadoCliente(id, "Pendiente", "Tu cuenta está en revisión. Espera la aprobación del administrador.");
 };
+
+  window.agregarCita = async function(){
+  const cita = {
+    cliente: document.getElementById("citaCliente").value.trim(),
+    telefono: document.getElementById("citaTelefono").value.trim(),
+    fecha: document.getElementById("citaFecha").value,
+    hora: document.getElementById("citaHora").value,
+    servicio: document.getElementById("citaServicio").value || "Corte",
+    estado: "Confirmada",
+    creadaEn: serverTimestamp()
+  };
+
+  if(!cita.cliente || !cita.telefono || !cita.fecha || !cita.hora){
+    alert("Faltan datos");
+    return;
+  }
+
+  await addDoc(collection(db, "citas"), cita);
+
+  mostrarToast("Cita agregada");
+  cargarCitas();
+};
+
+window.cargarCitas = async function(){
+  const contenedor = document.getElementById("listaCitas");
+
+  const querySnapshot = await getDocs(collection(db, "citas"));
+  citas = [];
+
+  querySnapshot.forEach(doc => {
+    citas.push({ id: doc.id, ...doc.data() });
+  });
+
+  contenedor.innerHTML = citas.map(cita => `
+    <div class="client">
+      <h3>${cita.cliente}</h3>
+      <p>${cita.fecha} - ${cita.hora}</p>
+
+      <button onclick="mandarRecordatorio('${cita.id}')">Recordatorio</button>
+      <button onclick="cancelarCita('${cita.id}')">Cancelar</button>
+    </div>
+  `).join("");
+};
+
+window.mandarRecordatorio = function(id){
+  const cita = citas.find(c => c.id === id);
+  abrirWhatsApp(cita.telefono, `Hola ${cita.cliente}, te recordamos tu cita el ${cita.fecha} a las ${cita.hora}`);
+};
+
+window.cancelarCita = async function(id){
+  const cita = citas.find(c => c.id === id);
+
+  await updateDoc(doc(db, "citas", id), {
+    estado: "Cancelada"
+  });
+
+  abrirWhatsApp(cita.telefono, "Tu cita fue cancelada");
+  cargarCitas();
+};
   
 window.addEventListener("load", () => {
   cargarHorarios();
   cargarClientes();
+  cargarCitas();
 });
 </script>
 </body>
