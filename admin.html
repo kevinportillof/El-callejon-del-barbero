@@ -304,7 +304,29 @@ button:disabled{opacity:.5;cursor:not-allowed;transform:none}
   .toolbar{grid-template-columns:1fr}
   .stats{grid-template-columns:1fr 1fr}
   .stat strong{font-size:24px}
+.menu-admin{
+  max-width:1200px;
+  margin:20px auto 0;
+  padding:0 20px;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
 }
+
+.menu-admin button{
+  background:#1b1b1b;
+  color:white;
+  border:1px solid #333;
+}
+
+.seccion-admin{
+  display:none;
+}
+
+.seccion-admin.activa{
+  display:block;
+}
+  
 </style>
 </head>
 
@@ -317,6 +339,13 @@ button:disabled{opacity:.5;cursor:not-allowed;transform:none}
     </div>
     <div class="badge">Conectado a Firebase</div>
   </div>
+  <nav class="menu-admin">
+  <button onclick="mostrarSeccion('clientes')">Clientes</button>
+  <button onclick="mostrarSeccion('solicitudes')">Solicitudes</button>
+  <button onclick="mostrarSeccion('horarios')">Horarios</button>
+  <button onclick="mostrarSeccion('agenda')">Agenda</button>
+  <button onclick="mostrarSeccion('recordatorios')">Recordatorios</button>
+</nav>
 </header>
 
 <main class="layout">
@@ -328,83 +357,109 @@ button:disabled{opacity:.5;cursor:not-allowed;transform:none}
     
   </section>
 
-  <section class="grid">
-    <div class="section">
-      <div class="section-head">
-        <div>
-          <h2>Horarios disponibles</h2>
-          <p>Escribe las horas separadas por diagonal. Ejemplo: 4/5/6/7</p>
-        </div>
-      </div>
-
-      <div class="section-body">
-        <div class="days">
-          <div class="day"><label for="lunes">Lunes</label><input id="lunes" type="text" placeholder="Ej: 4/5/6/7"></div>
-          <div class="day"><label for="martes">Martes</label><input id="martes" type="text" placeholder="Ej: 4/5/6/7"></div>
-          <div class="day"><label for="miercoles">Miércoles</label><input id="miercoles" type="text" placeholder="Ej: 4/5/6/7"></div>
-          <div class="day"><label for="jueves">Jueves</label><input id="jueves" type="text" placeholder="Ej: 4/5/6/7"></div>
-          <div class="day"><label for="viernes">Viernes</label><input id="viernes" type="text" placeholder="Ej: 4/5/6/7"></div>
-          <div class="day"><label for="sabado">Sábado</label><input id="sabado" type="text" placeholder="Ej: 11/12/1/3/5"></div>
-          <div class="day"><label for="domingo">Domingo</label><input id="domingo" type="text" placeholder="Ej: Cerrado o 4/5/6"></div>
-        </div>
-
-        <p class="help">Tip: si un día no trabajas, escribe “Cerrado”. Después podemos convertir esto a botones por hora para que el cliente seleccione su cita.</p>
-
-        <div class="actions">
-          <button class="btn-primary" id="btnGuardar" onclick="guardarHorarios()">Guardar horarios</button>
-          <button class="btn-secondary" onclick="cargarHorarios()">Recargar</button>
-          <button class="btn-secondary" onclick="limpiarHorarios()">Limpiar campos</button>
-        </div>
+<section id="horarios" class="seccion-admin activa">
+  <div class="section">
+    <div class="section-head">
+      <div>
+        <h2>Horarios disponibles</h2>
+        <p>Escribe las horas separadas por diagonal. Ejemplo: 4/5/6/7</p>
       </div>
     </div>
 
-    <div class="section">
-      <div class="section-head">
-        <div>
-          <h2>Clientes registrados</h2>
-          <p>Aprueba o rechaza cuentas desde aquí.</p>
-        </div>
+    <div class="section-body">
+      <div class="days">
+        <div class="day"><label for="lunes">Lunes</label><input id="lunes" type="text" placeholder="Ej: 4/5/6/7"></div>
+        <div class="day"><label for="martes">Martes</label><input id="martes" type="text" placeholder="Ej: 4/5/6/7"></div>
+        <div class="day"><label for="miercoles">Miércoles</label><input id="miercoles" type="text" placeholder="Ej: 4/5/6/7"></div>
+        <div class="day"><label for="jueves">Jueves</label><input id="jueves" type="text" placeholder="Ej: 4/5/6/7"></div>
+        <div class="day"><label for="viernes">Viernes</label><input id="viernes" type="text" placeholder="Ej: 4/5/6/7"></div>
+        <div class="day"><label for="sabado">Sábado</label><input id="sabado" type="text" placeholder="Ej: 11/12/1/3/5"></div>
+        <div class="day"><label for="domingo">Domingo</label><input id="domingo" type="text" placeholder="Ej: Cerrado o 4/5/6"></div>
       </div>
 
-      <div class="section-body">
-        <div class="toolbar">
-          <input id="buscador" type="search" placeholder="Buscar por nombre, correo o WhatsApp..." oninput="renderClientes()">
-          <select id="filtroEstado" onchange="renderClientes()">
-            <option value="todos">Todos</option>
-            <option value="Pendiente">Pendientes</option>
-            <option value="Aprobado">Aprobados</option>
-            <option value="Rechazado">Rechazados</option>
-          </select>
-        </div>
-
-        <div id="listaClientes" class="client-list">
-          <div class="loading">Cargando clientes...</div>
-        </div>
+      <div class="actions">
+        <button class="btn-primary" id="btnGuardar" onclick="guardarHorarios()">Guardar horarios</button>
+        <button class="btn-secondary" onclick="cargarHorarios()">Recargar</button>
+        <button class="btn-secondary" onclick="limpiarHorarios()">Limpiar campos</button>
       </div>
-    </div>
-
-    <div class="section" style="grid-column:1/-1;">
-  <div class="section-head">
-    <div>
-      <h2>Agenda de citas</h2>
-      <p>Agrega citas, cancela y manda recordatorios.</p>
     </div>
   </div>
+</section>
 
-  <div class="section-body">
-    <input id="citaCliente" placeholder="Nombre del cliente">
-    <input id="citaTelefono" placeholder="WhatsApp del cliente">
-    <input id="citaFecha" type="date">
-    <input id="citaHora" type="time">
-    <input id="citaServicio" placeholder="Servicio">
-
-    <button class="btn-primary" onclick="agregarCita()">Agregar cita</button>
-
-    <div id="listaCitas" class="client-list" style="margin-top:20px;"></div>
+<section id="clientes" class="seccion-admin">
+  <div class="section">
+    <div class="section-head">
+      <div>
+        <h2>Clientes aprobados</h2>
+        <p>Clientes que ya tienen acceso.</p>
+      </div>
+    </div>
+    <div class="section-body">
+      <div id="listaClientesAprobados" class="client-list"></div>
+    </div>
   </div>
-</div>
-    
-  </section>
+</section>
+
+<section id="solicitudes" class="seccion-admin">
+  <div class="section">
+    <div class="section-head">
+      <div>
+        <h2>Solicitudes pendientes</h2>
+        <p>Aprueba o deniega cuentas desde aquí.</p>
+      </div>
+    </div>
+    <div class="section-body">
+      <div id="listaSolicitudes" class="client-list"></div>
+    </div>
+  </div>
+</section>
+
+<section id="agenda" class="seccion-admin">
+  <div class="section">
+    <div class="section-head">
+      <div>
+        <h2>Agenda de citas</h2>
+        <p>Agrega citas de clientes registrados.</p>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <select id="citaClienteSelect" onchange="rellenarClienteCita()">
+        <option value="">Selecciona cliente registrado</option>
+      </select>
+
+      <input id="citaCliente" placeholder="Nombre del cliente">
+      <input id="citaTelefono" placeholder="WhatsApp del cliente">
+      <input id="citaFecha" type="date">
+      <input id="citaHora" type="time">
+      <input id="citaServicio" placeholder="Servicio">
+
+      <button class="btn-primary" onclick="agregarCita()">Agregar cita</button>
+
+      <h3 style="margin-top:25px;">Agenda semanal</h3>
+      <div id="listaCitas" class="client-list"></div>
+    </div>
+  </div>
+</section>
+
+<section id="recordatorios" class="seccion-admin">
+  <div class="section">
+    <div class="section-head">
+      <div>
+        <h2>Recordatorios</h2>
+        <p>Citas de hoy y mañana.</p>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <h3>Citas de hoy</h3>
+      <div id="citasHoy" class="client-list"></div>
+
+      <h3 style="margin-top:25px;">Citas de mañana</h3>
+      <div id="citasManana" class="client-list"></div>
+    </div>
+  </div>
+</section>
 </main>
 
 <div id="toast" class="toast"></div>
@@ -528,8 +583,9 @@ async function cargarClientes(){
       clientes.push({ id: documento.id, ...documento.data() });
     });
 
-    actualizarEstadisticas();
-    renderClientes();
+ actualizarEstadisticas();
+llenarSelectClientes();
+renderClientes();
   }catch(error){
     console.error(error);
     contenedor.innerHTML = '<div class="empty">No se pudieron cargar los clientes. Revisa reglas de Firebase.</div>';
@@ -549,18 +605,110 @@ function esCumpleHoy(fechaNacimiento){
 
   return hoy.getMonth() + 1 === mes && hoy.getDate() === dia;
 }
-  
-window.renderClientes = function(){
-  const contenedor = document.getElementById("listaClientes");
-  const busqueda = document.getElementById("buscador").value.toLowerCase().trim();
-  const filtro = document.getElementById("filtroEstado").value;
 
-  let lista = clientes.filter(cliente => {
-    const estado = normalizarEstado(cliente.estado);
-    const texto = `${cliente.nombre || ""} ${cliente.telefono || ""} ${cliente.correo || ""}`.toLowerCase();
-    return texto.includes(busqueda) && (filtro === "todos" || estado === filtro);
+function fechaHoy(){
+  return new Date().toISOString().split("T")[0];
+}
+
+function fechaManana(){
+  const manana = new Date();
+  manana.setDate(manana.getDate() + 1);
+  return manana.toISOString().split("T")[0];
+}
+
+function fechaEn7Dias(){
+  const fecha = new Date();
+  fecha.setDate(fecha.getDate() + 7);
+  return fecha.toISOString().split("T")[0];
+}
+
+function llenarSelectClientes(){
+  const select = document.getElementById("citaClienteSelect");
+  if(!select) return;
+
+  const aprobados = clientes.filter(c => normalizarEstado(c.estado) === "Aprobado");
+
+  select.innerHTML = `<option value="">Selecciona cliente registrado</option>` + aprobados.map(cliente => `
+    <option value="${cliente.id}">
+      ${cliente.nombre || "Sin nombre"} - ${cliente.telefono || "Sin teléfono"}
+    </option>
+  `).join("");
+}
+
+window.rellenarClienteCita = function(){
+  const id = document.getElementById("citaClienteSelect").value;
+  const cliente = clientes.find(c => c.id === id);
+
+  if(!cliente) return;
+
+  document.getElementById("citaCliente").value = cliente.nombre || "";
+  document.getElementById("citaTelefono").value = cliente.telefono || "";
+};
+
+window.mostrarSeccion = function(seccion){
+  document.querySelectorAll(".seccion-admin").forEach(div => {
+    div.classList.remove("activa");
   });
 
+  document.getElementById(seccion).classList.add("activa");
+};
+  
+window.renderClientes = function(){
+  const aprobados = clientes.filter(c => normalizarEstado(c.estado) === "Aprobado");
+  const pendientes = clientes.filter(c => normalizarEstado(c.estado) === "Pendiente");
+
+  document.getElementById("listaClientesAprobados").innerHTML = renderListaClientes(aprobados, false);
+  document.getElementById("listaSolicitudes").innerHTML = renderListaClientes(pendientes, true);
+};
+
+function renderListaClientes(lista, mostrarAcciones){
+  if(lista.length === 0){
+    return `<div class="empty">No hay registros.</div>`;
+  }
+
+  lista.sort((a, b) => {
+    return esCumpleHoy(b.fechaNacimiento) - esCumpleHoy(a.fechaNacimiento);
+  });
+
+  return lista.map(cliente => {
+    const estado = normalizarEstado(cliente.estado);
+    const telefonoLimpio = String(cliente.telefono || "").replace(/\D/g, "");
+    const cumpleHoy = esCumpleHoy(cliente.fechaNacimiento);
+
+    return `
+      <article class="client" style="${cumpleHoy ? 'border:1px solid #f3c969; box-shadow:0 0 20px rgba(243,201,105,.25);' : ''}">
+        <div class="client-top">
+          <div>
+            ${cumpleHoy ? '<p style="color:#f3c969;font-weight:800;">🎂 Cumpleaños hoy</p>' : ''}
+            <h3>${cliente.nombre || "Sin nombre"}</h3>
+            <p><strong>WhatsApp:</strong> ${cliente.telefono || "No registrado"}</p>
+            <p><strong>Correo:</strong> ${cliente.correo || "No registrado"}</p>
+            <p><strong>Nacimiento:</strong> ${cliente.fechaNacimiento || "No registrado"}</p>
+          </div>
+          <span class="status ${claseEstado(estado)}">${estado}</span>
+        </div>
+
+        <div class="actions">
+          ${mostrarAcciones ? `
+            <button class="btn-success" onclick="aprobarCliente('${cliente.id}')">Aprobar</button>
+            <button class="btn-danger" onclick="rechazarCliente('${cliente.id}')">Denegar</button>
+          ` : ""}
+
+          ${telefonoLimpio ? `
+            <button class="btn-whatsapp" onclick="mandarMensajeAprobacion('${cliente.id}')">Avisar aprobación</button>
+            <button class="btn-danger" onclick="mandarMensajeRechazo('${cliente.id}')">Avisar denegación</button>
+            <button class="${cumpleHoy ? 'btn-primary' : 'btn-secondary'}"
+              onclick="mandarMensajeCumple('${cliente.id}')"
+              ${cumpleHoy ? '' : 'disabled'}>
+              ${cumpleHoy ? 'Felicitar' : 'Cumple no activo'}
+            </button>
+          ` : ""}
+        </div>
+      </article>
+    `;
+  }).join("");
+}
+  
   lista.sort((a, b) => {
     return esCumpleHoy(b.fechaNacimiento) - esCumpleHoy(a.fechaNacimiento);
   });
@@ -739,7 +887,9 @@ document.getElementById("citaServicio").value = "";
 };
 
 window.cargarCitas = async function(){
-  const contenedor = document.getElementById("listaCitas");
+  const contenedorSemana = document.getElementById("listaCitas");
+  const contenedorHoy = document.getElementById("citasHoy");
+  const contenedorManana = document.getElementById("citasManana");
 
   const querySnapshot = await getDocs(collection(db, "citas"));
   citas = [];
@@ -749,29 +899,55 @@ window.cargarCitas = async function(){
   });
 
   citas.sort((a,b) => {
-  return `${a.fecha} ${a.hora}`.localeCompare(`${b.fecha} ${b.hora}`);
-});
-  
-contenedor.innerHTML = citas.map(cita => `
-  <div class="client">
-    <h3>${cita.cliente}</h3>
-    <p><strong>Fecha:</strong> ${cita.fecha}</p>
-    <p><strong>Hora:</strong> ${cita.hora}</p>
-    <p><strong>Servicio:</strong> ${cita.servicio}</p>
-    <p><strong>Estado:</strong> ${cita.estado}</p>
+    return `${a.fecha} ${a.hora}`.localeCompare(`${b.fecha} ${b.hora}`);
+  });
 
-    <div class="actions">
-      <button class="btn-whatsapp" onclick="mandarRecordatorio('${cita.id}')">
-        Recordatorio
-      </button>
+  const hoy = fechaHoy();
+  const manana = fechaManana();
+  const limiteSemana = fechaEn7Dias();
 
-      <button class="btn-danger" onclick="cancelarCita('${cita.id}')">
-        Cancelar
-      </button>
-    </div>
-  </div>
-`).join("");
+  const citasHoy = citas.filter(c => c.fecha === hoy && c.estado !== "Cancelada");
+  const citasManana = citas.filter(c => c.fecha === manana && c.estado !== "Cancelada");
+  const citasSemana = citas.filter(c => c.fecha >= hoy && c.fecha <= limiteSemana);
+
+  contenedorHoy.innerHTML = renderCitas(citasHoy, false);
+  contenedorManana.innerHTML = renderCitas(citasManana, true);
+  contenedorSemana.innerHTML = renderCitas(citasSemana, false);
 };
+
+  function renderCitas(lista, permitirRecordatorio){
+  if(lista.length === 0){
+    return `<div class="empty">No hay citas registradas.</div>`;
+  }
+
+  return lista.map(cita => {
+    const puedeRecordar = permitirRecordatorio && cita.estado !== "Cancelada";
+
+    return `
+      <div class="client" style="${cita.estado === 'Cancelada' ? 'opacity:.5; border:1px solid #e57373;' : ''}">
+        <h3>${cita.cliente}</h3>
+        <p><strong>Fecha:</strong> ${cita.fecha}</p>
+        <p><strong>Hora:</strong> ${cita.hora}</p>
+        <p><strong>Servicio:</strong> ${cita.servicio}</p>
+        <p><strong>Estado:</strong> ${cita.estado}</p>
+
+        <div class="actions">
+          <button class="btn-whatsapp"
+            onclick="mandarRecordatorio('${cita.id}')"
+            ${puedeRecordar ? '' : 'disabled'}>
+            ${puedeRecordar ? 'Mandar recordatorio' : 'Recordatorio no activo'}
+          </button>
+
+          <button class="btn-danger"
+            onclick="cancelarCita('${cita.id}')"
+            ${cita.estado === 'Cancelada' ? 'disabled' : ''}>
+            ${cita.estado === 'Cancelada' ? 'Cancelada' : 'Cancelar'}
+          </button>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
   
 window.mandarRecordatorio = function(id){
   const cita = citas.find(c => c.id === id);
