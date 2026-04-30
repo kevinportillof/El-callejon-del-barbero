@@ -775,17 +775,32 @@ contenedor.innerHTML = citas.map(cita => `
   
 window.mandarRecordatorio = function(id){
   const cita = citas.find(c => c.id === id);
-  abrirWhatsApp(cita.telefono, `Hola ${cita.cliente}, te recordamos tu cita el ${cita.fecha} a las ${cita.hora}`);
+ abrirWhatsApp(cita.telefono, `Hola ${cita.cliente}.
+
+Te recordamos tu cita en El Callejón del Barbero 💈
+
+Fecha: ${cita.fecha}
+Hora: ${cita.hora}
+Servicio: ${cita.servicio}
+
+Te esperamos.`);
 };
 
 window.cancelarCita = async function(id){
+  const confirmar = confirm("¿Seguro que quieres cancelar esta cita?");
+  if(!confirmar) return;
+  
   const cita = citas.find(c => c.id === id);
 
   await updateDoc(doc(db, "citas", id), {
     estado: "Cancelada"
   });
 
-  abrirWhatsApp(cita.telefono, "Tu cita fue cancelada");
+  abrirWhatsApp(cita.telefono, `Hola ${cita.cliente}.
+
+Tu cita en El Callejón del Barbero fue cancelada.
+
+Si deseas reagendar, puedes escribirnos nuevamente.`);
   cargarCitas();
 };
   
