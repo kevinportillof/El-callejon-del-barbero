@@ -664,39 +664,41 @@ window.renderClientes = function(){
   document.getElementById("listaClientesAprobados").innerHTML = renderListaClientes(aprobados, false);
   document.getElementById("listaSolicitudes").innerHTML = renderListaClientes(pendientes, true);
 };
+  function renderListaClientes(lista, mostrarAcciones){
+  if(lista.length === 0){
+    return `<div class="empty">No hay registros.</div>`;
+  }
 
-return `
-  <article class="client" style="${cumpleHoy ? 'border:1px solid #f3c969; box-shadow:0 0 20px rgba(243,201,105,.25);' : ''}">
-    <div class="client-top">
-      <div>
-        ${cumpleHoy ? '<p style="color:#f3c969;font-weight:800;">🎂 Cumpleaños hoy</p>' : ''}
-        <h3>${cliente.nombre || "Sin nombre"}</h3>
-        <p><strong>WhatsApp:</strong> ${cliente.telefono || "No registrado"}</p>
-        <p><strong>Correo:</strong> ${cliente.correo || "No registrado"}</p>
-        <p><strong>Nacimiento:</strong> ${cliente.fechaNacimiento || "No registrado"}</p>
-      </div>
-      <span class="status ${claseEstado(estado)}">${estado}</span>
-    </div>
+  lista.sort((a, b) => {
+    return esCumpleHoy(b.fechaNacimiento) - esCumpleHoy(a.fechaNacimiento);
+  });
 
-    <div class="actions">
-    ${mostrarAcciones ? `
-        <button class="btn-success" onclick="aprobarCliente('${cliente.id}')">Aprobar</button>
-        <button class="btn-danger" onclick="rechazarCliente('${cliente.id}')">Denegar</button>
-      ` : ""}
+  return lista.map(cliente => {
+    const estado = normalizarEstado(cliente.estado);
+    const telefonoLimpio = String(cliente.telefono || "").replace(/\D/g, "");
+    const cumpleHoy = esCumpleHoy(cliente.fechaNacimiento);
 
-      ${telefonoLimpio ? `
-        <button class="btn-whatsapp" onclick="mandarMensajeAprobacion('${cliente.id}')">Avisar aprobación</button>
-        <button class="btn-danger" onclick="mandarMensajeRechazo('${cliente.id}')">Avisar denegación</button>
-        <button class="${cumpleHoy ? 'btn-primary' : 'btn-secondary'}"
-          onclick="mandarMensajeCumple('${cliente.id}')"
-          ${cumpleHoy ? '' : 'disabled'}>
-          ${cumpleHoy ? 'Felicitar' : 'Cumple no activo'}
-        </button>
-      ` : ""}
-    </div>
-  </article>
-`;
+    return `
+    <article class="client">
+        <div class="client-top">
+          <div>
+            ${cumpleHoy ? '<p style="color:#f3c969;">🎂 Cumpleaños hoy</p>' : ''}
+            <h3>${cliente.nombre || "Sin nombre"}</h3>
+            <p><strong>WhatsApp:</strong> ${cliente.telefono || "No registrado"}</p>
+          </div>
+          <span class="status ${claseEstado(estado)}">${estado}</span>
+        </div>
 
+        <div class="actions">
+          ${mostrarAcciones ? `
+            <button class="btn-success" onclick="aprobarCliente('${cliente.id}')">Aprobar</button>
+            <button class="btn-danger" onclick="rechazarCliente('${cliente.id}')">Denegar</button>
+          ` : ""}
+        </div>
+      </article>
+    `;
+  }).join("");
+}
 async function cambiarEstadoCliente(id, estado, mensajeAdmin){
   try{
     
@@ -855,6 +857,7 @@ window.cargarCitas = async function(){
   contenedorManana.innerHTML = renderCitas(citasManana, true);
   contenedorSemana.innerHTML = renderCitas(citasSemana, false);
 };
+
 function renderCitas(lista, permitirRecordatorio){
   if(lista.length === 0){
     return `<div class="empty">No hay citas registradas.</div>`;
@@ -864,28 +867,25 @@ function renderCitas(lista, permitirRecordatorio){
     const puedeRecordar = permitirRecordatorio && cita.estado !== "Cancelada";
 
     return `
-  <div class="client" style="${cita.estado === 'Cancelada' ? 'opacity:.5; border:1px solid #e57373;' : ''}">
-    <h3>${cita.cliente}</h3>
-    <p><strong>Fecha:</strong> ${cita.fecha}</p>
-    <p><strong>Hora:</strong> ${cita.hora}</p>
-    <p><strong>Servicio:</strong> ${cita.servicio}</p>
-    <p><strong>Estado:</strong> ${cita.estado}</p>
+      <div class="client">
+        <h3>${cita.cliente}</h3>
+        <p>${cita.fecha} - ${cita.hora}</p>
 
-    <div class="actions">
-      <button class="btn-whatsapp"
-        onclick="mandarRecordatorio('${cita.id}')"
-        ${puedeRecordar ? '' : 'disabled'}>
-        ${puedeRecordar ? 'Recordatorio' : 'No activo'}
-      </button>
+        <div class="actions">
+          <button class="btn-whatsapp"
+            onclick="mandarRecordatorio('${cita.id}')"
+            ${puedeRecordar ? '' : 'disabled'}>
+            Recordatorio
+          </button>
 
-      <button class="btn-danger"
-        onclick="cancelarCita('${cita.id}')"
-        ${cita.estado === 'Cancelada' ? 'disabled' : ''}>
-        ${cita.estado === 'Cancelada' ? 'Cancelada' : 'Cancelar'}
-      </button>
-    </div>
-  </div>
-`;
+          <button class="btn-danger"
+            onclick="cancelarCita('${cita.id}')"
+            ${cita.estado === 'Cancelada' ? 'disabled' : ''}>
+            Cancelar
+          </button>
+        </div>
+      </div>
+    `;
   }).join("");
 }
   
