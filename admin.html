@@ -533,6 +533,20 @@ async function cargarClientes(){
   }
 }
 
+function esCumpleHoy(fechaNacimiento){
+  if(!fechaNacimiento) return false;
+
+  const hoy = new Date();
+  const partes = String(fechaNacimiento).split("-");
+
+  if(partes.length !== 3) return false;
+
+  const mes = Number(partes[1]);
+  const dia = Number(partes[2]);
+
+  return hoy.getMonth() + 1 === mes && hoy.getDate() === dia;
+}
+  
 window.renderClientes = function(){
   const contenedor = document.getElementById("listaClientes");
   const busqueda = document.getElementById("buscador").value.toLowerCase().trim();
@@ -543,6 +557,51 @@ window.renderClientes = function(){
     const texto = `${cliente.nombre || ""} ${cliente.telefono || ""} ${cliente.correo || ""}`.toLowerCase();
     return texto.includes(busqueda) && (filtro === "todos" || estado === filtro);
   });
+
+  lista.sort((a, b) => {
+    return esCumpleHoy(b.fechaNacimiento) - esCumpleHoy(a.fechaNacimiento);
+  });
+
+  if(lista.length === 0){
+    contenedor.innerHTML = '<div class="empty">No hay clientes con ese filtro.</div>';
+    return;
+  }
+
+  contenedor.innerHTML = lista.map(cliente => {
+    const estado = normalizarEstado(cliente.estado);
+    const telefonoLimpio = String(cliente.telefono || "").replace(/\D/g, "");
+    const cumpleHoy = esCumpleHoy(cliente.fechaNacimiento);
+
+    return `
+      <article class="client" style="${cumpleHoy ? 'border-color:#f3c969; box-shadow:0 0 25px rgba(243,201,105,.20);' : ''}">
+        <div class="client-top">
+          <div>
+            ${cumpleHoy ? '<p style="color:#f3c969;font-weight:800;">Cumpleaños hoy</p>' : ''}
+            <h3>${cliente.nombre || "Sin nombre"}</h3>
+            <p><strong>WhatsApp:</strong> ${cliente.telefono || "No registrado"}</p>
+            <p><strong>Correo:</strong> ${cliente.correo || "No registrado"}</p>
+            <p><strong>Nacimiento:</strong> ${cliente.fechaNacimiento || "No registrado"}</p>
+          </div>
+          <span class="status ${claseEstado(estado)}">${estado}</span>
+        </div>
+
+        <div class="actions">
+          <button class="btn-success" onclick="aprobarCliente('${cliente.id}')">Aprobar</button>
+          <button class="btn-danger" onclick="rechazarCliente('${cliente.id}')">Denegar</button>
+          <button class="btn-secondary" onclick="ponerPendiente('${cliente.id}')">Pendiente</button>
+
+          ${telefonoLimpio ? `
+            <button class="btn-whatsapp" onclick="mandarMensajeAprobacion('${cliente.id}')">Avisar aprobación</button>
+            <button class="btn-danger" onclick="mandarMensajeRechazo('${cliente.id}')">Avisar denegación</button>
+            <button class="${cumpleHoy ? 'btn-primary' : 'btn-secondary'}" onclick="mandarMensajeCumple('${cliente.id}')" ${cumpleHoy ? '' : 'disabled'}>
+              ${cumpleHoy ? 'Felicitar cumpleaños' : 'Cumple no activo'}
+            </button>
+          ` : ""}
+        </div>
+      </article>
+    `;
+  }).join("");
+};
 
   if(lista.length === 0){
     contenedor.innerHTML = '<div class="empty">No hay clientes con ese filtro.</div>';
