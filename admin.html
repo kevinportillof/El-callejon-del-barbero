@@ -501,7 +501,7 @@ button:disabled{opacity:.5;cursor:not-allowed;transform:none}
 </main>
 
 <div id="toast" class="toast"></div>
-
+</div>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
 
@@ -971,8 +971,41 @@ Tu cita en El Callejón del Barbero fue cancelada.
 Si deseas reagendar, puedes escribirnos nuevamente.`);
   cargarCitas();
 };
-  
-window.addEventListener("load", () => {
+  window.loginAdmin = async function(){
+  const correo = document.getElementById("loginCorreo").value.trim();
+  const pass = document.getElementById("loginPass").value.trim();
+
+  if(!correo || !pass){
+    alert("Escribe usuario y contraseña");
+    return;
+  }
+
+  try{
+    await signInWithEmailAndPassword(auth, correo, pass);
+  }catch(error){
+    alert("Usuario o contraseña incorrectos");
+  }
+};
+
+onAuthStateChanged(auth, async (user) => {
+
+  if(!user){
+    document.getElementById("loginBox").style.display = "block";
+    document.getElementById("panelAdmin").style.display = "none";
+    return;
+  }
+
+  const adminDoc = await getDoc(doc(db, "admins", user.uid));
+
+  if(!adminDoc.exists()){
+    alert("No tienes permisos de administrador");
+    await signOut(auth);
+    return;
+  }
+
+  document.getElementById("loginBox").style.display = "none";
+  document.getElementById("panelAdmin").style.display = "block";
+
   cargarHorarios();
   cargarClientes();
   cargarCitas();
