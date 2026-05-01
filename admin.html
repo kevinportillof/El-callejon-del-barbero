@@ -504,6 +504,7 @@ button:disabled{opacity:.5;cursor:not-allowed;transform:none}
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
+
 import {
   getFirestore,
   collection,
@@ -516,6 +517,12 @@ import {
   addDoc
 } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
 
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
 const firebaseConfig = {
   apiKey: "AIzaSyCaLuLg_Tp-0bgzpB1DiPR7VmIrmLLFFSM",
   authDomain: "elcallejondelbarbero-54.firebaseapp.com",
@@ -528,6 +535,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const auth = getAuth(app);
 const dias = ["lunes","martes","miercoles","jueves","viernes","sabado","domingo"];
 let clientes = [];
 let citas = [];
