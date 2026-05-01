@@ -796,6 +796,7 @@ window.ponerPendiente = function(id){
   window.agregarCita = async function(){
   const cita = {
     cliente: document.getElementById("citaCliente").value.trim(),
+    clienteId: document.getElementById("citaClienteSelect").value || null,
     telefono: document.getElementById("citaTelefono").value.trim(),
     fecha: document.getElementById("citaFecha").value,
     hora: document.getElementById("citaHora").value,
@@ -822,11 +823,13 @@ if(citaRepetida){
     
   await addDoc(collection(db, "citas"), cita);
     document.getElementById("citaCliente").value = "";
-document.getElementById("citaTelefono").value = "";
-document.getElementById("citaFecha").value = "";
-document.getElementById("citaHora").value = "";
-document.getElementById("citaServicio").value = "";
+    document.getElementById("citaClienteSelect").value = "";
+    document.getElementById("citaTelefono").value = "";
+    document.getElementById("citaFecha").value = "";
+    document.getElementById("citaHora").value = "";
+    document.getElementById("citaServicio").value = "";
 
+    
   mostrarToast("Cita agregada");
   cargarCitas();
 };
@@ -871,7 +874,9 @@ function renderCitas(lista, permitirRecordatorio){
     return `
       <div class="client">
         <h3>${cita.cliente}</h3>
-        <p>${cita.fecha} - ${cita.hora}</p>
+       <p><strong>Fecha:</strong> ${cita.fecha}</p>
+<p><strong>Hora:</strong> ${cita.hora}</p>
+<p><strong>Servicio:</strong> ${cita.servicio}</p>
 
         <div class="actions">
           <button class="btn-whatsapp"
