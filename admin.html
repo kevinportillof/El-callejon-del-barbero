@@ -632,12 +632,14 @@ function llenarSelectClientes(){
 
   const aprobados = clientes.filter(c => normalizarEstado(c.estado) === "Aprobado");
 
- select.innerHTML = `<option value="">Selecciona cliente registrado</option>` + aprobados.map(cliente => `
-  <option value="${cliente.id}">
-    ${cliente.nombre || "Sin nombre"} - ${cliente.telefono || "Sin teléfono"}
-  </option>
-`).join("");
-  }
+  select.innerHTML =
+    `<option value="">Selecciona cliente registrado</option>` +
+    aprobados.map(cliente => `
+      <option value="${cliente.id}">
+        ${cliente.nombre || "Sin nombre"} - ${cliente.telefono || "Sin teléfono"}
+      </option>
+    `).join("");
+}
 
 window.rellenarClienteCita = function(){
   const id = document.getElementById("citaClienteSelect").value;
