@@ -517,12 +517,7 @@ import {
   addDoc
 } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
 
-import {
-  getAuth,
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
-  signOut
-} from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
+
 const firebaseConfig = {
   apiKey: "AIzaSyCaLuLg_Tp-0bgzpB1DiPR7VmIrmLLFFSM",
   authDomain: "elcallejondelbarbero-54.firebaseapp.com",
@@ -535,7 +530,6 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-const auth = getAuth(app);
 const dias = ["lunes","martes","miercoles","jueves","viernes","sabado","domingo"];
 let clientes = [];
 let citas = [];
@@ -971,45 +965,63 @@ Tu cita en El Callejón del Barbero fue cancelada.
 Si deseas reagendar, puedes escribirnos nuevamente.`);
   cargarCitas();
 };
-  window.loginAdmin = async function(){
-  const correo = document.getElementById("loginCorreo").value.trim();
+  
+window.loginAdmin = async function(){
+  const usuario = document.getElementById("loginUsuario").value.trim().toLowerCase();
   const pass = document.getElementById("loginPass").value.trim();
 
-  if(!correo || !pass){
+  if(!usuario || !pass){
     alert("Escribe usuario y contraseña");
     return;
   }
 
   try{
-    await signInWithEmailAndPassword(auth, correo, pass);
+    const adminsSnap = await getDocs(collection(db, "admins"));
+    let adminValido = null;
+
+    adminsSnap.forEach(docu => {
+      const data = docu.data();
+
+      if(data.usuario === usuario && data.password === pass){
+        adminValido = {
+          id: docu.id,
+          ...data
+        };
+      }
+    });
+
+    if(!adminValido){
+      alert("Usuario o contraseña incorrectos");
+      return;
+    }
+
+    localStorage.setItem("adminActivo", "true");
+    localStorage.setItem("adminNombre", adminValido.nombre || "Administrador");
+
+    document.getElementById("loginBox").style.display = "none";
+    document.getElementById("panelAdmin").style.display = "block";
+
+    cargarHorarios();
+    cargarClientes();
+    cargarCitas();
+    mostrarSeccion("solicitudes");
+
   }catch(error){
-    alert("Usuario o contraseña incorrectos");
+    console.error(error);
+    alert("Error al iniciar sesión");
   }
 };
 
-onAuthStateChanged(auth, async (user) => {
+window.addEventListener("load", () => {
+  if(localStorage.getItem("adminActivo") === "true"){
+    document.getElementById("loginBox").style.display = "none";
+    document.getElementById("panelAdmin").style.display = "block";
 
-  if(!user){
-    document.getElementById("loginBox").style.display = "block";
-    document.getElementById("panelAdmin").style.display = "none";
-    return;
+    cargarHorarios();
+    cargarClientes();
+    cargarCitas();
+    mostrarSeccion("solicitudes");
   }
-
-  const adminDoc = await getDoc(doc(db, "admins", user.uid));
-
-  if(!adminDoc.exists()){
-    alert("No tienes permisos de administrador");
-    await signOut(auth);
-    return;
-  }
-
-  document.getElementById("loginBox").style.display = "none";
-  document.getElementById("panelAdmin").style.display = "block";
-
-  cargarHorarios();
-  cargarClientes();
-  cargarCitas();
-  mostrarSeccion("solicitudes");
 });
   
 </script>
