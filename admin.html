@@ -985,7 +985,6 @@ window.loginAdmin = async function(){
     let adminValido = null;
 console.log("Intento:", usuario, pass);
     adminsSnap.forEach(docu => {
-    console.log("Firebase:", data.usuario, data.password);
       const data = docu.data();
 
       if(
