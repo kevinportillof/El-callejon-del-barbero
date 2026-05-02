@@ -1006,9 +1006,22 @@ const citaRepetida = citas.some(c =>
   c.hora === cita.hora &&
   c.estado !== "Cancelada"
 );
-
 if(citaRepetida){
-  alert("Ese horario ya está ocupado");
+  if(confirm("Ese horario está ocupado. ¿Quieres entrar a lista de espera?")){
+
+    await addDoc(collection(db, "listaEspera"), {
+      cliente: cita.cliente,
+      telefono: cita.telefono,
+      fecha: cita.fecha,
+      horaDeseada: cita.hora,
+      servicio: cita.servicio,
+      estado: "Esperando",
+      creadoEn: serverTimestamp()
+    });
+
+    mostrarToast("Cliente agregado a lista de espera");
+  }
+
   return;
 }
 
