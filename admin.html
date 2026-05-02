@@ -666,7 +666,8 @@ import {
   setDoc,
   getDoc,
   serverTimestamp, 
-  addDoc
+  addDoc,
+  deleteDoc
 } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
 
 
@@ -883,10 +884,12 @@ window.renderClientes = function(){
         </div>
 
         <div class="actions">
-          ${mostrarAcciones ? `
-            <button class="btn-success" onclick="aprobarCliente('${cliente.id}')">Aprobar</button>
-            <button class="btn-danger" onclick="rechazarCliente('${cliente.id}')">Denegar</button>
-          ` : ""}
+        ${mostrarAcciones ? `
+  <button class="btn-success" onclick="aprobarCliente('${cliente.id}')">Aprobar</button>
+  <button class="btn-danger" onclick="rechazarCliente('${cliente.id}')">Denegar</button>
+` : `
+  <button class="btn-danger" onclick="eliminarCliente('${cliente.id}')">Eliminar cliente</button>
+`}
         </div>
       </article>
     `;
@@ -983,7 +986,24 @@ window.rechazarCliente = function(id){
 window.ponerPendiente = function(id){
   cambiarEstadoCliente(id, "Pendiente", "Tu cuenta está en revisión. Espera la aprobación del administrador.");
 };
+window.eliminarCliente = async function(id){
+  const confirmar = confirm("¿Seguro que quieres eliminar este cliente?");
+  if(!confirmar) return;
 
+  try{
+    await deleteDoc(doc(db, "clientes", id));
+
+    clientes = clientes.filter(cliente => cliente.id !== id);
+
+    actualizarEstadisticas();
+    renderClientes();
+
+    mostrarToast("Cliente eliminado");
+  }catch(error){
+    console.error(error);
+    alert("Error al eliminar cliente");
+  }
+};
   window.agregarCita = async function(){
   const cita = {
     cliente: document.getElementById("citaCliente").value.trim(),
