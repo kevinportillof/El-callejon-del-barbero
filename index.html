@@ -12,8 +12,6 @@
     <!-- TIPOGRAFÍA PREMIUM -->
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
 
-   <script async src="https://www.tiktok.com/embed.js"></script>
-
     <style>
       
       
@@ -33,24 +31,7 @@
             overflow-x: hidden;
         }
 
-        /* Nieve */
-        .snowflake {
-            position: fixed;
-            top: -10px;
-            z-index: 9999;
-            user-select: none;
-            pointer-events: none;
-            color: white;
-            font-size: 1em;
-            opacity: 0.8;
-            animation-name: fall;
-            animation-timing-function: linear;
-            animation-iteration-count: infinite;
-        }
-        @keyframes fall {
-            0% { transform: translateY(0) rotate(0deg); }
-            100% { transform: translateY(100vh) rotate(360deg); }
-        }
+       
 
         .overlay {
         background: rgba(0, 0, 0, 0.55);
@@ -91,7 +72,8 @@
         }
 
         h1 {
-            font-family: 'Great Vibes', cursive;
+            
+            font-family: 'Playfair Display', serif;
             font-size: 52px;
             margin-top: 10px;
             color: #ffffff;
@@ -520,6 +502,122 @@
     cursor: pointer;
 }
 
+.producto-card{
+  width: 92%;
+  max-width: 410px;
+  margin: 25px auto;
+  background: linear-gradient(180deg,#151515,#090909);
+  border: 1px solid #2a2a2a;
+  border-radius: 22px;
+  overflow: hidden;
+  color: #fff;
+  font-family: Arial, sans-serif;
+  box-shadow: 0 14px 35px rgba(0,0,0,.55);
+}
+
+.producto-card img{
+  width: 100%;
+  display: block;
+}
+
+.producto-info{
+  padding: 20px;
+}
+
+.producto-etiqueta{
+  display: inline-block;
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #18a8ff;
+  background: rgba(24,168,255,.12);
+  border: 1px solid rgba(24,168,255,.35);
+  padding: 7px 12px;
+  border-radius: 20px;
+  margin-bottom: 12px;
+}
+
+.producto-info h2{
+  margin: 0 0 10px;
+  font-size: 25px;
+  line-height: 1.1;
+}
+
+.producto-descripcion{
+  color: #cfcfcf;
+  font-size: 15px;
+  line-height: 1.5;
+  margin-bottom: 15px;
+}
+
+.producto-beneficios{
+  background: rgba(255,255,255,.04);
+  border: 1px solid #252525;
+  border-radius: 16px;
+  padding: 12px 14px;
+}
+
+.producto-beneficios p{
+  margin: 6px 0;
+  color: #e2e2e2;
+  font-size: 14px;
+}
+
+.producto-precio{
+  font-size: 32px;
+  font-weight: 900;
+  margin: 18px 0 6px;
+}
+
+.producto-nota{
+  color: #999;
+  font-size: 13px;
+  margin-bottom: 18px;
+}
+
+.producto-boton{
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  background: #fff;
+  color: #111;
+  padding: 14px;
+  border-radius: 15px;
+  font-weight: 900;
+}
+
+.producto-boton:hover{
+  background: #18a8ff;
+  color: #fff;
+}
+
+.password-box{
+  display:flex;
+  align-items:center;
+  background:#111;
+  border-radius:12px;
+  margin:8px auto;
+  width:90%;
+}
+
+.password-box input{
+  flex:1;
+  background:transparent;
+  color:white;
+  border:none;
+  padding:12px;
+  outline:none;
+}
+
+.password-box button{
+  background:none;
+  border:none;
+  color:#8d99ae;
+  font-size:18px;
+  padding:0 10px;
+  cursor:pointer;
+}
+
     </style>
 </head>
 <body>
@@ -576,11 +674,6 @@
         <i class="fa-regular fa-clock icono-barberia"></i> Horarios disponibles
     </a>
 
-    <a class="btn" href="https://wa.me/523314345505?text=Hola,%20quiero%20agendar%20una%20cita%20en%20*El%20Callej%C3%B3n%20del%20Barbero*.%0A%0AServicio:%0AFecha%20aproximada:%0AHorario:%0A%0AQuedo%20pendiente,%20gracias."
-    target="_blank">
-        <i class="fa-brands fa-whatsapp icono-barberia"></i> Agendar cita
-    </a>
-
     <a class="btn" onclick="mostrar('productos')">
         <i class="fa-solid fa-pump-soap icono-barberia"></i> Productos
     </a>
@@ -609,62 +702,61 @@
     </div>
 </div>
 
-<!-- SECCIONES SERVICIOS, PRODUCTOS, BARBEROS -->
+<!-- SECCIÓN SERVICIOS -->
 <div class="seccion" id="servicios">
 
    <h2 class="titulo">Servicios</h2>
 
    <p style="color:#c7d0df; margin-bottom:25px;">
-Selecciona uno o varios servicios antes de elegir tu horario.
+Puedes elegir hasta 3 servicios normales o 1 paquete.
 </p>
 
 <div class="servicios-grid">
 
-
-    <button class="servicio-card" onclick="seleccionarServicio(event, 'Corte', '1 hora', 200)">
+    <button class="servicio-card servicio-normal" onclick="seleccionarServicio(event, 'Corte', 200, 'servicio')">
         <h3>Corte</h3>
-        <p>$200 · 1h</p>
+        <p>$200</p>
     </button>
 
-    <button class="servicio-card" onclick="seleccionarServicio(event, 'Barba en frío', '1 hora', 200)">
+    <button class="servicio-card servicio-normal" onclick="seleccionarServicio(event, 'Barba en frío', 200, 'servicio')">
         <h3>Barba en frío</h3>
-        <p>$200 · 1h</p>
+        <p>$200</p>
     </button>
 
-    <button class="servicio-card" onclick="seleccionarServicio(event, 'Tinta en barba', '1 hora', 150)">
+    <button class="servicio-card servicio-normal" onclick="seleccionarServicio(event, 'Tinta en barba', 150, 'servicio')">
         <h3>Tinta en barba</h3>
-        <p>$150 · 1h</p>
+        <p>$150</p>
     </button>
 
-    <button class="servicio-card" onclick="seleccionarServicio(event, 'Barba con ritual de vapor', '1 hora', 250)">
+    <button class="servicio-card servicio-normal" onclick="seleccionarServicio(event, 'Barba con ritual de vapor', 250, 'servicio')">
         <h3>Barba con ritual de vapor</h3>
-        <p>$250 · 1h</p>
+        <p>$250</p>
     </button>
 
-    <button class="servicio-card" onclick="seleccionarServicio(event, 'Limpieza de vello facial', '1 hora', 150)">
+    <button class="servicio-card servicio-normal" onclick="seleccionarServicio(event, 'Limpieza de vello facial', 150, 'servicio')">
         <h3>Limpieza de vello facial</h3>
-        <p>$150 · 1h</p>
+        <p>$150</p>
         <small>Cejas, nariz y orejas</small>
     </button>
 
-    <button class="servicio-card" onclick="seleccionarServicio(event, 'Mascarilla para puntos negros', '1 hora', 150)">
+    <button class="servicio-card servicio-normal" onclick="seleccionarServicio(event, 'Mascarilla para puntos negros', 150, 'servicio')">
         <h3>Mascarilla para puntos negros</h3>
-        <p>$150 · 1h</p>
+        <p>$150</p>
     </button>
 
-    <button class="servicio-card" onclick="seleccionarServicio(event, 'Exfoliación facial', '1 hora', 150)">
+    <button class="servicio-card servicio-normal" onclick="seleccionarServicio(event, 'Exfoliación facial', 150, 'servicio')">
         <h3>Exfoliación facial</h3>
-        <p>$150 · 1h</p>
+        <p>$150</p>
     </button>
 
-    <button class="servicio-card" onclick="seleccionarServicio(event, 'Parche para ojeras', '1 hora', 130)">
+    <button class="servicio-card servicio-normal" onclick="seleccionarServicio(event, 'Parche para ojeras', 130, 'servicio')">
         <h3>Parche para ojeras</h3>
-        <p>$130 · 1h</p>
+        <p>$130</p>
     </button>
 
-    <button class="servicio-card" onclick="seleccionarServicio(event, 'Rasurado de cabeza', '1 hora', 250)">
+    <button class="servicio-card servicio-normal" onclick="seleccionarServicio(event, 'Rasurado de cabeza', 250, 'servicio')">
         <h3>Rasurado de cabeza</h3>
-        <p>$250 · 1h</p>
+        <p>$250</p>
     </button>
 
 </div>
@@ -673,37 +765,37 @@ Selecciona uno o varios servicios antes de elegir tu horario.
 
 <div class="servicios-grid">
 
-    <button class="servicio-card paquete" onclick="seleccionarServicio(event, 'Emperador', '1 hora 30 min', 390)">
+    <button class="servicio-card paquete" onclick="seleccionarServicio(event, 'Emperador', 390, 'paquete')">
         <h3>Emperador</h3>
         <p>$390 · 1h 30min</p>
         <small>Corte, parches para ojeras, exfoliación y masaje capilar</small>
     </button>
 
-    <button class="servicio-card paquete" onclick="seleccionarServicio(event, 'Espartano', '1 hora 30 min', 390)">
+    <button class="servicio-card paquete" onclick="seleccionarServicio(event, 'Espartano', 390, 'paquete')">
         <h3>Espartano</h3>
         <p>$390 · 1h 30min</p>
         <small>Arreglo de barba, ritual de vapor, parches para ojeras, exfoliación y masaje antiestrés</small>
     </button>
 
-    <button class="servicio-card paquete" onclick="seleccionarServicio(event, 'Ejecutivo', '1 hora 30 min', 530)">
+    <button class="servicio-card paquete" onclick="seleccionarServicio(event, 'Ejecutivo', 530, 'paquete')">
         <h3>Ejecutivo</h3>
         <p>$530 · 1h 30min</p>
         <small>Corte, barba con vapor, parches, mascarilla/tinta y masaje capilar</small>
     </button>
 
-    <button class="servicio-card paquete" onclick="seleccionarServicio(event, 'Imperial', '1 hora 30 min', 680)">
+    <button class="servicio-card paquete" onclick="seleccionarServicio(event, 'Imperial', 680, 'paquete')">
         <h3>Imperial</h3>
         <p>$680 · 1h 30min</p>
         <small>Corte, barba con vapor, parches, mascarilla/tinta, masaje capilar y limpieza de vello facial</small>
     </button>
 
-    <button class="servicio-card paquete" onclick="seleccionarServicio(event, 'Renovación Facial', '1 hora 30 min', 400)">
+    <button class="servicio-card paquete" onclick="seleccionarServicio(event, 'Renovación Facial', 400, 'paquete')">
         <h3>Renovación Facial</h3>
         <p>$400 · 1h 30min</p>
         <small>Ritual de vapor, mascarilla para puntos negros, exfoliación facial, parches para ojeras y ligero masaje</small>
     </button>
 
-    <button class="servicio-card paquete" onclick="seleccionarServicio(event, 'Baby Face', '1 hora 30 min', 500)">
+    <button class="servicio-card paquete" onclick="seleccionarServicio(event, 'Baby Face', 500, 'paquete')">
         <h3>Baby Face</h3>
         <p>$500 · 1h 30min</p>
         <small>Ritual de vapor, mascarilla para puntos negros, exfoliación facial, parches para ojeras, limpieza de vello facial y ligero masaje</small>
@@ -725,15 +817,15 @@ Selecciona uno o varios servicios antes de elegir tu horario.
 
     <button class="btn" onclick="mostrar('agendarDespuesSeccion')">
     <i class="fa-solid fa-calendar-days icono-barberia"></i> Agendar para después
-</button>
+    </button>
    
-</div> <!-- acciones-agenda -->
+</div>
 
 <a class="btn-regresar" onclick="regresar()">
     <i class="fa-solid fa-razor"></i> Regresar
 </a>
 
-</div> 
+</div>
 
 <!-- CITAS DISPONIBLES -->
 <div class="seccion" id="horarios">
@@ -795,36 +887,53 @@ Solicita una cita para días posteriores. Quedará pendiente de confirmación.
 </div>
 
 <div class="seccion" id="perfil">
-    <h2 class="titulo">Mi cuenta</h2>
+<h2 class="titulo">Mi cuenta</h2>
 
-    <div class="horario-card">
-        <h3>Iniciar sesión</h3>
+<p style="color:#c7d0df; margin-bottom:20px;">
+Inicia sesión o crea tu cuenta para agendar más rápido.
+</p>
 
-        <input id="loginCorreo" placeholder="Correo" type="email" style="width:90%; padding:12px; margin:8px; border-radius:12px; border:none;">
-        <input id="loginPassword" placeholder="Contraseña" type="password" style="width:90%; padding:12px; margin:8px; border-radius:12px; border:none;">
+<!-- LOGIN -->
+<div class="horario-card">
+<h3>Iniciar sesión</h3>
 
-        <button class="btn" onclick="iniciarSesionDemo()">Iniciar sesión</button>
+<input id="loginUsuario" placeholder="Usuario" type="text" style="width:90%; padding:12px; margin:8px; border-radius:12px; border:none;">
+<div class="password-box">
+  <input id="loginPassword" placeholder="Contraseña" type="password">
+  <button type="button" onclick="togglePassword('loginPassword')">👁️</button>
+</div>
 
-        <p id="estadoLogin" style="margin-top:15px;"></p>
-    </div>
+<button class="btn" onclick="iniciarSesionDemo()">Entrar</button>
 
-    <div class="horario-card">
-        <h3>Crear cuenta</h3>
+<button class="btn" onclick="mostrarCrearCuenta()">
+No tengo cuenta
+</button>
 
-        <input id="nombreCliente" placeholder="Nombre completo" style="width:90%; padding:12px; margin:8px; border-radius:12px; border:none;">
-        <input id="telefonoCliente" placeholder="WhatsApp" style="width:90%; padding:12px; margin:8px; border-radius:12px; border:none;">
-        <input id="correoCliente" placeholder="Correo" type="email" style="width:90%; padding:12px; margin:8px; border-radius:12px; border:none;">
-        <input id="fechaNacimiento" type="date" style="width:90%; padding:12px; margin:8px; border-radius:12px; border:none;">
-        <input id="passwordCliente" placeholder="Contraseña" type="password" style="width:90%; padding:12px; margin:8px; border-radius:12px; border:none;">
+<p id="estadoLogin"></p>
+</div>
 
-        <button class="btn" onclick="crearCuentaDemo()">Crear cuenta</button>
+<!-- CREAR CUENTA -->
+<div class="horario-card" id="crearCuentaBox" style="display:none;">
+<h3>Crear cuenta</h3>
 
-        <p id="estadoCuenta" style="margin-top:15px;"></p>
-    </div>
+<input id="nombreCliente" placeholder="Nombre completo" style="width:90%; padding:12px; margin:8px; border-radius:12px; border:none;">
+<input id="telefonoCliente" placeholder="WhatsApp" style="width:90%; padding:12px; margin:8px; border-radius:12px; border:none;">
+<input id="usuarioCliente" placeholder="Crea tu usuario" type="text" style="width:90%; padding:12px; margin:8px; border-radius:12px; border:none;">
+<input id="fechaNacimiento" type="date" style="width:90%; padding:12px; margin:8px; border-radius:12px; border:none;">
+<div class="password-box">
+  <input id="passwordCliente" placeholder="Contraseña" type="password">
+  <button type="button" onclick="togglePassword('passwordCliente')">👁️</button>
+</div>
 
-    <a class="btn-regresar" onclick="regresar()">
-        <i class="fa-solid fa-razor"></i> Regresar
-    </a>
+<button class="btn" onclick="crearCuentaDemo()">Crear cuenta</button>
+
+<p id="estadoCuenta"></p>
+</div>
+
+<a class="btn-regresar" onclick="regresar()">
+<i class="fa-solid fa-razor"></i> Regresar
+</a>
+
 </div>
 
 <div class="seccion" id="agendarDespuesSeccion">
@@ -842,7 +951,7 @@ Solicita una cita para días posteriores. Quedará pendiente de confirmación.
         style="width:90%; padding:12px; margin:10px; border-radius:12px; border:none;">
 
         <button class="btn" onclick="agendarDespues()">
-            <i class="fa-brands fa-whatsapp icono-barberia"></i> Enviar solicitud
+        <i class="fa-brands fa-whatsapp icono-barberia"></i> Solicitar por WhatsApp
         </button>
     </div>
 
@@ -853,82 +962,116 @@ Solicita una cita para días posteriores. Quedará pendiente de confirmación.
 
 <!-- PRODUCTOS -->
 <div class="seccion" id="productos">
-    <h2 class="titulo">Productos</h2>
+  <h2 class="titulo">Productos</h2>
 
-    <div style="display:flex; flex-direction:column; gap:30px; align-items:center;">
+  <div class="catalogo-productos">
 
-        <div style="width:90%; max-width:420px; background:rgba(0,0,0,0.6); padding:20px; border-radius:22px;">
-            <img src="https://i.ibb.co/JFbFkBtF/Chat-GPT-Image-11-ene-2026-10-51-50-p-m.png" style="width:100%; border-radius:18px;">
-            <div style="font-size:28px; font-weight:900;">Minoxidil</div>
-            <div style="font-size:24px; font-weight:800; color:#8d99ae">$300 MXN</div>
-            <p>Shampoo profesional formulado con minoxidil y biotina, ideal para fortalecer el cabello y estimular su crecimiento desde la raíz. Su fórmula ayuda a reducir la caída, mejorar la densidad y mantener el cuero cabelludo limpio y saludable.Shampoo profesional formulado con minoxidil y biotina, ideal para fortalecer el cabello y estimular su crecimiento desde la raíz. Su fórmula ayuda a reducir la caída, mejorar la densidad y mantener el cuero cabelludo limpio y saludable.</p>
+    <!-- SHAMPOO -->
+    <section class="producto-card">
+      <img src="https://i.ibb.co/8LsFmCSz/Chat-GPT-Image-1-may-2026-04-30-07-a-m.png" alt="Shampoo Biotina Bergamota">
+      <div class="producto-info">
+        <span class="producto-etiqueta">Premium</span>
+        <h2>Shampoo Biotina + Bergamota</h2>
+        <p class="producto-descripcion">Limpieza profunda que fortalece el cabello y ayuda a estimular su crecimiento.</p>
+        <div class="producto-beneficios">
+          <p>✔ Estimula el crecimiento capilar</p>
+          <p>✔ Fortalece desde la raíz</p>
+          <p>✔ Aumenta densidad del cabello</p>
+          <p>✔ Contenido 1000 ml</p>
         </div>
+        <p class="producto-precio">$300 MXN</p>
+        <p class="producto-nota">Disponible únicamente en El Callejón del Barbero.</p>
+        <a class="producto-boton" href="https://wa.me/523314345505?text=Hola,%20quiero%20preguntar%20por%20el%20Shampoo%20Biotina%20Bergamota%20de%20$300">Preguntar por WhatsApp</a>
+      </div>
+    </section>
 
-         <div style="width:90%; max-width:420px; background:rgba(0,0,0,0.6); padding:20px; border-radius:22px;">
-            <img src="https://i.ibb.co/CpSRHKwd/Chat-GPT-Image-28-dic-2025-10-15-18-p-m.png" style="width:100%; border-radius:18px;">
-            <div style="font-size:28px; font-weight:900;">Minoxidil</div>
-            <div style="font-size:24px; font-weight:800; color:#8d99ae">$200 MXN</div>
-            <p>En El Callejón del Barbero tenemos Minoxidil para barba y cabello.
-Más densidad, mejor forma y resultados con constancia.
-Pregunta por él en tu cita.</p>
+    <!-- MINOXIDIL -->
+    <section class="producto-card">
+      <img src="https://i.ibb.co/7dtdygh6/Chat-GPT-Image-1-may-2026-03-58-49-a-m.png" alt="Minoxidil 5%">
+      <div class="producto-info">
+        <span class="producto-etiqueta">Tratamiento</span>
+        <h2>Minoxidil 5%</h2>
+        <p class="producto-descripcion">Ayuda a estimular el crecimiento de la barba y fortalecer el vello con uso constante.</p>
+        <div class="producto-beneficios">
+          <p>✔ Estimula el crecimiento</p>
+          <p>✔ Fortalece el vello</p>
+          <p>✔ Ideal para barba</p>
+          <p>✔ Contenido 30 ml</p>
         </div>
+        <p class="producto-precio">$200 MXN</p>
+        <p class="producto-nota">Uso externo. Se recomienda asesoría antes de usar.</p>
+        <a class="producto-boton" href="https://wa.me/523314345505?text=Hola,%20quiero%20preguntar%20por%20el%20Minoxidil%205%25%20de%20$200">Preguntar por WhatsApp</a>
+      </div>
+    </section>
 
-
-        <div style="width:90%; max-width:420px; background:rgba(0,0,0,0.6); padding:20px; border-radius:22px;">
-            <img src="https://i.ibb.co/BVJDH93x/Chat-GPT-Image-28-dic-2025-10-11-13-p-m.png" style="width:100%; border-radius:18px;">
-            <div style="font-size:28px; font-weight:900;">Cera Spider</div>
-            <div style="font-size:24px; font-weight:800; color:#8d99ae">$190 MXN</div>
-            <p>En El Callejón del Barbero la usamos y también la vendemos.
-Cera Spider con fijación flexible y estilo limpio sin dejar duro el cabello.
-Llévatela el día de tu corte.</p>
+    <!-- CERA GEL -->
+    <section class="producto-card">
+      <img src="https://i.ibb.co/dqCSwN4/Chat-GPT-Image-1-may-2026-04-35-13-a-m.png" alt="Cera Gel">
+      <div class="producto-info">
+        <span class="producto-etiqueta rojo">Fijación + brillo</span>
+        <h2>Cera Gel</h2>
+        <p class="producto-descripcion">Fijación con brillo y control. Ideal para peinados definidos y con estilo.</p>
+        <div class="producto-beneficios">
+          <p>✔ Fijación firme</p>
+          <p>✔ Aporta brillo</p>
+          <p>✔ Moldea fácilmente</p>
+          <p>✔ Acabado profesional</p>
         </div>
+        <p class="producto-precio">$190 MXN</p>
+        <p class="producto-nota">Disponible únicamente en El Callejón del Barbero.</p>
+        <a class="producto-boton rojo-btn" href="https://wa.me/523314345505?text=Hola,%20quiero%20preguntar%20por%20la%20Cera%20Gel%20de%20$190">Preguntar por WhatsApp</a>
+      </div>
+    </section>
 
-         <div style="width:90%; max-width:420px; background:rgba(0,0,0,0.6); padding:20px; border-radius:22px;">
-            <img src="https://i.ibb.co/b54nx60B/Chat-GPT-Image-28-dic-2025-01-42-19-p-m.png" style="width:100%; border-radius:18px;">
-            <div style="font-size:28px; font-weight:900;">Cera Gel</div>
-            <div style="font-size:24px; font-weight:800; color:#8d99ae">$190 MXN</div>
-            <p>
-Fijación firme con acabado limpio y controlado. Ideal para definir peinados estructurados sin dejar residuos ni sensación pegajosa. Aporta brillo moderado, controla el frizz y mantiene el estilo por más tiempo, incluso en jornadas largas. Textura fácil de aplicar y remover, pensada para un resultado pulido y duradero.
-
-Disponible en barbería. Pregunta por él.</p>
+    <!-- GEL LINAZA -->
+    <section class="producto-card">
+      <img src="https://i.ibb.co/NgLh6Nx3/Chat-GPT-Image-1-may-2026-04-11-43-a-m.png" alt="Gel de Linaza">
+      <div class="producto-info">
+        <span class="producto-etiqueta cafe">Natural</span>
+        <h2>Gel de Linaza</h2>
+        <p class="producto-descripcion">Fijación natural con brillo saludable. Ideal para un look ligero y flexible.</p>
+        <div class="producto-beneficios">
+          <p>✔ Fijación media natural</p>
+          <p>✔ Sin alcohol</p>
+          <p>✔ Sin parabenos</p>
+          <p>✔ Aporta brillo y suavidad</p>
         </div>
+        <p class="producto-precio">$160 MXN</p>
+        <p class="producto-nota">Disponible únicamente en El Callejón del Barbero.</p>
+        <a class="producto-boton cafe-btn" href="https://wa.me/523314345505?text=Hola,%20quiero%20preguntar%20por%20el%20Gel%20de%20Linaza%20de%20$160">Preguntar por WhatsApp</a>
+      </div>
+    </section>
 
-          <div style="width:90%; max-width:420px; background:rgba(0,0,0,0.6); padding:20px; border-radius:22px;">
-            <img src="https://i.ibb.co/Df5j4Q7p/Chat-GPT-Image-28-dic-2025-10-06-44-p-m.png" style="width:100%; border-radius:18px;">
-            <div style="font-size:28px; font-weight:900;">Cera Matte</div>
-            <div style="font-size:24px; font-weight:800; color:#8d99ae">$190 MXN</div>
-            <p>En El Callejón del Barbero usamos Cera Matte de nivel profesional.
-Control preciso, fijación firme y acabado totalmente mate para un look definido y elegante.
-Pregunta por ella en barbería.</p>
+    <!-- GEL EXTRA FIRME -->
+    <section class="producto-card">
+      <img src="https://i.ibb.co/Z6qmdR0d/Chat-GPT-Image-1-may-2026-03-15-49-a-m.png" alt="Gel Fijador Extra Firme">
+      <div class="producto-info">
+        <span class="producto-etiqueta">Exclusivo en barbería</span>
+        <h2>Gel Fijador Extra Firme</h2>
+        <p class="producto-descripcion">Control fuerte para mantener tu peinado firme, limpio y con estilo durante el día.</p>
+        <div class="producto-beneficios">
+          <p>✔ Fijación extra firme</p>
+          <p>✔ Sin alcohol</p>
+          <p>✔ Sin residuos</p>
+          <p>✔ Acabado profesional</p>
         </div>
+        <p class="producto-precio">$120 MXN</p>
+        <p class="producto-nota">Disponible únicamente en El Callejón del Barbero.</p>
+        <a class="producto-boton" href="https://wa.me/523314345505?text=Hola,%20quiero%20preguntar%20por%20el%20Gel%20Fijador%20Extra%20Firme%20de%20$120">Preguntar por WhatsApp</a>
+      </div>
+    </section>
 
-        <div style="width:90%; max-width:420px; background:rgba(0,0,0,0.6); padding:20px; border-radius:22px;">
-            <img src="https://i.ibb.co/99DS7MJ8/Chat-GPT-Image-28-dic-2025-10-13-48-p-m.png" style="width:100%; border-radius:18px;">
-            <div style="font-size:28px; font-weight:900;">Gel Fijador de Linaza</div>
-            <div style="font-size:24px; font-weight:800; color:#8d99ae">$160 MXN</div>
-            <p>En El Callejón del Barbero utilizamos Gel Fijador de Linaza de calidad profesional.
-Ofrece fijación natural, control uniforme y un acabado limpio, sin rigidez ni residuos.
+  </div>
 
-Pregunta por ella.</p>
-        </div>
-
-        <div style="width:90%; max-width:420px; background:rgba(0,0,0,0.6); padding:20px; border-radius:22px;">
-            <img src="https://i.ibb.co/kswdQx9S/28-dic-2025-07-11-22-p-m.png" style="width:100%; border-radius:18px;">
-            <div style="font-size:28px; font-weight:900;">Gel Fijador Extra Firme</div>
-            <div style="font-size:24px; font-weight:800; color:#8d99ae">$120 MXN</div>
-            <p>En El Callejón del Barbero trabajamos con Gel Fijador Extra Firme de calidad profesional.
-Máxima fijación, control duradero y acabado limpio para estilos que no se mueven.
-Disponible en barbería.</p>
-        </div>
-
-    </div>
-
-    <a class="btn-regresar" onclick="regresar()">
-        <i class="fa-solid fa-razor"></i> Regresar
-    </a>
+  <a class="btn-regresar" onclick="regresar()">
+      <i class="fa-solid fa-razor"></i> Regresar
+  </a>
 </div>
 
 <script>
+
+let carritoServicios = [];
+const NUMERO_WHATSAPP = "523314345505";
 
 function regresar() {
     // Oculta todas las secciones
@@ -1072,23 +1215,24 @@ function generarBotones(dia, texto) {
 
             const numero = "523314345505";
 
-            const total = carritoServicios.reduce((suma, item) => suma + item.precio, 0);
-
             const serviciosTexto = carritoServicios
-                .map(item => `- ${item.servicio} · ${item.duracion} · $${item.precio}`)
+                .map(item => `- ${item.servicio}`)
                 .join("\n");
 
-            const mensaje = `Hola, quiero agendar una cita en El Callejón del Barbero.
+            const duracion = calcularDuracion();
+
+            const mensaje = `Hola, quiero solicitar una cita en El Callejón del Barbero.
+
+Nombre:
 
 Servicios:
 ${serviciosTexto}
 
-Total: $${total}
+Duración aproximada: ${duracion}
 Día: ${dia}
 Hora: ${hora}:00
 
-Nombre:
-`;
+Entiendo que esta cita queda pendiente de confirmación.`;
 
             const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
             window.open(url, "_blank");
@@ -1098,28 +1242,71 @@ Nombre:
     });
 }
 
-let carritoServicios = [];
-let clienteSeleccionado = "Para mí";
-let esRegalo = false;
-let mensajeEspecial = "";
-
-function seleccionarServicio(event, servicio, duracion, precio) {
+function seleccionarServicio(event, servicio, precio, tipo) {
 
     const existe = carritoServicios.find(item => item.servicio === servicio);
 
     if (existe) {
         carritoServicios = carritoServicios.filter(item => item.servicio !== servicio);
         event.currentTarget.classList.remove("activo");
-    } else {
+        actualizarCarrito();
+        return;
+    }
+
+    if (tipo === "paquete") {
+        carritoServicios = [];
+        document.querySelectorAll(".servicio-card").forEach(btn => btn.classList.remove("activo"));
+
         carritoServicios.push({
-            servicio: servicio,
-            duracion: duracion,
-            precio: precio
+            servicio,
+            precio,
+            tipo
         });
+
+        event.currentTarget.classList.add("activo");
+        actualizarCarrito();
+        return;
+    }
+
+    if (tipo === "servicio") {
+        carritoServicios = carritoServicios.filter(item => item.tipo !== "paquete");
+        document.querySelectorAll(".paquete").forEach(btn => btn.classList.remove("activo"));
+
+        const serviciosNormales = carritoServicios.filter(item => item.tipo === "servicio");
+
+        if (serviciosNormales.length >= 3) {
+            alert("Solo puedes seleccionar máximo 3 servicios normales.");
+            return;
+        }
+
+        carritoServicios.push({
+            servicio,
+            precio,
+            tipo
+        });
+
         event.currentTarget.classList.add("activo");
     }
 
     actualizarCarrito();
+}
+
+function calcularDuracion() {
+    if (carritoServicios.length === 0) return "";
+
+    const paquete = carritoServicios.find(item => item.tipo === "paquete");
+
+    if (paquete) {
+        return "1 hora 30 min";
+    }
+
+    const cantidad = carritoServicios.length;
+
+    if (cantidad === 1) return "1 hora";
+    if (cantidad === 2) return "1 hora 10 min";
+    if (cantidad === 3) return "1 hora 30 min";
+
+    return "";
 }
 
 function actualizarCarrito() {
@@ -1133,40 +1320,21 @@ function actualizarCarrito() {
         return;
     }
 
-    let total = carritoServicios.reduce((suma, item) => suma + item.precio, 0);
+    const duracion = calcularDuracion();
+    const total = carritoServicios.reduce((suma, item) => suma + item.precio, 0);
 
     resumen.innerHTML = `
         <strong>Seleccionado:</strong><br>
-        ${carritoServicios.map(item => `• ${item.servicio} - $${item.precio}`).join("<br>")}
+        ${carritoServicios.map(item => `• ${item.servicio}`).join("<br>")}
         <br><br>
-        <strong>Total: $${total}</strong>
+        <strong>Duración aproximada: ${duracion}</strong>
+        <br><br>
+        <strong>Total aproximado: $${total}</strong>
     `;
 
     acciones.style.display = "block";
 }
 
-function seleccionarCliente(tipo){
-
-    clienteSeleccionado = tipo;
-
-    if(tipo === "Regalo"){
-        esRegalo = true;
-
-        const mensaje = prompt("Escribe un mensaje especial (opcional):");
-
-        if(mensaje){
-            mensajeEspecial = mensaje;
-        } else {
-            mensajeEspecial = "";
-        }
-
-    } else {
-        esRegalo = false;
-        mensajeEspecial = "";
-    }
-
-    alert("Cita para: " + tipo);
-}
 function cargarCitas(){
     generarBotones("lunes", localStorage.getItem("lunes"));
     generarBotones("martes", localStorage.getItem("martes"));
@@ -1200,28 +1368,22 @@ function agendarDespues(){
 
     const numero = "523314345505";
 
-    const total = carritoServicios.reduce((suma, item) => suma + item.precio, 0);
-
     const serviciosTexto = carritoServicios
-        .map(item => `- ${item.servicio} · ${item.duracion} · $${item.precio}`)
+        .map(item => `- ${item.servicio}`)
         .join("\n");
 
-    const mensaje = `Hola, quiero solicitar una cita para otra fecha en El Callejón del Barbero.
+    const duracion = calcularDuracion();
 
-Cita para: ${clienteSeleccionado}
+    const mensaje = `Hola, quiero solicitar una cita para después en El Callejón del Barbero.
 
-Nombre de la persona:
-Quién agenda:
+Nombre:
 
 Servicios:
 ${serviciosTexto}
 
-Total aproximado: $${total}
-
+Duración aproximada: ${duracion}
 Fecha que quiero: ${fecha}
 Hora aproximada: ${hora}
-
-${esRegalo ? `Mensaje especial: ${mensajeEspecial}` : ""}
 
 Entiendo que esta cita queda pendiente de confirmación.`;
 
@@ -1230,65 +1392,112 @@ Entiendo que esta cita queda pendiente de confirmación.`;
 }
 
 async function crearCuentaDemo() {
-    const nombre = document.getElementById("nombreCliente").value;
-    const telefono = document.getElementById("telefonoCliente").value;
-    const correo = document.getElementById("correoCliente").value;
-    const password = document.getElementById("passwordCliente").value;
+    const nombre = document.getElementById("nombreCliente").value.trim();
+    const telefono = document.getElementById("telefonoCliente").value.trim();
+    const usuario = document.getElementById("usuarioCliente").value.trim().toLowerCase();
+    const password = document.getElementById("passwordCliente").value.trim();
     const fechaNacimiento = document.getElementById("fechaNacimiento").value;
 
-    if (!nombre || !telefono || !correo || !password || !fechaNacimiento) {
+    if (!nombre || !telefono || !usuario || !password || !fechaNacimiento) {
         alert("Completa todos los campos");
         return;
     }
 
     try {
+        const clientesRef = window.collection(window.db, "clientes");
+        const clientesSnap = await window.getDocs(clientesRef);
 
-        const userCredential = await window.createUserWithEmailAndPassword(window.auth, correo, password);
+        let usuarioExiste = false;
 
-        await window.addDoc(window.collection(window.db, "clientes"), {
-            uid: userCredential.user.uid,
+        clientesSnap.forEach(doc => {
+            if (doc.data().usuario === usuario) {
+                usuarioExiste = true;
+            }
+        });
+
+        if (usuarioExiste) {
+            alert("Ese usuario ya existe. Elige otro.");
+            return;
+        }
+
+        await window.addDoc(clientesRef, {
             nombre: nombre,
             telefono: telefono,
-            correo: correo,
+            usuario: usuario,
+            password: password,
             fechaNacimiento: fechaNacimiento,
             estado: "Pendiente",
+            visitas: 0,
             fechaRegistro: new Date()
         });
 
         document.getElementById("estadoCuenta").innerText =
             "Cuenta creada. Esperando aprobación.";
 
-        alert("Cuenta creada correctamente");
+        alert("Cuenta creada correctamente. Espera aprobación.");
 
     } catch (error) {
         console.error(error);
-        alert("Error: " + error.message);
+        alert("Error al crear cuenta");
     }
 }
 
 async function iniciarSesionDemo() {
-    const correo = document.getElementById("loginCorreo").value;
-    const password = document.getElementById("loginPassword").value;
+    const usuario = document.getElementById("loginUsuario").value.trim().toLowerCase();
+    const password = document.getElementById("loginPassword").value.trim();
 
-    if (!correo || !password) {
-        alert("Escribe tu correo y contraseña");
+    if (!usuario || !password) {
+        alert("Escribe tu usuario y contraseña");
         return;
     }
 
     try {
-        await window.signInWithEmailAndPassword(window.auth, correo, password);
+        const clientesRef = window.collection(window.db, "clientes");
+        const clientesSnap = await window.getDocs(clientesRef);
+
+        let clienteEncontrado = null;
+
+        clientesSnap.forEach(doc => {
+            const data = doc.data();
+
+            if (data.usuario === usuario && data.password === password) {
+                clienteEncontrado = data;
+            }
+        });
+
+        if (!clienteEncontrado) {
+            alert("Usuario o contraseña incorrectos");
+            return;
+        }
+
+        if (clienteEncontrado.estado !== "Aprobado") {
+            alert("Tu cuenta aún está pendiente de aprobación.");
+            return;
+        }
+
+        localStorage.setItem("clienteNombre", clienteEncontrado.nombre);
+        localStorage.setItem("clienteUsuario", clienteEncontrado.usuario);
 
         document.getElementById("estadoLogin").innerText =
-            "Sesión iniciada correctamente.";
+            "Bienvenido, " + clienteEncontrado.nombre;
 
-        alert("Bienvenido de nuevo");
+        alert("Bienvenido " + clienteEncontrado.nombre);
 
         mostrar("servicios");
 
     } catch (error) {
         console.error(error);
-        alert("Correo o contraseña incorrectos");
+        alert("Error al iniciar sesión");
     }
+}
+
+function mostrarCrearCuenta(){
+    document.getElementById("crearCuentaBox").style.display = "block";
+}
+
+function togglePassword(id){
+  const input = document.getElementById(id);
+  input.type = input.type === "password" ? "text" : "password";
 }
 
 </script>
@@ -1297,7 +1506,6 @@ async function iniciarSesionDemo() {
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
 import { getFirestore, collection, addDoc, getDocs, updateDoc, doc } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCaLuLg_Tp-0bgzpB1DiPR7VmIrmLLFFSM",
@@ -1311,17 +1519,13 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-const auth = getAuth(app);
 
 window.db = db;
-window.auth = auth;
 window.collection = collection;
 window.addDoc = addDoc;
 window.getDocs = getDocs;
 window.updateDoc = updateDoc;
 window.doc = doc;
-window.createUserWithEmailAndPassword = createUserWithEmailAndPassword;
-window.signInWithEmailAndPassword = signInWithEmailAndPassword;
 </script>
 
 </body>
