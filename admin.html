@@ -352,6 +352,86 @@ button:disabled{opacity:.5;cursor:not-allowed;transform:none}
     width:100%;
   }
 }
+
+  .calendario-mes{
+  margin-bottom:28px;
+}
+
+.calendario-mes h3{
+  margin:0 0 14px;
+}
+
+.calendario-grid{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:8px;
+}
+
+.cal-dia,
+.cal-head{
+  background:#111;
+  border:1px solid #2b2b2b;
+  border-radius:14px;
+  min-height:58px;
+  color:white;
+  font-weight:800;
+}
+
+.cal-head{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#aaa;
+  min-height:38px;
+}
+
+.cal-dia{
+  cursor:pointer;
+  text-align:left;
+  padding:8px;
+}
+
+.cal-dia:hover{
+  border-color:#aaa;
+  transform:translateY(-1px);
+}
+
+.cal-dia.vacio{
+  opacity:.25;
+  cursor:default;
+}
+
+.cal-dia.abierto{
+  border-color:#8fd19e;
+}
+
+.cal-dia.cerrado{
+  border-color:#e57373;
+}
+
+.cal-dia.overtime{
+  border-color:#f3c969;
+}
+
+.cal-dia small{
+  display:block;
+  margin-top:6px;
+  color:#aaa;
+  font-size:11px;
+}
+
+@media(max-width:560px){
+  .calendario-grid{
+    gap:5px;
+  }
+
+  .cal-dia,
+  .cal-head{
+    border-radius:10px;
+    min-height:48px;
+    font-size:12px;
+  }
+}
   
 </style>
 </head>
@@ -506,40 +586,54 @@ button:disabled{opacity:.5;cursor:not-allowed;transform:none}
     </div>
   </div>
 </section>
+  
   <section id="horarioMensual" class="seccion-admin">
   <div class="section">
     <div class="section-head">
       <div>
         <h2>Horario mensual</h2>
-        <p>Controla las horas reales de trabajo para agendar después.</p>
+        <p>Selecciona un día del calendario y configura horario normal u overtime.</p>
       </div>
     </div>
 
     <div class="section-body">
-      <input id="fechaHorario" type="date">
+      <div id="calendariosMensuales"></div>
 
-      <select id="diaActivo">
-        <option value="true">Trabajar este día</option>
-        <option value="false">Cerrar este día</option>
-      </select>
+      <div id="editorHorarioDia" class="client" style="display:none; margin-top:20px;">
+        <h3 id="tituloFechaHorario">Configurar día</h3>
 
-      <input id="horaAbre" type="time" placeholder="Hora de apertura">
-      <input id="horaCierra" type="time" placeholder="Hora de cierre">
+        <select id="diaActivo">
+          <option value="true">Trabajar este día</option>
+          <option value="false">Cerrar este día</option>
+        </select>
 
-      <select id="overtimeActivo">
-        <option value="false">Sin overtime</option>
-        <option value="true">Activar overtime</option>
-      </select>
+        <input id="fechaHorario" type="hidden">
 
-      <input id="overtimeDesde" type="time" placeholder="Overtime desde">
-      <input id="overtimeHasta" type="time" placeholder="Overtime hasta">
+        <label>Hora de apertura</label>
+        <input id="horaAbre" type="time">
 
-      <button class="btn-primary" onclick="guardarHorarioMensual()">Guardar horario</button>
+        <label>Hora de cierre</label>
+        <input id="horaCierra" type="time">
 
-      <h3 style="margin-top:25px;">Horarios guardados</h3>
-      <div id="listaHorariosMensuales" class="client-list"></div>
+        <label>Overtime</label>
+        <select id="overtimeActivo">
+          <option value="false">Sin overtime</option>
+          <option value="true">Activar overtime</option>
+        </select>
+
+        <label>Overtime desde</label>
+        <input id="overtimeDesde" type="time">
+
+        <label>Overtime hasta</label>
+        <input id="overtimeHasta" type="time">
+
+        <div class="actions">
+          <button class="btn-primary" onclick="guardarHorarioMensual()">Guardar día</button>
+        </div>
+      </div>
     </div>
   </div>
+
 </section>
   <section id="listaEspera" class="seccion-admin">
   <div class="section">
@@ -1135,32 +1229,120 @@ window.guardarHorarioMensual = async function(){
   cargarHorariosMensuales();
 };
 
+let horariosMensuales = [];
+
 window.cargarHorariosMensuales = async function(){
-  const contenedor = document.getElementById("listaHorariosMensuales");
+  const contenedor = document.getElementById("calendariosMensuales");
   if(!contenedor) return;
 
   const snap = await getDocs(collection(db, "horariosMensuales"));
-  let horarios = [];
+  horariosMensuales = [];
 
   snap.forEach(docu => {
-    horarios.push({ id: docu.id, ...docu.data() });
+    horariosMensuales.push({ id: docu.id, ...docu.data() });
   });
 
-  horarios.sort((a,b) => String(a.fecha).localeCompare(String(b.fecha)));
+  renderCalendariosMensuales();
+};
 
-  if(horarios.length === 0){
-    contenedor.innerHTML = `<div class="empty">No hay horarios mensuales guardados.</div>`;
-    return;
+function renderCalendariosMensuales(){
+  const contenedor = document.getElementById("calendariosMensuales");
+  const hoy = new Date();
+
+  contenedor.innerHTML = "";
+
+  for(let i = 0; i < 2; i++){
+    const fechaMes = new Date(hoy.getFullYear(), hoy.getMonth() + i, 1);
+    contenedor.innerHTML += crearCalendarioMes(fechaMes);
+  }
+}
+
+function crearCalendarioMes(fechaMes){
+  const meses = [
+    "Enero","Febrero","Marzo","Abril","Mayo","Junio",
+    "Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"
+  ];
+
+  const year = fechaMes.getFullYear();
+  const mes = fechaMes.getMonth();
+
+  const primerDia = new Date(year, mes, 1);
+  const ultimoDia = new Date(year, mes + 1, 0).getDate();
+
+  let inicio = primerDia.getDay();
+  inicio = inicio === 0 ? 6 : inicio - 1;
+
+  let html = `
+    <div class="calendario-mes">
+      <h3>${meses[mes]} ${year}</h3>
+      <div class="calendario-grid">
+        <div class="cal-head">L</div>
+        <div class="cal-head">M</div>
+        <div class="cal-head">M</div>
+        <div class="cal-head">J</div>
+        <div class="cal-head">V</div>
+        <div class="cal-head">S</div>
+        <div class="cal-head">D</div>
+  `;
+
+  for(let i = 0; i < inicio; i++){
+    html += `<div class="cal-dia vacio"></div>`;
   }
 
-  contenedor.innerHTML = horarios.map(h => `
-    <div class="client">
-      <h3>${h.fecha}</h3>
-      <p><strong>Estado:</strong> ${h.activo ? "Abierto" : "Cerrado"}</p>
-      <p><strong>Horario:</strong> ${h.abre || "--"} a ${h.cierra || "--"}</p>
-      <p><strong>Overtime:</strong> ${h.overtimeActivo ? `${h.overtimeDesde} a ${h.overtimeHasta}` : "No activo"}</p>
+  for(let dia = 1; dia <= ultimoDia; dia++){
+    const fecha = `${year}-${String(mes + 1).padStart(2,"0")}-${String(dia).padStart(2,"0")}`;
+    const config = horariosMensuales.find(h => h.fecha === fecha);
+
+    let clase = "";
+    let texto = "Sin configurar";
+
+    if(config){
+      if(config.activo === false){
+        clase = "cerrado";
+        texto = "Cerrado";
+      }else if(config.overtimeActivo){
+        clase = "overtime";
+        texto = `${config.abre || "--"}-${config.cierra || "--"} + OT`;
+      }else{
+        clase = "abierto";
+        texto = `${config.abre || "--"}-${config.cierra || "--"}`;
+      }
+    }
+
+    html += `
+      <button class="cal-dia ${clase}" onclick="seleccionarDiaHorario('${fecha}')">
+        ${dia}
+        <small>${texto}</small>
+      </button>
+    `;
+  }
+
+  html += `
+      </div>
     </div>
-  `).join("");
+  `;
+
+  return html;
+}
+
+window.seleccionarDiaHorario = function(fecha){
+  const config = horariosMensuales.find(h => h.fecha === fecha);
+
+  document.getElementById("editorHorarioDia").style.display = "block";
+  document.getElementById("fechaHorario").value = fecha;
+  document.getElementById("tituloFechaHorario").innerText = "Configurar " + fecha;
+
+  document.getElementById("diaActivo").value = config?.activo === false ? "false" : "true";
+  document.getElementById("horaAbre").value = config?.abre || "";
+  document.getElementById("horaCierra").value = config?.cierra || "";
+  document.getElementById("overtimeActivo").value = config?.overtimeActivo ? "true" : "false";
+  document.getElementById("overtimeDesde").value = config?.overtimeDesde || "";
+  document.getElementById("overtimeHasta").value = config?.overtimeHasta || "";
+
+  document.getElementById("editorHorarioDia").scrollIntoView({
+    behavior:"smooth",
+    block:"center"
+  });
 };
 
 window.cargarListaEspera = async function(){
