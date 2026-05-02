@@ -1011,6 +1011,25 @@ if(citaRepetida){
   alert("Ese horario ya está ocupado");
   return;
 }
+
+    // 🔒 VALIDAR HORARIO MENSUAL
+const config = horariosMensuales.find(h => h.fecha === cita.fecha);
+
+if(config){
+  if(config.activo === false){
+    alert("Ese día está cerrado");
+    return;
+  }
+
+  if(cita.hora < config.abre || cita.hora > config.cierra){
+    alert("Hora fuera de horario de trabajo");
+    return;
+  }
+
+  if(config.overtimeActivo && cita.hora >= config.overtimeDesde){
+    alert("⚠️ Esta hora aplica overtime");
+  }
+}
     
   await addDoc(collection(db, "citas"), cita);
     document.getElementById("citaCliente").value = "";
@@ -1118,6 +1137,8 @@ Si deseas reagendar, puedes escribirnos nuevamente.`);
   cargarCitas();
   cargarHorariosMensuales();
   cargarListaEspera();
+  cargarHorariosMensuales();
+  cargarListaEspera();
 };
   
 window.loginAdmin = async function(){
@@ -1182,12 +1203,6 @@ window.addEventListener("load", () => {
     mostrarSeccion("solicitudes");
   }
 });
-
-  window.cerrarSesionAdmin = function(){
-  localStorage.removeItem("adminActivo");
-  localStorage.removeItem("adminNombre");
-  location.reload();
-};
 
   window.cerrarSesionAdmin = function(){
   localStorage.removeItem("adminActivo");
