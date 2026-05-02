@@ -506,6 +506,56 @@ button:disabled{opacity:.5;cursor:not-allowed;transform:none}
     </div>
   </div>
 </section>
+  <section id="horarioMensual" class="seccion-admin">
+  <div class="section">
+    <div class="section-head">
+      <div>
+        <h2>Horario mensual</h2>
+        <p>Controla las horas reales de trabajo para agendar después.</p>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <input id="fechaHorario" type="date">
+
+      <select id="diaActivo">
+        <option value="true">Trabajar este día</option>
+        <option value="false">Cerrar este día</option>
+      </select>
+
+      <input id="horaAbre" type="time" placeholder="Hora de apertura">
+      <input id="horaCierra" type="time" placeholder="Hora de cierre">
+
+      <select id="overtimeActivo">
+        <option value="false">Sin overtime</option>
+        <option value="true">Activar overtime</option>
+      </select>
+
+      <input id="overtimeDesde" type="time" placeholder="Overtime desde">
+      <input id="overtimeHasta" type="time" placeholder="Overtime hasta">
+
+      <button class="btn-primary" onclick="guardarHorarioMensual()">Guardar horario</button>
+
+      <h3 style="margin-top:25px;">Horarios guardados</h3>
+      <div id="listaHorariosMensuales" class="client-list"></div>
+    </div>
+  </div>
+</section>
+  <section id="listaEspera" class="seccion-admin">
+  <div class="section">
+    <div class="section-head">
+      <div>
+        <h2>Lista de espera</h2>
+        <p>Clientes esperando que se libere un horario.</p>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <div id="listaEsperaClientes" class="client-list"></div>
+    </div>
+  </div>
+</section>
+  
 </main>
 
 <div id="toast" class="toast"></div>
@@ -972,6 +1022,8 @@ Tu cita en El Callejón del Barbero fue cancelada.
 
 Si deseas reagendar, puedes escribirnos nuevamente.`);
   cargarCitas();
+  cargarHorariosMensuales();
+  cargarListaEspera();
 };
   
 window.loginAdmin = async function(){
@@ -1031,6 +1083,8 @@ window.addEventListener("load", () => {
     cargarHorarios();
     cargarClientes();
     cargarCitas();
+    cargarHorariosMensuales();
+    cargarListaEspera();
     mostrarSeccion("solicitudes");
   }
 });
@@ -1039,6 +1093,131 @@ window.addEventListener("load", () => {
   localStorage.removeItem("adminActivo");
   localStorage.removeItem("adminNombre");
   location.reload();
+};
+
+  window.cerrarSesionAdmin = function(){
+  localStorage.removeItem("adminActivo");
+  localStorage.removeItem("adminNombre");
+  location.reload();
+};
+
+window.guardarHorarioMensual = async function(){
+  const fecha = document.getElementById("fechaHorario").value;
+  const activo = document.getElementById("diaActivo").value === "true";
+  const abre = document.getElementById("horaAbre").value;
+  const cierra = document.getElementById("horaCierra").value;
+  const overtimeActivo = document.getElementById("overtimeActivo").value === "true";
+  const overtimeDesde = document.getElementById("overtimeDesde").value;
+  const overtimeHasta = document.getElementById("overtimeHasta").value;
+
+  if(!fecha){
+    alert("Selecciona una fecha");
+    return;
+  }
+
+  if(activo && (!abre || !cierra)){
+    alert("Pon hora de apertura y cierre");
+    return;
+  }
+
+  await setDoc(doc(db, "horariosMensuales", fecha), {
+    fecha,
+    activo,
+    abre,
+    cierra,
+    overtimeActivo,
+    overtimeDesde,
+    overtimeHasta,
+    actualizadoEn: serverTimestamp()
+  });
+
+  mostrarToast("Horario mensual guardado");
+  cargarHorariosMensuales();
+};
+
+window.cargarHorariosMensuales = async function(){
+  const contenedor = document.getElementById("listaHorariosMensuales");
+  if(!contenedor) return;
+
+  const snap = await getDocs(collection(db, "horariosMensuales"));
+  let horarios = [];
+
+  snap.forEach(docu => {
+    horarios.push({ id: docu.id, ...docu.data() });
+  });
+
+  horarios.sort((a,b) => String(a.fecha).localeCompare(String(b.fecha)));
+
+  if(horarios.length === 0){
+    contenedor.innerHTML = `<div class="empty">No hay horarios mensuales guardados.</div>`;
+    return;
+  }
+
+  contenedor.innerHTML = horarios.map(h => `
+    <div class="client">
+      <h3>${h.fecha}</h3>
+      <p><strong>Estado:</strong> ${h.activo ? "Abierto" : "Cerrado"}</p>
+      <p><strong>Horario:</strong> ${h.abre || "--"} a ${h.cierra || "--"}</p>
+      <p><strong>Overtime:</strong> ${h.overtimeActivo ? `${h.overtimeDesde} a ${h.overtimeHasta}` : "No activo"}</p>
+    </div>
+  `).join("");
+};
+
+window.cargarListaEspera = async function(){
+  const contenedor = document.getElementById("listaEsperaClientes");
+  if(!contenedor) return;
+
+  const snap = await getDocs(collection(db, "listaEspera"));
+  let espera = [];
+
+  snap.forEach(docu => {
+    espera.push({ id: docu.id, ...docu.data() });
+  });
+
+  espera.sort((a,b) => `${a.fecha} ${a.horaDeseada}`.localeCompare(`${b.fecha} ${b.horaDeseada}`));
+
+  if(espera.length === 0){
+    contenedor.innerHTML = `<div class="empty">No hay clientes en lista de espera.</div>`;
+    return;
+  }
+
+  contenedor.innerHTML = espera.map(e => `
+    <div class="client">
+      <h3>${e.cliente || "Cliente"}</h3>
+      <p><strong>Fecha:</strong> ${e.fecha}</p>
+      <p><strong>Hora deseada:</strong> ${e.horaDeseada}</p>
+      <p><strong>Servicio:</strong> ${e.servicio || "No especificado"}</p>
+      <p><strong>Estado:</strong> ${e.estado || "Esperando"}</p>
+
+      <div class="actions">
+        <button class="btn-whatsapp" onclick="avisarListaEspera('${e.id}')">Avisar por WhatsApp</button>
+      </div>
+    </div>
+  `).join("");
+};
+
+window.avisarListaEspera = function(id){
+  getDocs(collection(db, "listaEspera")).then(snap => {
+    let registro = null;
+
+    snap.forEach(docu => {
+      if(docu.id === id){
+        registro = { id: docu.id, ...docu.data() };
+      }
+    });
+
+    if(!registro) return;
+
+    abrirWhatsApp(registro.telefono, `Hola ${registro.cliente}.
+
+Se liberó el horario que querías en El Callejón del Barbero.
+
+Fecha: ${registro.fecha}
+Hora: ${registro.horaDeseada}
+Servicio: ${registro.servicio}
+
+Si todavía lo quieres, respóndenos para apartarlo.`);
+  });
 };
   
   window.verPassword = function(){
