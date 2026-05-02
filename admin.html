@@ -1028,6 +1028,11 @@ if(citaRepetida){
     // 🔒 VALIDAR HORARIO MENSUAL
 const config = horariosMensuales.find(h => h.fecha === cita.fecha);
 
+if(!config){
+  alert("Ese día aún no tiene horario configurado");
+  return;
+}
+
 if(config){
   if(config.activo === false){
     alert("Ese día está cerrado");
@@ -1150,8 +1155,6 @@ Si deseas reagendar, puedes escribirnos nuevamente.`);
   cargarCitas();
   cargarHorariosMensuales();
   cargarListaEspera();
-  cargarHorariosMensuales();
-  cargarListaEspera();
 };
   
 window.loginAdmin = async function(){
@@ -1193,10 +1196,12 @@ console.log("Intento:", usuario, pass);
     document.getElementById("panelAdmin").style.display = "block";
 
     cargarHorarios();
-    cargarClientes();
-    cargarCitas();
-    mostrarSeccion("solicitudes");
-
+cargarClientes();
+cargarCitas();
+cargarHorariosMensuales();
+cargarListaEspera();
+mostrarSeccion("solicitudes");
+    
   }catch(error){
     console.error(error);
     alert("Error al iniciar sesión");
