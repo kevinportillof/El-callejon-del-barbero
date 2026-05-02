@@ -362,7 +362,12 @@ button:disabled{opacity:.5;cursor:not-allowed;transform:none}
 
   <input id="loginUsuario" type="text" placeholder="Usuario" style="width:100%;margin-bottom:10px;">
   <input id="loginPass" type="password" placeholder="Contraseña" style="width:100%;margin-bottom:15px;">
-
+<div style="text-align:right;margin-top:-8px;margin-bottom:10px;">
+  <span onclick="verPassword()" style="font-size:12px;color:#aaa;cursor:pointer;">
+    👁 Ver contraseña
+  </span>
+</div>
+    
   <button onclick="loginAdmin()" style="width:100%;">Entrar</button>
 </div>
 
@@ -978,11 +983,15 @@ window.loginAdmin = async function(){
   try{
     const adminsSnap = await getDocs(collection(db, "admins"));
     let adminValido = null;
-
+console.log("Intento:", usuario, pass);
     adminsSnap.forEach(docu => {
+    console.log("Firebase:", data.usuario, data.password);
       const data = docu.data();
 
-      if(data.usuario === usuario && data.password === pass){
+      if(
+  data.usuario.trim().toLowerCase() === usuario &&
+  data.password.trim() === pass
+){
         adminValido = {
           id: docu.id,
           ...data
@@ -1023,6 +1032,11 @@ window.addEventListener("load", () => {
     mostrarSeccion("solicitudes");
   }
 });
+
+  window.verPassword = function(){
+  const input = document.getElementById("loginPass");
+  input.type = input.type === "password" ? "text" : "password";
+};
   
 </script>
 </body>
