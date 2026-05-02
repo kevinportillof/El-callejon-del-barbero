@@ -1169,7 +1169,7 @@ window.loginAdmin = async function(){
   try{
     const adminsSnap = await getDocs(collection(db, "admins"));
     let adminValido = null;
-console.log("Intento:", usuario, pass);
+
     adminsSnap.forEach(docu => {
       const data = docu.data();
 
