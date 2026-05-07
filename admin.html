@@ -464,12 +464,8 @@ button:disabled{opacity:.5;cursor:not-allowed;transform:none}
   </div>
   <nav class="menu-admin">
   <button onclick="mostrarSeccion('clientes')">Clientes</button>
-  <button onclick="mostrarSeccion('solicitudes')">Solicitudes</button>
   <button onclick="mostrarSeccion('horarios')">Horarios</button>
   <button onclick="mostrarSeccion('agenda')">Agenda</button>
-  <button onclick="mostrarSeccion('recordatorios')">Recordatorios</button>
-  <button onclick="mostrarSeccion('horarioMensual')">Horario mensual</button>
-  <button onclick="mostrarSeccion('listaEspera')">Lista de espera</button>
   <button onclick="cerrarSesionAdmin()">Cerrar sesión</button>
   </nav>
   </header>
@@ -487,22 +483,13 @@ button:disabled{opacity:.5;cursor:not-allowed;transform:none}
   <div class="section">
     <div class="section-head">
       <div>
-        <h2>Horarios disponibles</h2>
-        <p>Escribe las horas separadas por diagonal. Ejemplo: 4/5/6/7</p>
+        <h2>Configuración de horarios</h2>
+<p>Controla días de trabajo, overtime y bloques automáticos.</p>
       </div>
     </div>
 
     <div class="section-body">
-      <div class="days">
-        <div class="day"><label for="lunes">Lunes</label><input id="lunes" type="text" placeholder="Ej: 4/5/6/7"></div>
-        <div class="day"><label for="martes">Martes</label><input id="martes" type="text" placeholder="Ej: 4/5/6/7"></div>
-        <div class="day"><label for="miercoles">Miércoles</label><input id="miercoles" type="text" placeholder="Ej: 4/5/6/7"></div>
-        <div class="day"><label for="jueves">Jueves</label><input id="jueves" type="text" placeholder="Ej: 4/5/6/7"></div>
-        <div class="day"><label for="viernes">Viernes</label><input id="viernes" type="text" placeholder="Ej: 4/5/6/7"></div>
-        <div class="day"><label for="sabado">Sábado</label><input id="sabado" type="text" placeholder="Ej: 11/12/1/3/5"></div>
-        <div class="day"><label for="domingo">Domingo</label><input id="domingo" type="text" placeholder="Ej: Cerrado o 4/5/6"></div>
-      </div>
-
+     
       <div class="actions">
         <button class="btn-primary" id="btnGuardar" onclick="guardarHorarios()">Guardar horarios</button>
         <button class="btn-secondary" onclick="cargarHorarios()">Recargar</button>
