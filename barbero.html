@@ -388,6 +388,44 @@ window.agregarCita = async function(){
     return;
   }
 
+  // No permitir fechas pasadas
+const hoy = new Date();
+hoy.setHours(0,0,0,0);
+
+const fechaCita = new Date(cita.fecha + "T00:00:00");
+
+if(fechaCita < hoy){
+  alert("No puedes agendar en fechas pasadas");
+  return;
+}
+
+// Validar horario de trabajo configurado por el admin
+const snapHorarios = await getDocs(collection(db,"horariosMensuales"));
+let horarioDia = null;
+
+snapHorarios.forEach(docu => {
+  const h = docu.data();
+
+  if(h.fecha === cita.fecha){
+    horarioDia = h;
+  }
+});
+
+if(!horarioDia){
+  alert("Ese día todavía no tiene horario configurado por el administrador");
+  return;
+}
+
+if(horarioDia.activo === false){
+  alert("Ese día está cerrado");
+  return;
+}
+
+if(cita.hora < horarioDia.abre || cita.hora > horarioDia.cierra){
+  alert("La hora está fuera del horario de trabajo");
+  return;
+}
+
   await addDoc(collection(db,"citas"), cita);
 
   document.getElementById("cliente").value = "";
