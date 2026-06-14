@@ -238,24 +238,41 @@ async function loginBarbero(){
 
   try{
     const snap = await getDocs(collection(db,"barberos"));
-    let encontrado = null;
 
-    snap.forEach(docu => {
-      const b = docu.data();
+let usuarioExiste = false;
+let passwordCorrecta = false;
+let encontrado = null;
 
-      if(
-        String(b.usuario || "").trim().toLowerCase() === usuario &&
-        String(b.password || "").trim() === password &&
-        b.activo !== false
-      ){
-        encontrado = { id: docu.id, ...b };
-      }
-    });
+snap.forEach(docu => {
 
-    if(!encontrado){
-      mostrarError("❌ Usuario o contraseña incorrectos");
-      return;
+  const b = docu.data();
+
+  if(
+    String(b.usuario || "").trim().toLowerCase() === usuario
+  ){
+
+    usuarioExiste = true;
+
+    if(
+      String(b.password || "").trim() === password &&
+      b.activo !== false
+    ){
+      passwordCorrecta = true;
+      encontrado = { id: docu.id, ...b };
     }
+  }
+
+});
+
+if(!usuarioExiste){
+  mostrarError("❌ El usuario no existe");
+  return;
+}
+
+if(usuarioExiste && !passwordCorrecta){
+  mostrarError("❌ La contraseña es incorrecta");
+  return;
+}
 
     document.getElementById("errorLogin").style.display = "none";
 
