@@ -233,8 +233,8 @@ window.loginBarbero = async function(){
   snap.forEach(docu => {
     const b = docu.data();
     if(
-      b.usuario?.toLowerCase() === usuario &&
-      b.password === password &&
+     String(b.usuario || "").trim().toLowerCase() === usuario &&
+String(b.password || "").trim() === password &&
       b.activo !== false
     ){
       encontrado = { id: docu.id, ...b };
