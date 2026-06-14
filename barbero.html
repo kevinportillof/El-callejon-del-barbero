@@ -24,7 +24,7 @@ body{
   border-radius:22px;
 }
 
-input,select,textarea{
+input,textarea{
   width:100%;
   margin:8px 0;
   padding:13px;
@@ -42,22 +42,9 @@ button{
   cursor:pointer;
 }
 
-.btn{
-  background:#f5f5f5;
-  color:#111;
-}
-
-.btn-dark{
-  background:#252525;
-  color:white;
-  border:1px solid #444;
-}
-
-.btn-red{
-  background:#321919;
-  color:#ff8b8b;
-  border:1px solid #663333;
-}
+.btn{background:#f5f5f5;color:#111}
+.btn-dark{background:#252525;color:white;border:1px solid #444}
+.btn-red{background:#321919;color:#ff8b8b;border:1px solid #663333}
 
 header{
   padding:20px;
@@ -65,15 +52,8 @@ header{
   background:#090909;
 }
 
-header h1{
-  margin:0;
-  font-size:28px;
-}
-
-header p{
-  margin:5px 0 0;
-  color:#aaa;
-}
+header h1{margin:0;font-size:28px}
+header p{margin:5px 0 0;color:#aaa}
 
 .menu{
   display:flex;
@@ -137,6 +117,14 @@ main{
   padding:20px;
 }
 
+#errorLogin{
+  color:#ff8b8b;
+  text-align:center;
+  display:none;
+  margin-top:10px;
+  font-size:14px;
+}
+
 @media(max-width:900px){
   .agenda{grid-template-columns:1fr}
 }
@@ -147,24 +135,19 @@ main{
 
 <div id="loginBox" class="login">
   <h2>Panel Barbero 💈</h2>
+
   <input id="usuario" placeholder="Usuario">
   <input id="password" type="password" placeholder="Contraseña">
 
-<div style="text-align:right;margin-top:-4px;margin-bottom:10px;">
-  <span onclick="verPassword()" style="cursor:pointer;color:#aaa;font-size:13px;">
-    👁 Ver contraseña
-  </span>
-</div>
-  <button class="btn" style="width:100%" onclick="loginBarbero()">Entrar</button>
-  
-  <p id="errorLogin"
-style="
-color:#ff8b8b;
-text-align:center;
-display:none;
-margin-top:10px;
-font-size:14px;">
-</p>
+  <div style="text-align:right;margin-top:-4px;margin-bottom:10px;">
+    <span id="btnVerPassword" style="cursor:pointer;color:#aaa;font-size:13px;">
+      👁 Ver contraseña
+    </span>
+  </div>
+
+  <button id="btnEntrar" class="btn" style="width:100%">Entrar</button>
+
+  <p id="errorLogin"></p>
 </div>
 
 <div id="panel" style="display:none;">
@@ -238,47 +221,60 @@ window.mostrar = function(id){
   document.getElementById(id).classList.add("activa");
 };
 
-window.loginBarbero = async function(){
+function mostrarError(mensaje){
+  const error = document.getElementById("errorLogin");
+  error.style.display = "block";
+  error.textContent = mensaje;
+}
+
+async function loginBarbero(){
   const usuario = document.getElementById("usuario").value.trim().toLowerCase();
   const password = document.getElementById("password").value.trim();
 
-  const snap = await getDocs(collection(db,"barberos"));
-  let encontrado = null;
+  if(!usuario || !password){
+    mostrarError("❌ Escribe usuario y contraseña");
+    return;
+  }
 
-  snap.forEach(docu => {
-    const b = docu.data();
-    if(
-     String(b.usuario || "").trim().toLowerCase() === usuario &&
-String(b.password || "").trim() === password &&
-      b.activo !== false
-    ){
-      encontrado = { id: docu.id, ...b };
+  try{
+    const snap = await getDocs(collection(db,"barberos"));
+    let encontrado = null;
+
+    snap.forEach(docu => {
+      const b = docu.data();
+
+      if(
+        String(b.usuario || "").trim().toLowerCase() === usuario &&
+        String(b.password || "").trim() === password &&
+        b.activo !== false
+      ){
+        encontrado = { id: docu.id, ...b };
+      }
+    });
+
+    if(!encontrado){
+      mostrarError("❌ Usuario o contraseña incorrectos");
+      return;
     }
-  });
 
-  if(!encontrado){
+    document.getElementById("errorLogin").style.display = "none";
 
-  const error = document.getElementById("errorLogin");
+    barberoActivo = encontrado;
 
-  error.style.display = "block";
-  error.textContent =
-    "❌ Usuario o contraseña incorrectos";
+    localStorage.setItem("barberoId", encontrado.id);
+    localStorage.setItem("barberoNombre", encontrado.nombre);
 
-  return;
+    document.getElementById("loginBox").style.display = "none";
+    document.getElementById("panel").style.display = "block";
+    document.getElementById("nombreBarbero").textContent = encontrado.nombre;
+
+    cargarCitas();
+
+  }catch(error){
+    console.error(error);
+    mostrarError("❌ Error de conexión con Firebase");
+  }
 }
-  
-document.getElementById("errorLogin").style.display = "none";
-  barberoActivo = encontrado;
-
-  localStorage.setItem("barberoId", encontrado.id);
-  localStorage.setItem("barberoNombre", encontrado.nombre);
-
-  document.getElementById("loginBox").style.display = "none";
-  document.getElementById("panel").style.display = "block";
-  document.getElementById("nombreBarbero").textContent = encontrado.nombre;
-
-  cargarCitas();
-};
 
 window.cerrarSesion = function(){
   localStorage.removeItem("barberoId");
@@ -322,7 +318,7 @@ function renderAgenda(){
         c.barberoId === barberoActivo.id &&
         c.estado !== "Cancelada"
       )
-      .sort((a,b) => a.hora.localeCompare(b.hora));
+      .sort((a,b) => String(a.hora || "").localeCompare(String(b.hora || "")));
 
     let html = `
       <div class="dia">
@@ -352,6 +348,11 @@ function renderAgenda(){
 }
 
 window.agregarCita = async function(){
+  if(!barberoActivo){
+    alert("Inicia sesión primero");
+    return;
+  }
+
   const cita = {
     cliente: document.getElementById("cliente").value.trim(),
     fecha: document.getElementById("fecha").value,
@@ -399,29 +400,28 @@ window.solicitarReagendar = async function(id){
   cargarCitas();
 };
 
+function verPassword(){
+  const input = document.getElementById("password");
+  input.type = input.type === "password" ? "text" : "password";
+}
+
+document.getElementById("btnEntrar").addEventListener("click", loginBarbero);
+document.getElementById("btnVerPassword").addEventListener("click", verPassword);
+
 window.addEventListener("load", async () => {
   const id = localStorage.getItem("barberoId");
   const nombre = localStorage.getItem("barberoNombre");
 
   if(id && nombre){
     barberoActivo = { id, nombre };
+
     document.getElementById("loginBox").style.display = "none";
     document.getElementById("panel").style.display = "block";
     document.getElementById("nombreBarbero").textContent = nombre;
+
     cargarCitas();
   }
 });
-
-  window.verPassword = function(){
-  const input = document.getElementById("password");
-
-  if(input.type === "password"){
-    input.type = "text";
-  }else{
-    input.type = "password";
-  }
-};
-  
 </script>
 
 </body>
