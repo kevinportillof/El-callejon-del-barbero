@@ -149,7 +149,22 @@ main{
   <h2>Panel Barbero 💈</h2>
   <input id="usuario" placeholder="Usuario">
   <input id="password" type="password" placeholder="Contraseña">
+
+<div style="text-align:right;margin-top:-4px;margin-bottom:10px;">
+  <span onclick="verPassword()" style="cursor:pointer;color:#aaa;font-size:13px;">
+    👁 Ver contraseña
+  </span>
+</div>
   <button class="btn" style="width:100%" onclick="loginBarbero()">Entrar</button>
+  
+  <p id="errorLogin"
+style="
+color:#ff8b8b;
+text-align:center;
+display:none;
+margin-top:10px;
+font-size:14px;">
+</p>
 </div>
 
 <div id="panel" style="display:none;">
@@ -242,10 +257,17 @@ String(b.password || "").trim() === password &&
   });
 
   if(!encontrado){
-    alert("Usuario o contraseña incorrectos");
-    return;
-  }
 
+  const error = document.getElementById("errorLogin");
+
+  error.style.display = "block";
+  error.textContent =
+    "❌ Usuario o contraseña incorrectos";
+
+  return;
+}
+  
+document.getElementById("errorLogin").style.display = "none";
   barberoActivo = encontrado;
 
   localStorage.setItem("barberoId", encontrado.id);
@@ -389,6 +411,17 @@ window.addEventListener("load", async () => {
     cargarCitas();
   }
 });
+
+  window.verPassword = function(){
+  const input = document.getElementById("password");
+
+  if(input.type === "password"){
+    input.type = "text";
+  }else{
+    input.type = "password";
+  }
+};
+  
 </script>
 
 </body>
