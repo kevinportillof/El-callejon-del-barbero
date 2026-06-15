@@ -526,9 +526,10 @@ font-size:14px;">
         <p>Barbero principal</p>
 
         <div class="actions">
-          <button class="btn-primary">
-            Ver agenda
-          </button>
+         <button class="btn-primary"
+onclick="abrirHorarioBarbero('francisco','Francisco Limón')">
+Ver agenda
+</button>
         </div>
       </div>
 
@@ -537,14 +538,66 @@ font-size:14px;">
         <p>Barbero</p>
 
         <div class="actions">
-          <button class="btn-primary">
-            Ver agenda
-          </button>
+        <button class="btn-primary"
+onclick="abrirHorarioBarbero('jose','José Montaño')">
+Ver agenda
+</button>
         </div>
       </div>
 
     </div>
   </div>
+</section>
+
+  <section id="agendaBarbero" class="seccion-admin">
+
+  <div class="section">
+    <div class="section-head">
+      <h2 id="tituloBarbero">
+        Agenda semanal
+      </h2>
+    </div>
+
+    <div class="section-body">
+
+     <div class="client">
+
+<h3>Lunes</h3>
+<input type="time">
+<input type="time">
+
+<h3>Martes</h3>
+<input type="time">
+<input type="time">
+
+<h3>Miércoles</h3>
+<input type="time">
+<input type="time">
+
+<h3>Jueves</h3>
+<input type="time">
+<input type="time">
+
+<h3>Viernes</h3>
+<input type="time">
+<input type="time">
+
+<h3>Sábado</h3>
+<input type="time">
+<input type="time">
+
+<h3>Domingo</h3>
+<input type="time">
+<input type="time">
+
+<button class="btn-primary">
+Guardar horario
+</button>
+
+</div>
+    </div>
+  </div>
+
 </section>
   
 <section id="clientes" class="seccion-admin">
@@ -1516,6 +1569,15 @@ Si todavía lo quieres, respóndenos para apartarlo.`);
   window.verPassword = function(){
   const input = document.getElementById("loginPass");
   input.type = input.type === "password" ? "text" : "password";
+};
+
+  window.abrirHorarioBarbero = function(id,nombre){
+
+  document.getElementById("tituloBarbero").innerText =
+    "Horario semanal · " + nombre;
+
+  mostrarSeccion("agendaBarbero");
+
 };
   
 </script>
