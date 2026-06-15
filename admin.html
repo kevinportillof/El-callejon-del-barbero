@@ -462,12 +462,14 @@ button:disabled{opacity:.5;cursor:not-allowed;transform:none}
     </div>
     <div class="badge">Conectado a Firebase</div>
   </div>
-  <nav class="menu-admin">
-  <button onclick="mostrarSeccion('clientes')">Clientes</button>
-  <button onclick="mostrarSeccion('horarios')">Horarios</button>
-  <button onclick="mostrarSeccion('agenda')">Agenda</button>
-  <button onclick="cerrarSesionAdmin()">Cerrar sesión</button>
-  </nav>
+ <nav class="menu-admin">
+  <button onclick="mostrarSeccion('barberos')">💈 Barberos</button>
+  <button onclick="mostrarSeccion('clientes')">👤 Clientes</button>
+  <button onclick="mostrarSeccion('solicitudes')">📩 Solicitudes</button>
+  <button onclick="mostrarSeccion('recordatorios')">🔔 Recordatorios</button>
+  <button onclick="mostrarSeccion('listaEspera')">⏳ Lista de espera</button>
+  <button onclick="cerrarSesionAdmin()">🚪 Salir</button>
+</nav>
   </header>
 
 <main class="layout">
@@ -498,7 +500,43 @@ button:disabled{opacity:.5;cursor:not-allowed;transform:none}
     </div>
   </div>
 </section>
+<section id="barberos" class="seccion-admin">
+  <div class="section">
+    <div class="section-head">
+      <div>
+        <h2>Barberos</h2>
+        <p>Administra horarios y agenda de cada barbero.</p>
+      </div>
+    </div>
 
+    <div class="section-body">
+
+      <div class="client">
+        <h3>Francisco Limón</h3>
+        <p>Barbero principal</p>
+
+        <div class="actions">
+          <button class="btn-primary">
+            Ver agenda
+          </button>
+        </div>
+      </div>
+
+      <div class="client">
+        <h3>José Montaño</h3>
+        <p>Barbero</p>
+
+        <div class="actions">
+          <button class="btn-primary">
+            Ver agenda
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+  
 <section id="clientes" class="seccion-admin">
   <div class="section">
     <div class="section-head">
@@ -1207,7 +1245,7 @@ cargarClientes();
 cargarCitas();
 cargarHorariosMensuales();
 cargarListaEspera();
-mostrarSeccion("solicitudes");
+mostrarSeccion("barberos");
     
   }catch(error){
     console.error(error);
@@ -1225,7 +1263,7 @@ window.addEventListener("load", () => {
     cargarCitas();
     cargarHorariosMensuales();
     cargarListaEspera();
-    mostrarSeccion("solicitudes");
+   mostrarSeccion("barberos");
   }
 });
 
