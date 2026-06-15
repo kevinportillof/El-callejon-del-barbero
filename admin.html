@@ -1544,20 +1544,74 @@ Si todavía lo quieres, respóndenos para apartarlo.`);
     "Horario semanal · " + nombre;
 
   document.getElementById("contenidoAgendaBarbero").innerHTML = `
-    <div class="client">
-      <h3>${nombre}</h3>
-      <p>Editor listo. Siguiente paso: guardar horarios por día.</p>
 
-      <div class="actions">
-        <button class="btn-secondary" onclick="mostrarSeccion('barberos')">
-          Volver
-        </button>
-      </div>
-    </div>
-  `;
+<div class="client">
 
-  mostrarSeccion("agendaBarbero");
-};
+<h3>Lunes</h3>
+Entrada
+<input type="time" id="lunesEntrada">
+
+Salida
+<input type="time" id="lunesSalida">
+
+<h3>Martes</h3>
+Entrada
+<input type="time" id="martesEntrada">
+
+Salida
+<input type="time" id="martesSalida">
+
+<h3>Miércoles</h3>
+Entrada
+<input type="time" id="miercolesEntrada">
+
+Salida
+<input type="time" id="miercolesSalida">
+
+<h3>Jueves</h3>
+Entrada
+<input type="time" id="juevesEntrada">
+
+Salida
+<input type="time" id="juevesSalida">
+
+<h3>Viernes</h3>
+Entrada
+<input type="time" id="viernesEntrada">
+
+Salida
+<input type="time" id="viernesSalida">
+
+<h3>Sábado</h3>
+Entrada
+<input type="time" id="sabadoEntrada">
+
+Salida
+<input type="time" id="sabadoSalida">
+
+<h3>Domingo</h3>
+Entrada
+<input type="time" id="domingoEntrada">
+
+Salida
+<input type="time" id="domingoSalida">
+
+<div class="actions">
+
+<button class="btn-primary">
+Guardar horario
+</button>
+
+<button class="btn-secondary"
+onclick="mostrarSeccion('barberos')">
+Volver
+</button>
+
+</div>
+
+</div>
+
+`;
   
 </script>
 </body>
