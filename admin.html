@@ -449,6 +449,16 @@ button:disabled{opacity:.5;cursor:not-allowed;transform:none}
 </div>
     
   <button onclick="loginAdmin()" style="width:100%;">Entrar</button>
+
+<p id="errorLoginAdmin"
+style="
+display:none;
+color:#ff8b8b;
+text-align:center;
+margin-top:10px;
+font-size:14px;">
+</p>
+
 </div>
 
 <div id="panelAdmin" style="display:none;">
@@ -1213,27 +1223,50 @@ window.loginAdmin = async function(){
 
   try{
     const adminsSnap = await getDocs(collection(db, "admins"));
-    let adminValido = null;
+  let usuarioExiste = false;
+let passwordCorrecta = false;
+let adminValido = null;
 
-    adminsSnap.forEach(docu => {
-      const data = docu.data();
+adminsSnap.forEach(docu => {
 
-      if(
-  data.usuario.trim().toLowerCase() === usuario &&
-  data.password.trim() === pass
-){
-        adminValido = {
-          id: docu.id,
-          ...data
-        };
-      }
-    });
+  const data = docu.data();
 
-    if(!adminValido){
-      alert("Usuario o contraseña incorrectos");
-      return;
+  if(
+    String(data.usuario || "").trim().toLowerCase() === usuario
+  ){
+
+    usuarioExiste = true;
+
+    if(
+      String(data.password || "").trim() === pass
+    ){
+
+      passwordCorrecta = true;
+
+      adminValido = {
+        id: docu.id,
+        ...data
+      };
     }
+  }
+});
 
+    if(!usuarioExiste){
+  document.getElementById("errorLoginAdmin").style.display = "block";
+  document.getElementById("errorLoginAdmin").textContent =
+  "❌ El usuario no existe";
+  return;
+}
+
+if(usuarioExiste && !passwordCorrecta){
+  document.getElementById("errorLoginAdmin").style.display = "block";
+  document.getElementById("errorLoginAdmin").textContent =
+  "❌ La contraseña es incorrecta";
+  return;
+}
+
+document.getElementById("errorLoginAdmin").style.display = "none";
+    
     localStorage.setItem("adminActivo", "true");
     localStorage.setItem("adminNombre", adminValido.nombre || "Administrador");
 
