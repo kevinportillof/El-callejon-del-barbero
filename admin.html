@@ -1538,78 +1538,128 @@ Si todavía lo quieres, respóndenos para apartarlo.`);
   input.type = input.type === "password" ? "text" : "password";
 };
 
-  window.abrirHorarioBarbero = function(id,nombre){
+ window.abrirHorarioBarbero = async function(id,nombre){
 
-document.getElementById("tituloBarbero").innerText =
-"Horario semanal · " + nombre;
+  document.getElementById("tituloBarbero").innerText =
+  "Horario semanal · " + nombre;
 
-document.getElementById("contenidoAgendaBarbero").innerHTML = `
+  let guardado = {};
+  const ref = doc(db,"horariosBarberos",id);
+  const snap = await getDoc(ref);
 
-<div class="client">
+  if(snap.exists()){
+    guardado = snap.data().horario || {};
+  }
 
-<h3>Lunes</h3>
-Entrada
-<input type="time" id="lunesEntrada">
-Salida
-<input type="time" id="lunesSalida">
+  document.getElementById("contenidoAgendaBarbero").innerHTML = `
 
-<h3>Martes</h3>
-Entrada
-<input type="time" id="martesEntrada">
-Salida
-<input type="time" id="martesSalida">
+  <div class="client">
 
-<h3>Miércoles</h3>
-Entrada
-<input type="time" id="miercolesEntrada">
-Salida
-<input type="time" id="miercolesSalida">
+  ${dias.map(dia => `
+    <h3>${dia}</h3>
 
-<h3>Jueves</h3>
-Entrada
-<input type="time" id="juevesEntrada">
-Salida
-<input type="time" id="juevesSalida">
+    <label>¿Trabaja?</label>
+    <select id="${dia}Activo">
+      <option value="true">Sí trabaja</option>
+      <option value="false">Cerrado</option>
+    </select>
 
-<h3>Viernes</h3>
-Entrada
-<input type="time" id="viernesEntrada">
-Salida
-<input type="time" id="viernesSalida">
+    <label>Entrada</label>
+    <input type="time" id="${dia}Entrada">
 
-<h3>Sábado</h3>
-Entrada
-<input type="time" id="sabadoEntrada">
-Salida
-<input type="time" id="sabadoSalida">
+    <label>Descanso inicio</label>
+    <input type="time" id="${dia}DescansoInicio">
 
-<h3>Domingo</h3>
-Entrada
-<input type="time" id="domingoEntrada">
-Salida
-<input type="time" id="domingoSalida">
+    <label>Descanso fin</label>
+    <input type="time" id="${dia}DescansoFin">
 
-<div class="actions">
+    <label>Salida</label>
+    <input type="time" id="${dia}Salida">
+  `).join("")}
 
-<button class="btn-primary"
-onclick="guardarHorarioBarbero('${id}')">
-Guardar horario
-</button>
+  <div class="actions">
+    <button class="btn-primary" onclick="guardarHorarioBarbero('${id}')">
+      Guardar horario
+    </button>
 
-<button class="btn-secondary"
-onclick="mostrarSeccion('barberos')">
-Volver
-</button>
+    <button class="btn-secondary" onclick="mostrarSeccion('barberos')">
+      Volver
+    </button>
+  </div>
 
-</div>
+  </div>
+  `;
 
-</div>
+  dias.forEach(dia => {
+    document.getElementById(`${dia}Activo`).value =
+      guardado[dia]?.activo === false ? "false" : "true";
 
-`;
+    document.getElementById(`${dia}Entrada`).value =
+      guardado[dia]?.entrada || "";
 
-mostrarSeccion("agendaBarbero");
+    document.getElementById(`${dia}DescansoInicio`).value =
+      guardado[dia]?.descansoInicio || "";
 
+    document.getElementById(`${dia}DescansoFin`).value =
+      guardado[dia]?.descansoFin || "";
+
+    document.getElementById(`${dia}Salida`).value =
+      guardado[dia]?.salida || "";
+  });
+
+  mostrarSeccion("agendaBarbero");
 };
+
+
+window.guardarHorarioBarbero = async function(id){
+
+  const horario = {};
+
+  for(const dia of dias){
+    const activo = document.getElementById(`${dia}Activo`).value === "true";
+    const entrada = document.getElementById(`${dia}Entrada`).value;
+    const descansoInicio = document.getElementById(`${dia}DescansoInicio`).value;
+    const descansoFin = document.getElementById(`${dia}DescansoFin`).value;
+    const salida = document.getElementById(`${dia}Salida`).value;
+
+    if(activo && (!entrada || !salida)){
+      alert(`Falta entrada o salida en ${dia}`);
+      return;
+    }
+
+    if(activo && entrada >= salida){
+      alert(`La entrada debe ser antes que la salida en ${dia}`);
+      return;
+    }
+
+    if((descansoInicio && !descansoFin) || (!descansoInicio && descansoFin)){
+      alert(`Completa bien el descanso en ${dia}`);
+      return;
+    }
+
+    if(descansoInicio && descansoFin && descansoInicio >= descansoFin){
+      alert(`El descanso está mal en ${dia}`);
+      return;
+    }
+
+    horario[dia] = {
+      activo,
+      entrada,
+      descansoInicio,
+      descansoFin,
+      salida
+    };
+  }
+
+  await setDoc(doc(db,"horariosBarberos",id), {
+    barberoId:id,
+    horario,
+    actualizadoEn:serverTimestamp()
+  });
+
+  mostrarToast("Horario guardado correctamente");
+};
+  
   window.guardarHorarioBarbero = async function(id){
 
 const horario = {
