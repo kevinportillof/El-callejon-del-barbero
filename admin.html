@@ -1610,7 +1610,34 @@ Si todavía lo quieres, respóndenos para apartarlo.`);
   mostrarSeccion("agendaBarbero");
 };
 
+window.guardarHorarioBarbero = async function(id){
 
+  const horario = {};
+
+  for(const dia of dias){
+
+    horario[dia] = {
+      activo: document.getElementById(`${dia}Activo`).value === "true",
+      entrada: document.getElementById(`${dia}Entrada`).value,
+      descansoInicio: document.getElementById(`${dia}DescansoInicio`).value,
+      descansoFin: document.getElementById(`${dia}DescansoFin`).value,
+      salida: document.getElementById(`${dia}Salida`).value
+    };
+
+  }
+
+  await setDoc(
+    doc(db,"horariosBarberos",id),
+    {
+      barberoId:id,
+      horario,
+      actualizadoEn:serverTimestamp()
+    }
+  );
+
+  mostrarToast("Horario guardado correctamente");
+
+};
 
   
 </script>
