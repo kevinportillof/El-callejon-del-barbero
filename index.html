@@ -1,1532 +1,416 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
 
-    <title>El Callejón Del Barbero</title>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-    <!-- Iconos -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <meta
+    name="theme-color"
+    content="#1a1a1a"
+  >
 
-    <!-- TIPOGRAFÍA PREMIUM -->
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+  <meta
+    name="description"
+    content="El Callejón del Barbero se encuentra temporalmente en mantenimiento."
+  >
 
-    <style>
-      
-      
-        body {
-            margin: 0;
-            font-family: 'Playfair Display', serif;
+  <title>Mantenimiento | El Callejón del Barbero</title>
 
-            /* FONDO AJUSTADO */
-            background-image: url('https://i.ibb.co/dSp2ry3/fondobm.png');
-            background-size: cover;
-            background-position: center top;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-            text-align: center;
-            color: white;
-            overflow-x: hidden;
-        }
+    html,
+    body {
+      width: 100%;
+      min-height: 100%;
+    }
 
-       
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
 
-        .overlay {
-        background: rgba(0, 0, 0, 0.55);
-       width: 100%;
-       height: 100%;
-       position: fixed;
+      font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+      color: #181818;
+
+      background:
+        radial-gradient(
+          circle at top,
+          rgba(255, 255, 255, 0.95),
+          rgba(230, 230, 230, 0.95) 45%,
+          #cfcfcf 100%
+        );
+    }
+
+    .mantenimiento {
+      width: 100%;
+      max-width: 560px;
+      text-align: center;
+    }
+
+    .marca {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+
+      margin-bottom: 34px;
+
+      color: #222;
+    }
+
+    .marca-linea {
+      width: 44px;
+      height: 2px;
+      background: #555;
+    }
+
+    .marca-texto {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+    }
+
+    .tarjeta {
+      position: relative;
+      overflow: hidden;
+
+      padding: 54px 34px 38px;
+
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 28px;
+
+      background:
+        rgba(255, 255, 255, 0.72);
+
+      box-shadow:
+        0 24px 70px rgba(0, 0, 0, 0.12);
+
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .tarjeta::before {
+      content: "";
+
+      position: absolute;
       top: 0;
-      left: 0;
-     z-index: 1;
-     pointer-events: none;
+      left: 50%;
+
+      width: 82px;
+      height: 4px;
+
+      transform: translateX(-50%);
+
+      border-radius: 0 0 10px 10px;
+
+      background: #4d4d4d;
+    }
+
+    .icono {
+      width: 74px;
+      height: 74px;
+
+      display: grid;
+      place-items: center;
+
+      margin: 0 auto 26px;
+
+      border-radius: 50%;
+
+      background: #1a1a1a;
+
+      box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.18);
+    }
+
+    .icono svg {
+      width: 34px;
+      height: 34px;
+
+      fill: none;
+      stroke: white;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .estado {
+      display: inline-block;
+
+      margin-bottom: 15px;
+
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 2.4px;
+      text-transform: uppercase;
+
+      color: #666;
+    }
+
+    h1 {
+      max-width: 430px;
+      margin: 0 auto;
+
+      font-size: clamp(32px, 7vw, 52px);
+      line-height: 0.98;
+      letter-spacing: -2px;
+
+      color: #151515;
+    }
+
+    .descripcion {
+      max-width: 420px;
+
+      margin: 22px auto 0;
+
+      font-size: 16px;
+      line-height: 1.65;
+
+      color: #5f5f5f;
+    }
+
+    .separador {
+      width: 54px;
+      height: 1px;
+
+      margin: 30px auto;
+
+      background: #aaa;
+    }
+
+    .mensaje {
+      font-size: 14px;
+      line-height: 1.6;
+
+      color: #454545;
+    }
+
+    .acciones {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+
+      margin-top: 30px;
+    }
+
+    .boton {
+      min-height: 54px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+
+      padding: 14px 22px;
+
+      border-radius: 16px;
+
+      font-size: 15px;
+      font-weight: 750;
+      text-decoration: none;
+
+      transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+    }
+
+    .boton:active {
+      transform: scale(0.98);
+    }
+
+    .boton-principal {
+      color: white;
+      background: #1a1a1a;
+
+      box-shadow:
+        0 12px 24px rgba(0, 0, 0, 0.16);
+    }
+
+    .boton-secundario {
+      color: #222;
+
+      border: 1px solid #c7c7c7;
+
+      background:
+        rgba(255, 255, 255, 0.55);
+    }
+
+    .pie {
+      margin-top: 24px;
+
+      font-size: 12px;
+      letter-spacing: 1px;
+
+      color: #777;
+    }
+
+    .pulso {
+      width: 7px;
+      height: 7px;
+
+      display: inline-block;
+
+      margin-right: 7px;
+
+      border-radius: 50%;
+
+      background: #555;
+
+      animation: pulso 1.8s infinite;
+    }
+
+    @keyframes pulso {
+      0% {
+        box-shadow:
+          0 0 0 0 rgba(80, 80, 80, 0.35);
       }
 
-
-        .contenido {
-            position: relative;
-            z-index: 2;
-            padding-top: 40px;
-            animation: fadeIn 0.8s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-
-        /* LOGO INTERACTIVO */
-        img.logo {
-            width: 72%;
-            max-width: 350px;
-            margin-top: 5px;
-            border-radius: 20px;
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
-        }
-        img.logo:hover {
-            transform: rotate(-5deg) scale(1.08);
-            box-shadow: 0 0 25px rgba(255,255,255,0.9);
-            cursor: pointer;
-        }
-
-        h1 {
-            
-            font-family: 'Playfair Display', serif;
-            font-size: 52px;
-            margin-top: 10px;
-            color: #ffffff;
-            text-shadow: 0 0 18px black;
-        }
-
-        /* BOTONES PROFESIONALES */
-        .btn {
-         display: block;
-         width: 82%;
-         max-width: 320px;
-         margin: 14px auto;
-         padding: 16px;
-
-         background: linear-gradient(145deg, #1c1c1f, #2f3e46);
-         border: 1px solid rgba(255,255,255,0.12);
-
-         color: #f5f5f5;
-         font-size: 18px;
-         font-weight: 700;
-
-         border-radius: 18px;
-         text-decoration: none;
-
-         box-shadow:
-         0 6px 20px rgba(0,0,0,0.6),
-         inset 0 1px 0 rgba(255,255,255,0.05);
-
-         transition: all 0.25s ease;
-        }
-
-        .btn:hover {
-          background: linear-gradient(145deg, #2f3e46, #3a4f57);
-         transform: translateY(-3px) scale(1.02);
-
-         box-shadow:
-         0 10px 25px rgba(0,0,0,0.8),
-         0 0 12px rgba(141,153,174,0.3);
-        }
-
-        .btn:active {
-         transform: scale(0.96);
-         box-shadow: inset 0 3px 10px rgba(0,0,0,0.8);
-        }
-
-        /* BOTÓN REGRESAR PROFESIONAL */
-        .btn-regresar {
-            width: 60%;
-            max-width: 185px;
-            margin: 25px auto;
-            padding: 11px 14px;
-
-            background: linear-gradient(135deg, #524b4b, #a1a0e7, #61a0ce);
-            background-size: 300% 300%;
-            color: white;
-            font-size: 16px;
-            font-weight: 800;
-
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
-
-            border-radius: 50px;
-            border: none;
-
-            animation: barberGlow 4s ease infinite;
-            box-shadow: 0 0 20px rgba(103, 82, 236, 0.6);
-
-            transition: all 0.25s ease;
-        }
-
-        #servicios .btn-regresar {
-    position: fixed;
-    bottom: 18px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 9999;
-}
-
-#servicios .btn-regresar:hover {
-    transform: translateX(-50%) scale(1.08);
-}
-
-        @keyframes barberGlow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .btn-regresar i {
-            font-size: 18px;
-        }
-
-        /* ICONOS */
-        .icono-barberia {
-            color: #8d99ae;
-            text-shadow: 0 0 12px #8d99ae;
-            margin-right: 6px;
-        }
-
-        .social-container {
-            margin-top: 30px;
-            display: flex;
-            justify-content: center;
-            gap: 18px;
-        }
-
-        .social-circle {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            color: white;
-            text-decoration: none;
-            transition: 0.3s;
-            box-shadow: 0 0 12px rgba(255,255,255,0.25);
-        }
-
-        .social-circle:hover {
-            transform: scale(1.15);
-        }
-
-        .tikTok { background: #000; }
-        .facebook { background: #1877f2; }
-        .instagram { 
-            background: linear-gradient(45deg, #8d99ae, #fa7e1e, #d62976, #962fbf, #4f5bd5);
-        }
-             .maps {
-       background: #34a853; /* verde Google Maps */
-         }
-
-        /* DIRECCIÓN CON ICONO */
-        .direccion {
-            color: white;
-            font-weight: 600;
-            font-size: 16px;
-            text-shadow: 0 0 8px black;
-            margin-top: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .seccion {
-            display: none;
-            position: relative;
-            z-index: 2;
-            padding: 40px 20px;
-            animation: fadeIn 0.8s ease;
-        }
-
-        .titulo {
-            font-size: 36px;
-            font-weight: 800;
-            margin-bottom: 25px;
-            text-shadow: 0 0 14px black;
-        }
-
-        /* ===== MODAL AVISO AL ENTRAR ===== */
-.modal-aviso {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 99999;
-}
-
-.modal-contenido {
-    background: linear-gradient(135deg, #111, #1e1e1e);
-    padding: 30px 22px;
-    border-radius: 24px;
-    max-width: 340px;
-    width: 85%;
-    box-shadow: 0 0 30px rgba(255,255,255,0.25);
-    animation: popIn 0.4s ease;
-}
-
-@keyframes popIn {
-    from { transform: scale(0.8); opacity: 0; }
-    to   { transform: scale(1); opacity: 1; }
-}
-
-.modal-contenido h3 {
-    font-size: 28px;
-    margin-bottom: 12px;
-    color: #8d99ae;
-}
-
-.modal-contenido p {
-    font-size: 18px;
-    margin-bottom: 22px;
-}
-
-.modal-contenido button {
-    background: linear-gradient(135deg, #524b4b, #a1a0e7, #61a0ce);
-    border: none;
-    padding: 12px 26px;
-    border-radius: 40px;
-    color: white;
-    font-size: 16px;
-    font-weight: 800;
-    cursor: pointer;
-}
-
-/* ===== BARBEROS ===== */
-.contenedor-barberos {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 22px;
-}
-
-.barbero-card {
-    width: 260px;
-    background: rgba(0,0,0,0.65);
-    border-radius: 20px;
-    padding: 16px;
-    box-shadow: 0 0 18px rgba(0,0,0,0.6);
-}
-
-.barbero-card img {
-    width: 100%;
-    border-radius: 16px;
-    margin-bottom: 10px;
-}
-
-.barbero-card h3 {
-    font-size: 22px;
-    margin: 8px 0;
-}
-
-.barbero-card p {
-    font-size: 15px;
-}
-
-.barbero-card button,
-.btn-barbero {
-    margin-top: 10px;
-    padding: 10px 16px;
-    border-radius: 30px;
-    border: none;
-    background:#8d99ae;
-    color: #000;
-    font-weight: 800;
-    cursor: pointer;
-    text-decoration: none;
-    display: inline-block;
-}
-
-.barbero-card.vacante {
-    border: 2px dashed #8d99ae;
-}
-
-/* BOTÓN ENTENDIDO ESTILO "SE BUSCA BARBERO" */
-.btn-entendido {
-    padding: 12px 26px;
-    border-radius: 40px;
-    border: none;
-    font-size: 16px;
-    font-weight: 800;
-    cursor: pointer;
-    color: white;
-    background: linear-gradient(135deg, #524b4b, #a1a0e7, #61a0ce);
-    transition: all 0.25s ease;
-}
-
-.btn-entendido:hover {
-    transform: scale(1.08);
-    filter: brightness(1.15);
-}
-
-.horario-card{
-    width: 90%;
-    max-width: 420px;
-    margin: 16px auto;
-    padding: 18px;
-    border-radius: 20px;
-    background: rgba(0,0,0,0.60);
-    box-shadow: 0 0 14px rgba(0,0,0,0.35);
-    border: 1px solid rgba(255,255,255,0.10);
-}
-
-.horario-card h3{
-    margin: 0 0 8px 0;
-    color: #8d99ae;
-    font-size: 24px;
-}
-
-.horario-card p{
-    margin: 0;
-    font-size: 18px;
-    color: white;
-}
-
-.hora-btn {
-    margin: 6px;
-    padding: 10px 14px;
-    border-radius: 12px;
-
-    border: 1px solid rgba(255,255,255,0.2);
-    background: rgba(255,255,255,0.05);
-
-    color: #f5f5f5;
-    cursor: pointer;
-    transition: 0.25s;
-    font-weight: 600;
-}
-
-.hora-btn:hover {
-    background: #f5f5f5;
-    color: #111;
-    transform: scale(1.08);
-}
-
-.servicios-grid {
-    display: grid;
-    gap: 16px;
-    width: 90%;
-    max-width: 430px;
-    margin: 0 auto;
-}
-
-.servicio-card {
-    position: relative;
-    overflow: hidden;
-    text-align: left;
-
-    background: linear-gradient(145deg, rgba(10,10,12,0.95), rgba(35,43,50,0.88));
-    color: white;
-
-    border: 1px solid rgba(255,255,255,0.14);
-    border-radius: 26px;
-
-    padding: 22px 24px;
-    min-height: 110px;
-
-    cursor: pointer;
-
-    box-shadow:
-        0 12px 28px rgba(0,0,0,0.75),
-        inset 0 1px 0 rgba(255,255,255,0.08);
-
-    transition: all 0.28s ease;
-}
-
-.servicio-card::after {
-    content: "✦";
-    position: absolute;
-    top: 18px;
-    right: 22px;
-    color: rgba(255,255,255,0.25);
-    font-size: 20px;
-}
-
-.servicio-card h3 {
-    margin: 0;
-    font-size: 26px;
-    color: #c7d0df;
-}
-
-.servicio-card p {
-    display: inline-block;
-    margin-top: 10px;
-    padding: 6px 12px;
-
-    background: rgba(255,255,255,0.08);
-    border-radius: 20px;
-
-    font-size: 15px;
-    font-weight: 700;
-}
-
-.servicio-card small {
-    display: block;
-    margin-top: 8px;
-    font-size: 13px;
-    color: #b8c0cc;
-}
-
-.servicio-card:hover {
-    transform: translateY(-5px);
-    box-shadow:
-        0 18px 35px rgba(0,0,0,0.9),
-        0 0 15px rgba(141,153,174,0.2);
-}
-
-.servicio-card.activo {
-    background: #f5f5f5;
-    color: #111;
-}
-
-.servicio-card.activo h3,
-.servicio-card.activo p,
-.servicio-card.activo small {
-    color: #111;
-}
-
-.servicio-card.activo::after {
-    content: "✓";
-    color: #111;
-    font-weight: bold;
-}
-
-.perfil-circulo {
-    position: fixed;
-    top: 18px;
-    right: 18px;
-    width: 52px;
-    height: 52px;
-    border-radius: 50%;
-    background: rgba(0,0,0,0.75);
-    border: 1px solid rgba(255,255,255,0.35);
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-    font-size: 22px;
-    cursor: pointer;
-}
-
-.producto-card{
-  width: 92%;
-  max-width: 410px;
-  margin: 25px auto;
-  background: linear-gradient(180deg,#151515,#090909);
-  border: 1px solid #2a2a2a;
-  border-radius: 22px;
-  overflow: hidden;
-  color: #fff;
-  font-family: Arial, sans-serif;
-  box-shadow: 0 14px 35px rgba(0,0,0,.55);
-}
-
-.producto-card img{
-  width: 100%;
-  display: block;
-}
-
-.producto-info{
-  padding: 20px;
-}
-
-.producto-etiqueta{
-  display: inline-block;
-  font-size: 11px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: #18a8ff;
-  background: rgba(24,168,255,.12);
-  border: 1px solid rgba(24,168,255,.35);
-  padding: 7px 12px;
-  border-radius: 20px;
-  margin-bottom: 12px;
-}
-
-.producto-info h2{
-  margin: 0 0 10px;
-  font-size: 25px;
-  line-height: 1.1;
-}
-
-.producto-descripcion{
-  color: #cfcfcf;
-  font-size: 15px;
-  line-height: 1.5;
-  margin-bottom: 15px;
-}
-
-.producto-beneficios{
-  background: rgba(255,255,255,.04);
-  border: 1px solid #252525;
-  border-radius: 16px;
-  padding: 12px 14px;
-}
-
-.producto-beneficios p{
-  margin: 6px 0;
-  color: #e2e2e2;
-  font-size: 14px;
-}
-
-.producto-precio{
-  font-size: 32px;
-  font-weight: 900;
-  margin: 18px 0 6px;
-}
-
-.producto-nota{
-  color: #999;
-  font-size: 13px;
-  margin-bottom: 18px;
-}
-
-.producto-boton{
-  display: block;
-  text-align: center;
-  text-decoration: none;
-  background: #fff;
-  color: #111;
-  padding: 14px;
-  border-radius: 15px;
-  font-weight: 900;
-}
-
-.producto-boton:hover{
-  background: #18a8ff;
-  color: #fff;
-}
-
-.password-box{
-  display:flex;
-  align-items:center;
-  background:#111;
-  border-radius:12px;
-  margin:8px auto;
-  width:90%;
-}
-
-.password-box input{
-  flex:1;
-  background:transparent;
-  color:white;
-  border:none;
-  padding:12px;
-  outline:none;
-}
-
-.password-box button{
-  background:none;
-  border:none;
-  color:#8d99ae;
-  font-size:18px;
-  padding:0 10px;
-  cursor:pointer;
-}
-
-    </style>
+      70% {
+        box-shadow:
+          0 0 0 9px rgba(80, 80, 80, 0);
+      }
+
+      100% {
+        box-shadow:
+          0 0 0 0 rgba(80, 80, 80, 0);
+      }
+    }
+
+    @media (min-width: 520px) {
+      .acciones {
+        flex-direction: row;
+      }
+
+      .boton {
+        flex: 1;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 18px;
+      }
+
+      .tarjeta {
+        padding:
+          46px
+          22px
+          30px;
+
+        border-radius: 24px;
+      }
+
+      h1 {
+        letter-spacing: -1.4px;
+      }
+
+      .descripcion {
+        font-size: 15px;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<!-- ===== MODAL SE BUSCA BARBERO ===== -->
-<div class="modal-aviso" id="modalBarbero" style="display:none;">
-    <div class="modal-contenido">
-        <h3>✂️ Se busca barbero</h3>
-        <p>
-            ¿Eres barbero y te gustaría<br>
-            formar parte de <strong>El Callejón del Barbero</strong>?<br><br>
-            <strong>Mándanos tus trabajos</strong><br>
-            y conoce más información.
-        </p>
-            
-<a href="https://wa.me/523314345505?text=Hola,%20vi%20el%20anuncio%20de%20*Se%20busca%20barbero*%20en%20El%20Callej%C3%B3n%20del%20Barbero%20y%20me%20gustar%C3%ADa%20recibir%20m%C3%A1s%20informaci%C3%B3n.%20Gracias."
-   target="_blank"
-   style="
-        display:block;
-        margin-bottom:14px;
-        padding:12px;
-        border-radius:40px;
-        background:#8d99ae;
-        color:white;
-        font-weight:800;
-        text-decoration:none;
-        text-align:center;
-   ">
-    Pedir información
-</a>
-       <button class="btn-entendido" onclick="cerrarBarbero()">Entendido</button>
-    </div>
-</div>
+  <main class="mantenimiento">
 
+    <div class="marca">
+      <span class="marca-linea"></span>
 
-<div class="overlay"></div>
+      <span class="marca-texto">
+        El Callejón
+      </span>
 
-<div class="perfil-circulo" onclick="mostrar('perfil')" title="Iniciar sesión o crear cuenta">
-    <i class="fa-solid fa-user"></i>
-</div>
-
-<!-- INICIO -->
-<div class="contenido" id="inicio">
-
-    <img src="https://i.ibb.co/BXWTNnd/logoya.png" class="logo" alt="Logo">
-
-    <h1>Dedicados al cuidado personal masculino</h1>
-    
-    <a class="btn" onclick="mostrar('servicios')">
-        <i class="fa-solid fa-scissors icono-barberia"></i> Servicios
-    </a>
-
-    <a class="btn" onclick="mostrar('horarios')">
-        <i class="fa-regular fa-clock icono-barberia"></i> Horarios disponibles
-    </a>
-
-    <a class="btn" onclick="mostrar('productos')">
-        <i class="fa-solid fa-pump-soap icono-barberia"></i> Productos
-    </a>
-
-    <div class="social-container">
-        <a class="social-circle tikTok" href="https://vm.tiktok.com/ZSHKNBNFWNjTw-59O2k/" target="_blank">
-            <i class="fa-brands fa-tiktok"></i>
-        </a>
-
-        <a class="social-circle facebook" href="https://www.facebook.com/share/18h2Nk3fat/" target="_blank">
-            <i class="fa-brands fa-facebook-f"></i>
-        </a>
-
-        <a class="social-circle instagram" href="https://www.instagram.com/el_callejon_del_barbaro?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">
-            <i class="fa-brands fa-instagram"></i>
-        </a>
-
-        <a class="social-circle maps" id="btnMapa">
-    <i class="fa-solid fa-location-dot"></i>
-</a>
+      <span class="marca-linea"></span>
     </div>
 
-    <div class="direccion" onclick="document.getElementById('btnMapa').click()" style="cursor:pointer;">
-        <i class="fa-solid fa-location-dot"></i>
-        Calzada del Panteón #54, Andador 3, entre Nueva Galicia y 12 de Octubre.<br> Tepic, Nayarit Mexico 
-    </div>
-</div>
 
-<!-- SECCIÓN SERVICIOS -->
-<div class="seccion" id="servicios">
+    <section class="tarjeta">
 
-   <h2 class="titulo">Servicios</h2>
+      <div class="icono" aria-hidden="true">
+        <svg viewBox="0 0 24 24">
+          <path d="M14.7 6.3a4 4 0 0 0-5 5L3 18l3 3 6.7-6.7a4 4 0 0 0 5-5l-2.4 2.4-3-3 2.4-2.4z"></path>
+        </svg>
+      </div>
 
-   <p style="color:#c7d0df; margin-bottom:25px;">
-Puedes elegir hasta 3 servicios normales o 1 paquete.
-</p>
 
-<div class="servicios-grid">
+      <span class="estado">
+        <span class="pulso"></span>
+        Sitio en mantenimiento
+      </span>
 
-    <button class="servicio-card servicio-normal" onclick="seleccionarServicio(event, 'Corte', 200, 'servicio')">
-        <h3>Corte</h3>
-        <p>$200</p>
-    </button>
 
-    <button class="servicio-card servicio-normal" onclick="seleccionarServicio(event, 'Barba en frío', 200, 'servicio')">
-        <h3>Barba en frío</h3>
-        <p>$200</p>
-    </button>
+      <h1>
+        Estamos afinando los detalles.
+      </h1>
 
-    <button class="servicio-card servicio-normal" onclick="seleccionarServicio(event, 'Tinta en barba', 150, 'servicio')">
-        <h3>Tinta en barba</h3>
-        <p>$150</p>
-    </button>
 
-    <button class="servicio-card servicio-normal" onclick="seleccionarServicio(event, 'Barba con ritual de vapor', 250, 'servicio')">
-        <h3>Barba con ritual de vapor</h3>
-        <p>$250</p>
-    </button>
+      <p class="descripcion">
+        Estamos trabajando en una nueva versión
+        de nuestra página para darte una mejor
+        experiencia.
+      </p>
 
-    <button class="servicio-card servicio-normal" onclick="seleccionarServicio(event, 'Limpieza de vello facial', 150, 'servicio')">
-        <h3>Limpieza de vello facial</h3>
-        <p>$150</p>
-        <small>Cejas, nariz y orejas</small>
-    </button>
 
-    <button class="servicio-card servicio-normal" onclick="seleccionarServicio(event, 'Mascarilla para puntos negros', 150, 'servicio')">
-        <h3>Mascarilla para puntos negros</h3>
-        <p>$150</p>
-    </button>
+      <div class="separador"></div>
 
-    <button class="servicio-card servicio-normal" onclick="seleccionarServicio(event, 'Exfoliación facial', 150, 'servicio')">
-        <h3>Exfoliación facial</h3>
-        <p>$150</p>
-    </button>
 
-    <button class="servicio-card servicio-normal" onclick="seleccionarServicio(event, 'Parche para ojeras', 130, 'servicio')">
-        <h3>Parche para ojeras</h3>
-        <p>$130</p>
-    </button>
+      <p class="mensaje">
+        La barbería continúa atendiendo con normalidad.
+        Si necesitas información o quieres agendar,
+        puedes comunicarte con nosotros directamente.
+      </p>
 
-    <button class="servicio-card servicio-normal" onclick="seleccionarServicio(event, 'Rasurado de cabeza', 250, 'servicio')">
-        <h3>Rasurado de cabeza</h3>
-        <p>$250</p>
-    </button>
 
-</div>
+      <div class="acciones">
 
-<h2 class="titulo" style="font-size:30px; margin-top:35px;">Paquetes</h2>
+        <a
+          class="boton boton-principal"
+          href="https://wa.me/523314345505"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Contactar por WhatsApp
+        </a>
 
-<div class="servicios-grid">
+        <a
+          class="boton boton-secundario"
+          href="https://www.instagram.com/el_callejon_del_barbaro/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Instagram
+        </a>
 
-    <button class="servicio-card paquete" onclick="seleccionarServicio(event, 'Emperador', 390, 'paquete')">
-        <h3>Emperador</h3>
-        <p>$390 · 1h 30min</p>
-        <small>Corte, parches para ojeras, exfoliación y masaje capilar</small>
-    </button>
+      </div>
 
-    <button class="servicio-card paquete" onclick="seleccionarServicio(event, 'Espartano', 390, 'paquete')">
-        <h3>Espartano</h3>
-        <p>$390 · 1h 30min</p>
-        <small>Arreglo de barba, ritual de vapor, parches para ojeras, exfoliación y masaje antiestrés</small>
-    </button>
+    </section>
 
-    <button class="servicio-card paquete" onclick="seleccionarServicio(event, 'Ejecutivo', 530, 'paquete')">
-        <h3>Ejecutivo</h3>
-        <p>$530 · 1h 30min</p>
-        <small>Corte, barba con vapor, parches, mascarilla/tinta y masaje capilar</small>
-    </button>
 
-    <button class="servicio-card paquete" onclick="seleccionarServicio(event, 'Imperial', 680, 'paquete')">
-        <h3>Imperial</h3>
-        <p>$680 · 1h 30min</p>
-        <small>Corte, barba con vapor, parches, mascarilla/tinta, masaje capilar y limpieza de vello facial</small>
-    </button>
-
-    <button class="servicio-card paquete" onclick="seleccionarServicio(event, 'Renovación Facial', 400, 'paquete')">
-        <h3>Renovación Facial</h3>
-        <p>$400 · 1h 30min</p>
-        <small>Ritual de vapor, mascarilla para puntos negros, exfoliación facial, parches para ojeras y ligero masaje</small>
-    </button>
-
-    <button class="servicio-card paquete" onclick="seleccionarServicio(event, 'Baby Face', 500, 'paquete')">
-        <h3>Baby Face</h3>
-        <p>$500 · 1h 30min</p>
-        <small>Ritual de vapor, mascarilla para puntos negros, exfoliación facial, parches para ojeras, limpieza de vello facial y ligero masaje</small>
-    </button>
-
-</div>
-
-<p id="servicio-seleccionado" style="margin-top:18px; font-size:18px;"></p>
-
-<div id="acciones-agenda" style="display:none; margin-top:25px;">
-
-    <p style="color:#c7d0df; margin-top:20px;">
-     Elige cómo quieres agendar tu cita
+    <p class="pie">
+      EL CALLEJÓN DEL BARBERO · TEPIC
     </p>
 
-   <button class="btn" onclick="mostrar('horarios')">
-    <i class="fa-regular fa-clock icono-barberia"></i> Agendar cita disponible
-   </button>
-
-    <button class="btn" onclick="mostrar('agendarDespuesSeccion')">
-    <i class="fa-solid fa-calendar-days icono-barberia"></i> Agendar para después
-    </button>
-   
-</div>
-
-<a class="btn-regresar" onclick="regresar()">
-    <i class="fa-solid fa-razor"></i> Regresar
-</a>
-
-</div>
-
-<!-- CITAS DISPONIBLES -->
-<div class="seccion" id="horarios">
-<h2 class="titulo">Citas disponibles</h2>
-
-<p style="font-size:16px; margin-bottom:20px;">
-Selecciona una hora disponible para confirmar tu cita esta semana.
-</p>
-
-<div class="horario-card">
-<h3 id="titulo-lunes">Lunes</h3>
-<p id="lunes">Sin citas disponibles</p>
-</div>
-
-<div class="horario-card">
-<h3 id="titulo-martes">Martes</h3>
-<p id="martes">Sin citas disponibles</p>
-</div>
-
-<div class="horario-card">
-<h3 id="titulo-miercoles">Miércoles</h3>
-<p id="miercoles">Sin citas disponibles</p>
-</div>
-
-<div class="horario-card">
-<h3 id="titulo-jueves">Jueves</h3>
-<p id="jueves">Sin citas disponibles</p>
-</div>
-
-<div class="horario-card">
-<h3 id="titulo-viernes">Viernes</h3>
-<p id="viernes">Sin citas disponibles</p>
-</div>
-
-<div class="horario-card">
-<h3 id="titulo-sabado">Sábado</h3>
-<p id="sabado">Sin citas disponibles</p>
-</div>
-
-<div class="horario-card">
-<h3 id="titulo-domingo">Domingo</h3>
-<p id="domingo">Sin citas disponibles</p>
-</div>
-
-<h2 class="titulo" style="font-size:28px; margin-top:30px;">Agendar para otra fecha</h2>
-
-<p style="font-size:16px; margin-bottom:20px;">
-Solicita una cita para días posteriores. Quedará pendiente de confirmación.
-</p>
-
-<button class="btn" onclick="mostrar('agendarDespuesSeccion')">
-    <i class="fa-solid fa-calendar-days icono-barberia"></i> Agendar para después
-</button>
-
-<a class="btn-regresar" onclick="regresar()">
-<i class="fa-solid fa-razor"></i> Regresar
-</a>
-
-</div>
-
-<div class="seccion" id="perfil">
-<h2 class="titulo">Mi cuenta</h2>
-
-<p style="color:#c7d0df; margin-bottom:20px;">
-Inicia sesión o crea tu cuenta para agendar más rápido.
-</p>
-
-<!-- LOGIN -->
-<div class="horario-card">
-<h3>Iniciar sesión</h3>
-
-<input id="loginUsuario" placeholder="Usuario" type="text" style="width:90%; padding:12px; margin:8px; border-radius:12px; border:none;">
-<div class="password-box">
-  <input id="loginPassword" placeholder="Contraseña" type="password">
-  <button type="button" onclick="togglePassword('loginPassword')">👁️</button>
-</div>
-
-<button class="btn" onclick="iniciarSesionDemo()">Entrar</button>
-
-<button class="btn" onclick="mostrarCrearCuenta()">
-No tengo cuenta
-</button>
-
-<p id="estadoLogin"></p>
-</div>
-
-<!-- CREAR CUENTA -->
-<div class="horario-card" id="crearCuentaBox" style="display:none;">
-<h3>Crear cuenta</h3>
-
-<input id="nombreCliente" placeholder="Nombre completo" style="width:90%; padding:12px; margin:8px; border-radius:12px; border:none;">
-<input id="telefonoCliente" placeholder="WhatsApp" style="width:90%; padding:12px; margin:8px; border-radius:12px; border:none;">
-<input id="usuarioCliente" placeholder="Crea tu usuario" type="text" style="width:90%; padding:12px; margin:8px; border-radius:12px; border:none;">
-<input id="fechaNacimiento" type="date" style="width:90%; padding:12px; margin:8px; border-radius:12px; border:none;">
-<div class="password-box">
-  <input id="passwordCliente" placeholder="Contraseña" type="password">
-  <button type="button" onclick="togglePassword('passwordCliente')">👁️</button>
-</div>
-
-<button class="btn" onclick="crearCuentaDemo()">Crear cuenta</button>
-
-<p id="estadoCuenta"></p>
-</div>
-
-<a class="btn-regresar" onclick="regresar()">
-<i class="fa-solid fa-razor"></i> Regresar
-</a>
-
-</div>
-
-<div class="seccion" id="agendarDespuesSeccion">
-    <h2 class="titulo">Agendar para después</h2>
-
-    <div class="horario-card">
-        <p>Selecciona la fecha y hora que te gustaría apartar.</p>
-
-        <label>Fecha</label>
-        <input type="date" id="fechaDespues"
-        style="width:90%; padding:12px; margin:10px; border-radius:12px; border:none;">
-
-        <label>Hora</label>
-        <input type="time" id="horaDespues"
-        style="width:90%; padding:12px; margin:10px; border-radius:12px; border:none;">
-
-        <button class="btn" onclick="agendarDespues()">
-        <i class="fa-brands fa-whatsapp icono-barberia"></i> Solicitar por WhatsApp
-        </button>
-    </div>
-
-    <a class="btn-regresar" onclick="regresar()">
-        <i class="fa-solid fa-razor"></i> Regresar
-    </a>
-</div>
-
-<!-- PRODUCTOS -->
-<div class="seccion" id="productos">
-  <h2 class="titulo">Productos</h2>
-
-  <div class="catalogo-productos">
-
-    <!-- SHAMPOO -->
-    <section class="producto-card">
-      <img src="https://i.ibb.co/8LsFmCSz/Chat-GPT-Image-1-may-2026-04-30-07-a-m.png" alt="Shampoo Biotina Bergamota">
-      <div class="producto-info">
-        <span class="producto-etiqueta">Premium</span>
-        <h2>Shampoo Biotina + Bergamota</h2>
-        <p class="producto-descripcion">Limpieza profunda que fortalece el cabello y ayuda a estimular su crecimiento.</p>
-        <div class="producto-beneficios">
-          <p>✔ Estimula el crecimiento capilar</p>
-          <p>✔ Fortalece desde la raíz</p>
-          <p>✔ Aumenta densidad del cabello</p>
-          <p>✔ Contenido 1000 ml</p>
-        </div>
-        <p class="producto-precio">$300 MXN</p>
-        <p class="producto-nota">Disponible únicamente en El Callejón del Barbero.</p>
-        <a class="producto-boton" href="https://wa.me/523314345505?text=Hola,%20quiero%20preguntar%20por%20el%20Shampoo%20Biotina%20Bergamota%20de%20$300">Preguntar por WhatsApp</a>
-      </div>
-    </section>
-
-    <!-- MINOXIDIL -->
-    <section class="producto-card">
-      <img src="https://i.ibb.co/7dtdygh6/Chat-GPT-Image-1-may-2026-03-58-49-a-m.png" alt="Minoxidil 5%">
-      <div class="producto-info">
-        <span class="producto-etiqueta">Tratamiento</span>
-        <h2>Minoxidil 5%</h2>
-        <p class="producto-descripcion">Ayuda a estimular el crecimiento de la barba y fortalecer el vello con uso constante.</p>
-        <div class="producto-beneficios">
-          <p>✔ Estimula el crecimiento</p>
-          <p>✔ Fortalece el vello</p>
-          <p>✔ Ideal para barba</p>
-          <p>✔ Contenido 30 ml</p>
-        </div>
-        <p class="producto-precio">$200 MXN</p>
-        <p class="producto-nota">Uso externo. Se recomienda asesoría antes de usar.</p>
-        <a class="producto-boton" href="https://wa.me/523314345505?text=Hola,%20quiero%20preguntar%20por%20el%20Minoxidil%205%25%20de%20$200">Preguntar por WhatsApp</a>
-      </div>
-    </section>
-
-    <!-- CERA GEL -->
-    <section class="producto-card">
-      <img src="https://i.ibb.co/dqCSwN4/Chat-GPT-Image-1-may-2026-04-35-13-a-m.png" alt="Cera Gel">
-      <div class="producto-info">
-        <span class="producto-etiqueta rojo">Fijación + brillo</span>
-        <h2>Cera Gel</h2>
-        <p class="producto-descripcion">Fijación con brillo y control. Ideal para peinados definidos y con estilo.</p>
-        <div class="producto-beneficios">
-          <p>✔ Fijación firme</p>
-          <p>✔ Aporta brillo</p>
-          <p>✔ Moldea fácilmente</p>
-          <p>✔ Acabado profesional</p>
-        </div>
-        <p class="producto-precio">$190 MXN</p>
-        <p class="producto-nota">Disponible únicamente en El Callejón del Barbero.</p>
-        <a class="producto-boton rojo-btn" href="https://wa.me/523314345505?text=Hola,%20quiero%20preguntar%20por%20la%20Cera%20Gel%20de%20$190">Preguntar por WhatsApp</a>
-      </div>
-    </section>
-
-    <!-- GEL LINAZA -->
-    <section class="producto-card">
-      <img src="https://i.ibb.co/NgLh6Nx3/Chat-GPT-Image-1-may-2026-04-11-43-a-m.png" alt="Gel de Linaza">
-      <div class="producto-info">
-        <span class="producto-etiqueta cafe">Natural</span>
-        <h2>Gel de Linaza</h2>
-        <p class="producto-descripcion">Fijación natural con brillo saludable. Ideal para un look ligero y flexible.</p>
-        <div class="producto-beneficios">
-          <p>✔ Fijación media natural</p>
-          <p>✔ Sin alcohol</p>
-          <p>✔ Sin parabenos</p>
-          <p>✔ Aporta brillo y suavidad</p>
-        </div>
-        <p class="producto-precio">$160 MXN</p>
-        <p class="producto-nota">Disponible únicamente en El Callejón del Barbero.</p>
-        <a class="producto-boton cafe-btn" href="https://wa.me/523314345505?text=Hola,%20quiero%20preguntar%20por%20el%20Gel%20de%20Linaza%20de%20$160">Preguntar por WhatsApp</a>
-      </div>
-    </section>
-
-    <!-- GEL EXTRA FIRME -->
-    <section class="producto-card">
-      <img src="https://i.ibb.co/Z6qmdR0d/Chat-GPT-Image-1-may-2026-03-15-49-a-m.png" alt="Gel Fijador Extra Firme">
-      <div class="producto-info">
-        <span class="producto-etiqueta">Exclusivo en barbería</span>
-        <h2>Gel Fijador Extra Firme</h2>
-        <p class="producto-descripcion">Control fuerte para mantener tu peinado firme, limpio y con estilo durante el día.</p>
-        <div class="producto-beneficios">
-          <p>✔ Fijación extra firme</p>
-          <p>✔ Sin alcohol</p>
-          <p>✔ Sin residuos</p>
-          <p>✔ Acabado profesional</p>
-        </div>
-        <p class="producto-precio">$120 MXN</p>
-        <p class="producto-nota">Disponible únicamente en El Callejón del Barbero.</p>
-        <a class="producto-boton" href="https://wa.me/523314345505?text=Hola,%20quiero%20preguntar%20por%20el%20Gel%20Fijador%20Extra%20Firme%20de%20$120">Preguntar por WhatsApp</a>
-      </div>
-    </section>
-
-  </div>
-
-  <a class="btn-regresar" onclick="regresar()">
-      <i class="fa-solid fa-razor"></i> Regresar
-  </a>
-</div>
-
-<script>
-
-let carritoServicios = [];
-const NUMERO_WHATSAPP = "523314345505";
-
-function regresar() {
-    // Oculta todas las secciones
-    document.querySelectorAll(".seccion").forEach(sec => {
-        sec.style.display = "none";
-    });
-
-    // Muestra el inicio
-    document.getElementById("inicio").style.display = "block";
-
-    // Regresa el scroll arriba (opcional pero recomendado)
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-}
-
-function mostrar(id) {
-    // Oculta inicio
-    document.getElementById("inicio").style.display = "none";
-
-    // Oculta todas las secciones
-    document.querySelectorAll(".seccion").forEach(sec => {
-        sec.style.display = "none";
-    });
-
-    // Muestra la sección solicitada
-    document.getElementById(id).style.display = "block";
-
-    // Instagram (por si lo usas después)
-    if (window.instgrm && instgrm.Embeds) {
-        instgrm.Embeds.process();
-    }
-}
-
-// ===== MAPA ÚNICO (APPLE / GOOGLE) =====
-document.getElementById("btnMapa").addEventListener("click", function () {
-
-    const linkAppleMaps = "https://maps.apple.com/?address=Andador%206%2051,%20Esteban%20Baca%20Calderon,%2063000%20Tepic,%20Nay.,%20M%C3%A9xico&auid=12437454849627990863&ll=21.501987,-104.886234&lsp=9902&q=El%20Callej%C3%B3n%20Del%20Barbero&_ext=CjkKBQgEEKUBCgQIBRADCgQIBhBnCgQIChAACgQIUhABCgQIVRAPCgQIWRACCgUIpAEQAQoFCMEBEAISJimWD5yOW381QDHf4uE9BzlawDmqcSXxqIE1QEEkyijgaDhawFAE";
-    const linkGoogleMaps = "https://maps.app.goo.gl/fC9s49aJyvPhe1B89?g_st=aw";
-
-    const esIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-
-    window.open(esIOS ? linkAppleMaps : linkGoogleMaps, "_blank");
-
-});
-
-function cerrarBarbero() {
-    document.getElementById("modalBarbero").style.display = "none";
-}
-
-// ===== MOSTRAR MODAL "SE BUSCA BARBERO" AL INICIO =====
-window.addEventListener("load", function () {
-    setTimeout(function () {
-        document.getElementById("modalBarbero").style.display = "flex";
-    }, 1200); // 1.2 segundos después de entrar
-});
-
-function ponerFechas(){
-
-const dias = [
-"Domingo",
-"Lunes",
-"Martes",
-"Miércoles",
-"Jueves",
-"Viernes",
-"Sábado"
-];
-
-const meses = [
-"enero",
-"febrero",
-"marzo",
-"abril",
-"mayo",
-"junio",
-"julio",
-"agosto",
-"septiembre",
-"octubre",
-"noviembre",
-"diciembre"
-];
-
-const hoy = new Date();
-
-const diasOrden = [
-"lunes",
-"martes",
-"miercoles",
-"jueves",
-"viernes",
-"sabado",
-"domingo"
-];
-
-diasOrden.forEach((dia, index) => {
-
-const fecha = new Date();
-fecha.setDate(hoy.getDate() + index);
-
-const nombreDia = dias[fecha.getDay()];
-const texto = `${nombreDia} ${fecha.getDate()} de ${meses[fecha.getMonth()]}`;
-
-const titulo = document.getElementById("titulo-" + dia);
-
-if(titulo){
-titulo.innerText = texto;
-}
-
-});
-
-}
-
-function generarBotones(dia, texto) {
-
-    const contenedor = document.getElementById(dia);
-
-    if (!texto || texto === "Sin citas disponibles") {
-        contenedor.innerHTML = "Sin citas disponibles";
-        return;
-    }
-
-    const horas = texto.split("/");
-    contenedor.innerHTML = "";
-
-    horas.forEach(hora => {
-
-        const btn = document.createElement("button");
-        btn.innerText = hora + ":00";
-        btn.classList.add("hora-btn");
-
-        btn.onclick = () => {
-
-            if (carritoServicios.length === 0) {
-                alert("Selecciona al menos un servicio");
-                mostrar("servicios");
-                return;
-            }
-
-            const numero = "523314345505";
-
-            const serviciosTexto = carritoServicios
-                .map(item => `- ${item.servicio}`)
-                .join("\n");
-
-            const duracion = calcularDuracion();
-
-            const mensaje = `Hola, quiero solicitar una cita en El Callejón del Barbero.
-
-Nombre:
-
-Servicios:
-${serviciosTexto}
-
-Duración aproximada: ${duracion}
-Día: ${dia}
-Hora: ${hora}:00
-
-Entiendo que esta cita queda pendiente de confirmación.`;
-
-            const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
-            window.open(url, "_blank");
-        };
-
-        contenedor.appendChild(btn);
-    });
-}
-
-function seleccionarServicio(event, servicio, precio, tipo) {
-
-    const existe = carritoServicios.find(item => item.servicio === servicio);
-
-    if (existe) {
-        carritoServicios = carritoServicios.filter(item => item.servicio !== servicio);
-        event.currentTarget.classList.remove("activo");
-        actualizarCarrito();
-        return;
-    }
-
-    if (tipo === "paquete") {
-        carritoServicios = [];
-        document.querySelectorAll(".servicio-card").forEach(btn => btn.classList.remove("activo"));
-
-        carritoServicios.push({
-            servicio,
-            precio,
-            tipo
-        });
-
-        event.currentTarget.classList.add("activo");
-        actualizarCarrito();
-        return;
-    }
-
-    if (tipo === "servicio") {
-        carritoServicios = carritoServicios.filter(item => item.tipo !== "paquete");
-        document.querySelectorAll(".paquete").forEach(btn => btn.classList.remove("activo"));
-
-        const serviciosNormales = carritoServicios.filter(item => item.tipo === "servicio");
-
-        if (serviciosNormales.length >= 3) {
-            alert("Solo puedes seleccionar máximo 3 servicios normales.");
-            return;
-        }
-
-        carritoServicios.push({
-            servicio,
-            precio,
-            tipo
-        });
-
-        event.currentTarget.classList.add("activo");
-    }
-
-    actualizarCarrito();
-}
-
-function calcularDuracion() {
-    if (carritoServicios.length === 0) return "";
-
-    const paquete = carritoServicios.find(item => item.tipo === "paquete");
-
-    if (paquete) {
-        return "1 hora 30 min";
-    }
-
-    const cantidad = carritoServicios.length;
-
-    if (cantidad === 1) return "1 hora";
-    if (cantidad === 2) return "1 hora 10 min";
-    if (cantidad === 3) return "1 hora 30 min";
-
-    return "";
-}
-
-function actualizarCarrito() {
-
-    const resumen = document.getElementById("servicio-seleccionado");
-    const acciones = document.getElementById("acciones-agenda");
-
-    if (carritoServicios.length === 0) {
-        resumen.innerText = "";
-        acciones.style.display = "none";
-        return;
-    }
-
-    const duracion = calcularDuracion();
-    const total = carritoServicios.reduce((suma, item) => suma + item.precio, 0);
-
-    resumen.innerHTML = `
-        <strong>Seleccionado:</strong><br>
-        ${carritoServicios.map(item => `• ${item.servicio}`).join("<br>")}
-        <br><br>
-        <strong>Duración aproximada: ${duracion}</strong>
-        <br><br>
-        <strong>Total aproximado: $${total}</strong>
-    `;
-
-    acciones.style.display = "block";
-}
-
-function cargarCitas(){
-    generarBotones("lunes", localStorage.getItem("lunes"));
-    generarBotones("martes", localStorage.getItem("martes"));
-    generarBotones("miercoles", localStorage.getItem("miercoles"));
-    generarBotones("jueves", localStorage.getItem("jueves"));
-    generarBotones("viernes", localStorage.getItem("viernes"));
-    generarBotones("sabado", localStorage.getItem("sabado"));
-    generarBotones("domingo", localStorage.getItem("domingo"));
-}
-
-window.addEventListener("load", function(){
-    cargarCitas();
-    ponerFechas();
-});
-
-function agendarDespues(){
-
-    if (carritoServicios.length === 0) {
-        alert("Selecciona al menos un servicio");
-        mostrar("servicios");
-        return;
-    }
-
-    const fecha = document.getElementById("fechaDespues").value;
-    const hora = document.getElementById("horaDespues").value;
-
-    if (!fecha || !hora) {
-        alert("Selecciona fecha y hora");
-        return;
-    }
-
-    const numero = "523314345505";
-
-    const serviciosTexto = carritoServicios
-        .map(item => `- ${item.servicio}`)
-        .join("\n");
-
-    const duracion = calcularDuracion();
-
-    const mensaje = `Hola, quiero solicitar una cita para después en El Callejón del Barbero.
-
-Nombre:
-
-Servicios:
-${serviciosTexto}
-
-Duración aproximada: ${duracion}
-Fecha que quiero: ${fecha}
-Hora aproximada: ${hora}
-
-Entiendo que esta cita queda pendiente de confirmación.`;
-
-    const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
-    window.open(url, "_blank");
-}
-
-async function crearCuentaDemo() {
-    const nombre = document.getElementById("nombreCliente").value.trim();
-    const telefono = document.getElementById("telefonoCliente").value.trim();
-    const usuario = document.getElementById("usuarioCliente").value.trim().toLowerCase();
-    const password = document.getElementById("passwordCliente").value.trim();
-    const fechaNacimiento = document.getElementById("fechaNacimiento").value;
-
-    if (!nombre || !telefono || !usuario || !password || !fechaNacimiento) {
-        alert("Completa todos los campos");
-        return;
-    }
-
-    try {
-        const clientesRef = window.collection(window.db, "clientes");
-        const clientesSnap = await window.getDocs(clientesRef);
-
-        let usuarioExiste = false;
-
-        clientesSnap.forEach(doc => {
-            if (doc.data().usuario === usuario) {
-                usuarioExiste = true;
-            }
-        });
-
-        if (usuarioExiste) {
-            alert("Ese usuario ya existe. Elige otro.");
-            return;
-        }
-
-        await window.addDoc(clientesRef, {
-            nombre: nombre,
-            telefono: telefono,
-            usuario: usuario,
-            password: password,
-            fechaNacimiento: fechaNacimiento,
-            estado: "Pendiente",
-            visitas: 0,
-            fechaRegistro: new Date()
-        });
-
-        document.getElementById("estadoCuenta").innerText =
-            "Cuenta creada. Esperando aprobación.";
-
-        alert("Cuenta creada correctamente. Espera aprobación.");
-
-    } catch (error) {
-        console.error(error);
-        alert("Error al crear cuenta");
-    }
-}
-
-async function iniciarSesionDemo() {
-    const usuario = document.getElementById("loginUsuario").value.trim().toLowerCase();
-    const password = document.getElementById("loginPassword").value.trim();
-
-    if (!usuario || !password) {
-        alert("Escribe tu usuario y contraseña");
-        return;
-    }
-
-    try {
-        const clientesRef = window.collection(window.db, "clientes");
-        const clientesSnap = await window.getDocs(clientesRef);
-
-        let clienteEncontrado = null;
-
-        clientesSnap.forEach(doc => {
-            const data = doc.data();
-
-            if (data.usuario === usuario && data.password === password) {
-                clienteEncontrado = data;
-            }
-        });
-
-        if (!clienteEncontrado) {
-            alert("Usuario o contraseña incorrectos");
-            return;
-        }
-
-        if (clienteEncontrado.estado !== "Aprobado") {
-            alert("Tu cuenta aún está pendiente de aprobación.");
-            return;
-        }
-
-        localStorage.setItem("clienteNombre", clienteEncontrado.nombre);
-        localStorage.setItem("clienteUsuario", clienteEncontrado.usuario);
-
-        document.getElementById("estadoLogin").innerText =
-            "Bienvenido, " + clienteEncontrado.nombre;
-
-        alert("Bienvenido " + clienteEncontrado.nombre);
-
-        mostrar("servicios");
-
-    } catch (error) {
-        console.error(error);
-        alert("Error al iniciar sesión");
-    }
-}
-
-function mostrarCrearCuenta(){
-    document.getElementById("crearCuentaBox").style.display = "block";
-}
-
-function togglePassword(id){
-  const input = document.getElementById(id);
-  input.type = input.type === "password" ? "text" : "password";
-}
-
-</script>
-
-<script type="module">
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, updateDoc, doc } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyCaLuLg_Tp-0bgzpB1DiPR7VmIrmLLFFSM",
-  authDomain: "elcallejondelbarbero-54.firebaseapp.com",
-  projectId: "elcallejondelbarbero-54",
-  storageBucket: "elcallejondelbarbero-54.firebasestorage.app",
-  messagingSenderId: "1002549966536",
-  appId: "1:1002549966536:web:d805a8e535d25198a257fd",
-  measurementId: "G-EQBV95SNJV"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-window.db = db;
-window.collection = collection;
-window.addDoc = addDoc;
-window.getDocs = getDocs;
-window.updateDoc = updateDoc;
-window.doc = doc;
-</script>
+  </main>
 
 </body>
 </html>
